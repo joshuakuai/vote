@@ -70,9 +70,9 @@ static short logicVersion;
     [_tcpStream close];
 }
 
--(void)sendData:(NSString*)josonString
+-(void)sendDataWithString:(NSString*)jsonString
 {
-    _sendString = [josonString copy];
+    _sendString = [jsonString copy];
 
     //temporal request
     if ([_tcpStream connected]) {
@@ -86,6 +86,12 @@ static short logicVersion;
     }
     
     //Long connection
+}
+
+-(void)sendDataWithDic:(NSDictionary*)josonDic
+{
+    NSString *jsonString = [josonDic JSONString];
+    [self sendDataWithString:jsonString];
 }
 
 #pragma mark - TcpStream delegate

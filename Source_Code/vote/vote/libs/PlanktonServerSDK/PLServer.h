@@ -38,6 +38,7 @@
 +(id)shareInstance;
 -(void)openLongConnection;
 -(void)closeConnection;
--(void)sendData:(NSString*)josonString;
+-(void)sendDataWithString:(NSString*)jsonString;
+-(void)sendDataWithDic:(NSDictionary*)jsonDic;
 
 @end

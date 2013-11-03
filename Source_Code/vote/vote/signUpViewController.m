@@ -25,6 +25,9 @@
 {
     [super viewDidLoad];
     
+    //set the plankton server's delegate
+    [[PLServer shareInstance] setDelegate:self];
+    
     //set the the keyboard dismiss selector
     [_firstNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_lastNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -68,7 +71,23 @@
     }
     
     //all pass, prepare the data
-    
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:_lastNameTextField.text,@"lastName",
+                                                                   _firstNameTextField.text,@"firstName",
+                                                                   _emailTextField.text,@"email",nil];
+    [[PLServer shareInstance] sendDataWithDic:dic];
+}
+
+#pragma mark - PLServer delegate
+- (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
+{
+    NSDictionary *cacheDic = (NSDictionary*)jsonString;
+    BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
+    NSLog(@"Received result:%d",result);
+}
+
+- (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
+{
+    NSLog(@"Error:%@",error);
 }
 
 

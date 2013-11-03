@@ -12,6 +12,7 @@
 //Package indication
 #define CML_PACKAGE_INDICATION 0xFFFF
 #define CML_PACKAGE_PLANKTION_LOGIC_LAYER_DEFAULT_TYPE 0x01
+#define CML_PACKAGE_VOTE 0x10
 
 typedef struct _CMLPackageHead{
 	int indication;              //Indication of package,always 0xFFFF
