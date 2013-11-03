@@ -17,3 +17,5 @@
 
 #define DevServerAdd @""
 #define RelServerAdd @""
+
+#define ShowErrorMeesage(string) 

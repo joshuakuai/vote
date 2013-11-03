@@ -7,6 +7,8 @@
 //
 
 #import "signUpViewController.h"
+#import "UIViewController+Message.h"
+#import "NSString+ValidCheck.h"
 
 @interface signUpViewController ()
 
@@ -14,25 +16,60 @@
 
 @implementation signUpViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)viewWillAppear:(BOOL)animated
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    
+    //set the the keyboard dismiss selector
+    [_firstNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [_lastNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [_emailAgainTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [_emailTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+
+- (void)textFieldDone:(UITextField*)textField
+{
+    [textField resignFirstResponder];
+}
+
+//begin signUp
+- (IBAction)singUp:(id)sender
+{
+    //check if the textfields has already filled
+    if (_firstNameTextField.text == nil || [_firstNameTextField.text isEqualToString:@""] ||
+        _lastNameTextField.text == nil || [_lastNameTextField.text isEqualToString:@""] ||
+        _lastNameTextField.text == nil || [_lastNameTextField.text isEqualToString:@""] ||
+        _lastNameTextField.text == nil || [_lastNameTextField.text isEqualToString:@""]){
+        
+        [self showErrorMessage:@"Any information can't be empty."];
+        return;
+    }
+    
+    //check if the email is valid
+    if (![_emailTextField.text isValidEmail] || ![_emailAgainTextField.text isValidEmail]) {
+        
+        [self showErrorMessage:@"Email address is not valid."];
+        return;
+    }
+    
+    if (![_emailTextField.text isEqualToString:_emailAgainTextField.text]) {
+        [self showErrorMessage:@"Email address is not the same, please check again."];
+        return;
+    }
+    
+    //all pass, prepare the data
+    
+}
+
 
 @end

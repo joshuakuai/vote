@@ -14,25 +14,23 @@
 
 @implementation rootViewController
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (void)viewWillAppear:(BOOL)animated
 {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        
-    }
-    return self;
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
+    
+    //check if the user has already logined in
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

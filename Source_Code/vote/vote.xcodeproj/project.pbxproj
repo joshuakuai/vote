@@ -22,6 +22,12 @@
 		AA3F90051826B55B007ABF9B /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA3F90041826B55B007ABF9B /* Storyboard.storyboard */; };
 		AA3F90081826D1A9007ABF9B /* rootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90071826D1A9007ABF9B /* rootViewController.m */; };
 		AA3F900B1826D7F7007ABF9B /* signUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F900A1826D7F7007ABF9B /* signUpViewController.m */; };
+		AA3F90121826E8AB007ABF9B /* UIViewController+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90111826E8AB007ABF9B /* UIViewController+Message.m */; };
+		AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */; };
+		AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901A1826EE61007ABF9B /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		AA3F90231826EE61007ABF9B /* PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901C1826EE61007ABF9B /* PLPackage.m */; };
+		AA3F90241826EE61007ABF9B /* PLServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901E1826EE61007ABF9B /* PLServer.m */; };
+		AA3F90251826EE61007ABF9B /* TcpStream.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90211826EE61007ABF9B /* TcpStream.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +62,19 @@
 		AA3F90071826D1A9007ABF9B /* rootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rootViewController.m; sourceTree = "<group>"; };
 		AA3F90091826D7F7007ABF9B /* signUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = signUpViewController.h; sourceTree = "<group>"; };
 		AA3F900A1826D7F7007ABF9B /* signUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = signUpViewController.m; sourceTree = "<group>"; };
+		AA3F90101826E8AB007ABF9B /* UIViewController+Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Message.h"; sourceTree = "<group>"; };
+		AA3F90111826E8AB007ABF9B /* UIViewController+Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Message.m"; sourceTree = "<group>"; };
+		AA3F90131826E962007ABF9B /* NSString+ValidCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ValidCheck.h"; sourceTree = "<group>"; };
+		AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ValidCheck.m"; sourceTree = "<group>"; };
+		AA3F90191826EE61007ABF9B /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
+		AA3F901A1826EE61007ABF9B /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
+		AA3F901B1826EE61007ABF9B /* PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPackage.h; sourceTree = "<group>"; };
+		AA3F901C1826EE61007ABF9B /* PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPackage.m; sourceTree = "<group>"; };
+		AA3F901D1826EE61007ABF9B /* PLServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLServer.h; sourceTree = "<group>"; };
+		AA3F901E1826EE61007ABF9B /* PLServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLServer.m; sourceTree = "<group>"; };
+		AA3F901F1826EE61007ABF9B /* Protocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocal.h; sourceTree = "<group>"; };
+		AA3F90201826EE61007ABF9B /* TcpStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TcpStream.h; sourceTree = "<group>"; };
+		AA3F90211826EE61007ABF9B /* TcpStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TcpStream.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +134,7 @@
 		AA3F8FDB1826B00C007ABF9B /* vote */ = {
 			isa = PBXGroup;
 			children = (
+				AA3F90161826E96A007ABF9B /* Category */,
 				AA3F90061826D1A9007ABF9B /* rootViewController.h */,
 				AA3F90071826D1A9007ABF9B /* rootViewController.m */,
 				AA3F90091826D7F7007ABF9B /* signUpViewController.h */,
@@ -123,6 +143,7 @@
 				AA3F8FE51826B00C007ABF9B /* AppDelegate.m */,
 				AA3F8FE71826B00C007ABF9B /* Images.xcassets */,
 				AA3F90041826B55B007ABF9B /* Storyboard.storyboard */,
+				AA3F90171826EE61007ABF9B /* libs */,
 				AA3F8FDC1826B00C007ABF9B /* Supporting Files */,
 			);
 			path = vote;
@@ -155,6 +176,41 @@
 				AA3F8FF71826B00C007ABF9B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		AA3F90161826E96A007ABF9B /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				AA3F90101826E8AB007ABF9B /* UIViewController+Message.h */,
+				AA3F90111826E8AB007ABF9B /* UIViewController+Message.m */,
+				AA3F90131826E962007ABF9B /* NSString+ValidCheck.h */,
+				AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
+		AA3F90171826EE61007ABF9B /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				AA3F90181826EE61007ABF9B /* PlanktonServerSDK */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		AA3F90181826EE61007ABF9B /* PlanktonServerSDK */ = {
+			isa = PBXGroup;
+			children = (
+				AA3F90191826EE61007ABF9B /* JSONKit.h */,
+				AA3F901A1826EE61007ABF9B /* JSONKit.m */,
+				AA3F901B1826EE61007ABF9B /* PLPackage.h */,
+				AA3F901C1826EE61007ABF9B /* PLPackage.m */,
+				AA3F901D1826EE61007ABF9B /* PLServer.h */,
+				AA3F901E1826EE61007ABF9B /* PLServer.m */,
+				AA3F901F1826EE61007ABF9B /* Protocal.h */,
+				AA3F90201826EE61007ABF9B /* TcpStream.h */,
+				AA3F90211826EE61007ABF9B /* TcpStream.m */,
+			);
+			path = PlanktonServerSDK;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,7 +312,13 @@
 				AA3F8FE61826B00C007ABF9B /* AppDelegate.m in Sources */,
 				AA3F90081826D1A9007ABF9B /* rootViewController.m in Sources */,
 				AA3F900B1826D7F7007ABF9B /* signUpViewController.m in Sources */,
+				AA3F90241826EE61007ABF9B /* PLServer.m in Sources */,
+				AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */,
 				AA3F8FE21826B00C007ABF9B /* main.m in Sources */,
+				AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */,
+				AA3F90231826EE61007ABF9B /* PLPackage.m in Sources */,
+				AA3F90121826E8AB007ABF9B /* UIViewController+Message.m in Sources */,
+				AA3F90251826EE61007ABF9B /* TcpStream.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
