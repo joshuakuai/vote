@@ -20,6 +20,8 @@
 		AA3F8FF91826B00C007ABF9B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA3F8FF71826B00C007ABF9B /* InfoPlist.strings */; };
 		AA3F8FFB1826B00C007ABF9B /* voteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F8FFA1826B00C007ABF9B /* voteTests.m */; };
 		AA3F90051826B55B007ABF9B /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA3F90041826B55B007ABF9B /* Storyboard.storyboard */; };
+		AA3F90081826D1A9007ABF9B /* rootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90071826D1A9007ABF9B /* rootViewController.m */; };
+		AA3F900B1826D7F7007ABF9B /* signUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F900A1826D7F7007ABF9B /* signUpViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,10 @@
 		AA3F8FF81826B00C007ABF9B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AA3F8FFA1826B00C007ABF9B /* voteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = voteTests.m; sourceTree = "<group>"; };
 		AA3F90041826B55B007ABF9B /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		AA3F90061826D1A9007ABF9B /* rootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rootViewController.h; sourceTree = "<group>"; };
+		AA3F90071826D1A9007ABF9B /* rootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rootViewController.m; sourceTree = "<group>"; };
+		AA3F90091826D7F7007ABF9B /* signUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = signUpViewController.h; sourceTree = "<group>"; };
+		AA3F900A1826D7F7007ABF9B /* signUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = signUpViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +115,10 @@
 		AA3F8FDB1826B00C007ABF9B /* vote */ = {
 			isa = PBXGroup;
 			children = (
+				AA3F90061826D1A9007ABF9B /* rootViewController.h */,
+				AA3F90071826D1A9007ABF9B /* rootViewController.m */,
+				AA3F90091826D7F7007ABF9B /* signUpViewController.h */,
+				AA3F900A1826D7F7007ABF9B /* signUpViewController.m */,
 				AA3F8FE41826B00C007ABF9B /* AppDelegate.h */,
 				AA3F8FE51826B00C007ABF9B /* AppDelegate.m */,
 				AA3F8FE71826B00C007ABF9B /* Images.xcassets */,
@@ -244,6 +254,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA3F8FE61826B00C007ABF9B /* AppDelegate.m in Sources */,
+				AA3F90081826D1A9007ABF9B /* rootViewController.m in Sources */,
+				AA3F900B1826D7F7007ABF9B /* signUpViewController.m in Sources */,
 				AA3F8FE21826B00C007ABF9B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
