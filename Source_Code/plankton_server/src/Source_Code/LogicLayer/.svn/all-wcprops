@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/plankton_server/!svn/ver/17/src/Source_Code/LogicLayer
+END
+LLLogicDefault.h
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/plankton_server/!svn/ver/18/src/Source_Code/LogicLayer/LLLogicDefault.h
+END
+LLLogicBase.h
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/plankton_server/!svn/ver/20/src/Source_Code/LogicLayer/LLLogicBase.h
+END
+PLLogicLayer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/plankton_server/!svn/ver/20/src/Source_Code/LogicLayer/PLLogicLayer.cpp
+END
+LLLogicDefault.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/plankton_server/!svn/ver/18/src/Source_Code/LogicLayer/LLLogicDefault.cpp
+END
+PLLogicLayer.h
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/plankton_server/!svn/ver/20/src/Source_Code/LogicLayer/PLLogicLayer.h
+END

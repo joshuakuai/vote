@@ -1,0 +1,48 @@
+Source_Code/CommunicationLayer/CMLSession.d \
+ Source_Code/CommunicationLayer/CMLSession.o: \
+ ../Source_Code/CommunicationLayer/CMLSession.cpp \
+ ../Source_Code/CommunicationLayer/CMLSession.h \
+ ../Source_Code/CommunicationLayer/../Common/PLog.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/PLLogicLayer.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/LLLogicUserManagement.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../LLLogicBase.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../../DataLayer/DLDatabase.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../../DataLayer/../Common/PLog.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/LLLogicParticleBattle.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../LLLogicBase.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../../DataLayer/DLDatabase.h \
+ ../Source_Code/CommunicationLayer/CMLPackage.h \
+ ../Source_Code/CommunicationLayer/CMLPackageProtocal.h \
+ ../Source_Code/CommunicationLayer/../Common/NotificationCenter.h \
+ ../Source_Code/CommunicationLayer/../Common/PLog.h \
+ ../Source_Code/CommunicationLayer/../Common/Observer.h
+
+../Source_Code/CommunicationLayer/CMLSession.h:
+
+../Source_Code/CommunicationLayer/../Common/PLog.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/PLLogicLayer.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/LLLogicUserManagement.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../LLLogicBase.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../../DataLayer/DLDatabase.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../../DataLayer/../Common/PLog.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/LLLogicParticleBattle.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../LLLogicBase.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../../DataLayer/DLDatabase.h:
+
+../Source_Code/CommunicationLayer/CMLPackage.h:
+
+../Source_Code/CommunicationLayer/CMLPackageProtocal.h:
+
+../Source_Code/CommunicationLayer/../Common/NotificationCenter.h:
+
+../Source_Code/CommunicationLayer/../Common/PLog.h:
+
+../Source_Code/CommunicationLayer/../Common/Observer.h:

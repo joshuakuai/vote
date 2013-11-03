@@ -1,0 +1,29 @@
+//Create by Joshua Kuai in 2013-01-30
+//Email:385592871@qq.com
+#include "CommunicationLayer/PLCommunicationLayer.h"
+#include "LogicLayer/PLLogicLayer.h"
+#include "Common/NotificationCenter.h"
+
+int main(){
+
+	//设置打印模式为罗嗦模式
+	PLog::setLogLevel(Verbose);
+
+	//实例化逻辑层单例
+	PLLogicLayer::Instance();
+
+	//实例化通知中心
+	NotificationCenter::Instance();
+
+	//开启通讯层
+	PLCommunicationLayer *communicationLayer = new PLCommunicationLayer();
+	communicationLayer->start();
+
+	//使用完毕后删除通讯层、逻辑层、通知中心
+	delete communicationLayer;
+	PLLogicLayer::Release();
+	NotificationCenter::Release();
+
+	return 0;
+}
+

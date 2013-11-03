@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/plankton_server/!svn/ver/17/src
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/plankton_server/!svn/ver/4/src/.project
+END
+.cproject
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/plankton_server/!svn/ver/20/src/.cproject
+END

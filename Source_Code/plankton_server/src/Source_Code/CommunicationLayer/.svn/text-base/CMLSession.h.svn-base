@@ -1,0 +1,41 @@
+/*
+ * CMLSession.h
+ *
+ *  Created on: Jan 30, 2013
+ *      Author: joshuakuai
+ */
+
+#ifndef CMLSESSION_H_
+#define CMLSESSION_H_
+
+#include <netinet/in.h>
+#include <pthread.h>
+#include <string>
+
+#define SOCKET_BUFFER_SIZE 1024*10  //接收缓存最大值
+
+using namespace std;
+
+class CMLSession{
+public:
+	CMLSession(int socketInstance);
+	virtual ~CMLSession(){};
+
+	unsigned int id;
+	int sessionSocket;
+	bool isDead;
+
+	//开启对话，对话将会在子线程运行
+	void startSession();
+
+	//标记为死亡，关闭socket等
+	void setDead();
+
+	//发送信息，同一时间只能发送一个信息
+	void sendData(string content);
+
+private:
+	pthread_mutex_t sendDatamutex;
+};
+
+#endif /* CMLSESSION_H_ */

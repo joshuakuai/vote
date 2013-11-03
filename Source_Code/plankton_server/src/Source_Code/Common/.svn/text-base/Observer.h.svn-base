@@ -1,0 +1,23 @@
+/*
+ * Observer.h
+ *
+ *  Created on: 2013-3-17
+ *      Author: Joshua
+ */
+
+#ifndef OBSERVER_H_
+#define OBSERVER_H_
+#include <string>
+
+using namespace std;
+
+class Observer{
+public:
+    string notificationName;
+
+	virtual ~Observer(){};
+	virtual void notify(void *arg) = 0;
+};
+
+
+#endif /* OBSERVER_H_ */

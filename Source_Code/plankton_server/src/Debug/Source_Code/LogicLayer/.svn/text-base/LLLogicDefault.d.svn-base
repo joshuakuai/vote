@@ -1,0 +1,39 @@
+Source_Code/LogicLayer/LLLogicDefault.d \
+ Source_Code/LogicLayer/LLLogicDefault.o: \
+ ../Source_Code/LogicLayer/LLLogicDefault.cpp \
+ ../Source_Code/LogicLayer/LLLogicDefault.h \
+ ../Source_Code/LogicLayer/LLLogicBase.h \
+ ../Source_Code/LogicLayer/../DataLayer/DLDatabase.h \
+ ../Source_Code/LogicLayer/../DataLayer/../Common/PLog.h \
+ ../Source_Code/LogicLayer/../Lib/json.h \
+ ../Source_Code/LogicLayer/../Lib/autolink.h \
+ ../Source_Code/LogicLayer/../Lib/config.h \
+ ../Source_Code/LogicLayer/../Lib/value.h \
+ ../Source_Code/LogicLayer/../Lib/forwards.h \
+ ../Source_Code/LogicLayer/../Lib/reader.h \
+ ../Source_Code/LogicLayer/../Lib/features.h \
+ ../Source_Code/LogicLayer/../Lib/writer.h
+
+../Source_Code/LogicLayer/LLLogicDefault.h:
+
+../Source_Code/LogicLayer/LLLogicBase.h:
+
+../Source_Code/LogicLayer/../DataLayer/DLDatabase.h:
+
+../Source_Code/LogicLayer/../DataLayer/../Common/PLog.h:
+
+../Source_Code/LogicLayer/../Lib/json.h:
+
+../Source_Code/LogicLayer/../Lib/autolink.h:
+
+../Source_Code/LogicLayer/../Lib/config.h:
+
+../Source_Code/LogicLayer/../Lib/value.h:
+
+../Source_Code/LogicLayer/../Lib/forwards.h:
+
+../Source_Code/LogicLayer/../Lib/reader.h:
+
+../Source_Code/LogicLayer/../Lib/features.h:
+
+../Source_Code/LogicLayer/../Lib/writer.h:

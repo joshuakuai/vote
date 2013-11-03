@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/plankton_server/!svn/ver/17/src/Source_Code/CommunicationLayer
+END
+CMLSessionPool.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/plankton_server/!svn/ver/5/src/Source_Code/CommunicationLayer/CMLSessionPool.h
+END
+PLCommunicationLayer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/plankton_server/!svn/ver/18/src/Source_Code/CommunicationLayer/PLCommunicationLayer.cpp
+END
+CMLSession.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/plankton_server/!svn/ver/21/src/Source_Code/CommunicationLayer/CMLSession.cpp
+END
+CMLPackageProtocal.h
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/plankton_server/!svn/ver/18/src/Source_Code/CommunicationLayer/CMLPackageProtocal.h
+END
+PLCommunicationLayer.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/plankton_server/!svn/ver/5/src/Source_Code/CommunicationLayer/PLCommunicationLayer.h
+END
+CMLSession.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/plankton_server/!svn/ver/18/src/Source_Code/CommunicationLayer/CMLSession.h
+END
+CMLPackage.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/plankton_server/!svn/ver/21/src/Source_Code/CommunicationLayer/CMLPackage.cpp
+END
+CMLSessionPool.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/plankton_server/!svn/ver/11/src/Source_Code/CommunicationLayer/CMLSessionPool.cpp
+END
+CMLPackage.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/plankton_server/!svn/ver/18/src/Source_Code/CommunicationLayer/CMLPackage.h
+END
