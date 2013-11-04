@@ -7,12 +7,18 @@
 
 #include "User.h"
 
-User::User() {
-	// TODO Auto-generated constructor stub
+User::User(DLDatabase *database) {
+	userid = -1;
+	this->database = database;
+	errorMessage = NULL;
+}
+
+bool checkIfEmailExist(string email)
+{
 
 }
 
-User::~User() {
-	// TODO Auto-generated destructor stub
-}
+bool signUp(string firstName,string lastName,string email)
+{
 
+}

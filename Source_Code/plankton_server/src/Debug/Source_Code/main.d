@@ -7,17 +7,10 @@ Source_Code/main.d Source_Code/main.o: ../Source_Code/main.cpp \
  ../Source_Code/CommunicationLayer/../Common/PLog.h \
  ../Source_Code/CommunicationLayer/../Common/Observer.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/PLLogicLayer.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/LLLogicUserManagement.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../LLLogicBase.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../../DataLayer/DLDatabase.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../../DataLayer/../Common/PLog.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/User.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/LLLogicParticleBattle.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../LLLogicBase.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../../DataLayer/DLDatabase.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/LLLogicVote.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../LLLogicBase.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/DLDatabase.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/../Common/PLog.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/PLog.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/md5.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/json.h \
@@ -28,6 +21,7 @@ Source_Code/main.d Source_Code/main.o: ../Source_Code/main.cpp \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/reader.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h \
  ../Source_Code/LogicLayer/PLLogicLayer.h \
  ../Source_Code/Common/ConfigureManager.h \
  ../Source_Code/Common/../Lib/json.h ../Source_Code/Common/PLog.h \
@@ -49,27 +43,13 @@ Source_Code/main.d Source_Code/main.o: ../Source_Code/main.cpp \
 
 ../Source_Code/CommunicationLayer/../LogicLayer/PLLogicLayer.h:
 
-../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/LLLogicUserManagement.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../LLLogicBase.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../../DataLayer/DLDatabase.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/../../DataLayer/../Common/PLog.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicUserManagement/User.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/LLLogicParticleBattle.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../LLLogicBase.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../../DataLayer/DLDatabase.h:
-
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/LLLogicVote.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../LLLogicBase.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/DLDatabase.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/../Common/PLog.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/PLog.h:
 
@@ -90,6 +70,8 @@ Source_Code/main.d Source_Code/main.o: ../Source_Code/main.cpp \
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h:
 
 ../Source_Code/LogicLayer/PLLogicLayer.h:
 

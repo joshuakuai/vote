@@ -13,7 +13,11 @@
 #include "../../Common/PLog.h"
 #include "../../Common/md5.h"
 #include "../../Lib/json.h"
-#include <vector>
+#include "User.h"
+#include "CodeManager.h"
+#include <list>
+
+using namespace std;
 
 class LLLogicVote:public LLLogicBase {
 public:
@@ -23,12 +27,14 @@ public:
 	}VoteRequestType;
 
 	LLLogicVote(){
+		codeManager = new codeManager;
     	database = new DLDatabase;
     	database->initDB("localhost", "root", "123456", "Vote");
     }
 
 	virtual ~LLLogicVote(){
 		delete database;
+		delete codeManager;
 	}
 
 	string excuteRequest(string requestString,short version,unsigned int sessionID);
@@ -38,6 +44,10 @@ private:
 	DLDatabase *database;
 
 	//User wait to sign up
+	list<User*> sighUpHoldOnList;
+
+	//Code Manager
+	CodeManager *codeManager;
 
 	//注册
 	bool signUp(string firstName,string lastName,string email);

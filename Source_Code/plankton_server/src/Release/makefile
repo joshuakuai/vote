@@ -8,7 +8,10 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include Source_Code/LogicLayer/LogicVote/subdir.mk
 -include Source_Code/LogicLayer/subdir.mk
+-include Source_Code/Lib/subdir.mk
+-include Source_Code/DataLayer/subdir.mk
 -include Source_Code/CommunicationLayer/subdir.mk
 -include Source_Code/Common/subdir.mk
 -include Source_Code/subdir.mk
@@ -47,7 +50,7 @@ all: PlanktonServer
 PlanktonServer: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++  -o "PlanktonServer" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/usr/lib64/mysql -o "PlanktonServer" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

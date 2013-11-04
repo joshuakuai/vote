@@ -98,4 +98,15 @@ bool DLDatabase::create_table(string table_str_sql)
 	return true;
 }
 
+bool DLDatabase::isMySQLSupportCall()
+{
+	if (mysql_get_server_version(connection) < 50503)
+	{
+	  fprintf(stderr,"Server does not support required CALL capabilities\n");
+	  return false;
+	}
+
+	return true;
+}
+
 

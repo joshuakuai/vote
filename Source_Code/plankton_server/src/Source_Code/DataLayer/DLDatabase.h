@@ -61,6 +61,8 @@ protected:
     MYSQL_ROW row;
 
     pthread_mutex_t connectionMutex;
+
+    bool isMySQLSupportCall();
 };
 
 #endif /* DLDATABASE_H_ */

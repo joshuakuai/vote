@@ -9,66 +9,61 @@
 #include <ctime>
 #include <cstdlib>
 
-
-CodeManager::CodeManager() {
-	// TODO Auto-generated constructor stub
-
-}
-
-CodeManager::~CodeManager() {
-	// TODO Auto-generated destructor stub
-}
-
-string CodeManager::getCode(string emailAdd){
-	//verification information, contains Email, Code, Created time
-	list<string> veriInfo;
-	string code;
+string CodeManager::getCode(User* userData){
+	//generate current time
 	char timetmp[9];
-	string createdTime;
-	short ranNum;
-
 	time_t t = time(0);
 
-	//set srand
+	strftime(timetmp, sizeof(timetmp), "%y%j%H%M", localtime(&t));
+
+	//check if user has already send the code
+	list<CodeConfirmRecord>::iterator it = codeConfirmList.begin();
+
+	for(;it != codeConfirmList.end();++it){
+		string recordEmail = (*it).userData->email;
+		if(recordEmail.compare(userData->email) != 0){
+			//now we should refresh the code's create time and resend
+			(*it).createTime = timetmp;
+			return (*it).code;
+		}
+	}
+
+	//no record, we create new record
+	CodeConfirmRecord newRecord;
+	newRecord.createTime = timetmp;
+	newRecord.userData = userData;
+
+	//create new code
+	short ranNum;
+
 	srand((unsigned)t);
 	for(short i=0; i<4; i++){
 		ranNum = rand()%10;
-		code.push_back((char)ranNum);
+		newRecord.code.push_back((char)ranNum);
 	}
-
-	//get time store in timetmp
-	strftime(timetmp, sizeof(timetmp), "%y%j%H%M", localtime(&t));
-	createdTime = timetmp;
-
-	//list to store a group infomation
-	veriInfo.push_back(emailAdd);
-	veriInfo.push_back(code);
-	veriInfo.push_back(createdTime);
 	
-	//veriInfo list -> userWl list
-	userWl.push_back(veriInfo);
+	//push to list
+	codeConfirmList.push_back(newRecord);
 
+	//return the code
+	return newRecord.code;
 }
 
-int CodeManager::idConfirm(string emailAdd, string code){
-	list<list<string> >::iterator userIndex;
-	list<string>::iterator infoIndex;
+int CodeManager::codeConfirm(string emailAdd, string code){
+	list<CodeConfirmRecord>::iterator it = codeConfirmList.begin();
 
-	//*if it cannot match any email, this value does not change -1
-	// if there is a match, but the code is wrong, the value turn to 0
-	// if the code is right, the value turn to 1*
-	short userMark = -1;
+	for(; it != codeConfirmList.end(); it++){
+		string recordEmail = (*it).userData->email;
+		string recordCode = (*it).code;
 
-	for(userIndex = userWl.begin(); userIndex!= userWl.end(); userIndex++){
-		infoIndex = (*userIndex).begin();
-		if(!(emailAdd.compare(*infoIndex))){
-			userMark ++;
-			infoIndex ++;
-			if(!(code.compare(*infoIndex))){
-				userMark ++;
+		if(recordEmail.compare(emailAdd) == 0){
+			if(recordCode.compare(code) == 0){
+				return 1;
+			}else{
+				return 0;
 			}
-			break;
 		}
 	}
-	return userMark;
+
+	return -1;
 }

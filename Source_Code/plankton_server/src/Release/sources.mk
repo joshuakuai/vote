@@ -25,6 +25,9 @@ C_UPPER_DEPS :=
 SUBDIRS := \
 Source_Code \
 Source_Code/LogicLayer \
+Source_Code/LogicLayer/LogicVote \
+Source_Code/Lib \
+Source_Code/DataLayer \
 Source_Code/CommunicationLayer \
 Source_Code/Common \
 

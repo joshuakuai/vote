@@ -26,9 +26,6 @@ SUBDIRS := \
 Source_Code \
 Source_Code/LogicLayer \
 Source_Code/LogicLayer/LogicVote \
-Source_Code/LogicLayer/LogicUserManagement \
-Source_Code/LogicLayer/LogicParticleBattle \
-Source_Code/LogicLayer/LogicFightGame \
 Source_Code/Lib \
 Source_Code/DataLayer \
 Source_Code/CommunicationLayer \

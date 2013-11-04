@@ -7,14 +7,16 @@
 
 #ifndef USER_H_
 #define USER_H_
+
 #include <string>
+#include "../../DataLayer/DLDatabase.h"
 
 using namespace std;
 
 class User {
 public:
-	User();
-	virtual ~User();
+	User(DLDatabase *database);
+	virtual ~User(){};
 
 	int userid;
 	string firstName;
@@ -22,6 +24,15 @@ public:
 	string email;
 	string password;
 	string token;
+
+	string errorMessage;
+
+	bool checkIfEmailExist(string email);
+	bool signUp(string firstName,string lastName,string email);
+
+private:
+	//数据库
+	DLDatabase *database;
 };
 
 #endif /* USER_H_ */
