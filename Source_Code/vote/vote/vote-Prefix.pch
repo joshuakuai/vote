@@ -17,5 +17,3 @@
 
 #define DevServerAdd @"192.168.1.13"
 #define RelServerAdd @""
-
-#define ShowErrorMeesage(string) 
