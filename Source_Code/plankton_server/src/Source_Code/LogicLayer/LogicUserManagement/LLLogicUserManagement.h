@@ -10,7 +10,6 @@
 
 #include "../LLLogicBase.h"
 #include "../../DataLayer/DLDatabase.h"
-#include "User.h"
 #include <vector>
 
 using namespace std;

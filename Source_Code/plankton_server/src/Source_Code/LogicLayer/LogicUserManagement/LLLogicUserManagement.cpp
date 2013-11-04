@@ -9,7 +9,6 @@
 #include "../../Common/PLog.h"
 #include "../../Common/md5.h"
 #include "../../Lib/json.h"
-#include "UserList.h"
 
 string LLLogicUserManagement::excuteRequest(string requestString,short version,unsigned int sessionID){
 	//获得请求类型
@@ -105,23 +104,3 @@ bool LLLogicUserManagement::registerUser(string name,string password,string toke
 	return true;
 }
 
-bool LLLogicUserManagement::login(string name,string password,string tokenString,string appName,unsigned int sessionID)
-{
-	MD5 md5(password);
-	string queryString = "SELECT user_id FROM User WHERE user_name='" + name + "' AND user_password='" + md5.md5() + "'";
-	vector<vector<string> > result = database->querySQL(queryString);
-
-	if(result.size() != 0){
-		//登录验证成功,向用户列表注册
-		User *loginUser = new User();
-		loginUser->userName = name;
-		loginUser->sessionID = sessionID;
-		loginUser->userID = atoi(result[0][0].c_str());
-		UserList::Instance()->userLogin(loginUser);
-		this->errorString = "";
-		return true;
-	}
-
-	this->errorString = "帐号密码验证错误";
-	return false;
-}
