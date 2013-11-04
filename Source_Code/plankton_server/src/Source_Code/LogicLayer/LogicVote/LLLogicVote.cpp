@@ -46,6 +46,7 @@ string LLLogicVote::excuteRequest(string requestString,short version,unsigned in
 //注册
 bool LLLogicVote::signUp(string firstName,string lastName,string email)
 {
+	//Put this user into the holding list, wait until the
 	return true;
 }
 
