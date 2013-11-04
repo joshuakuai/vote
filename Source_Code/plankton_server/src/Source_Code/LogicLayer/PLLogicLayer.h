@@ -21,12 +21,14 @@ public:
 		this->sessionID = sessionID;
 		_userManagementLogicExcutor = new LLLogicUserManagement;
 		_particleLogicExcutor = new LLLogicParticleBattle;
+		_voteLogicExcutor = new LLLogicVote;
 	}
 
 	//析构
 	virtual ~PLLogicLayer() {
 		delete _userManagementLogicExcutor;
 		delete _particleLogicExcutor;
+		delete _voteLogicExcutor;
 	}
 
 	unsigned int sessionID; //使用此逻辑层对象的SessionID
@@ -40,6 +42,9 @@ protected:
 
 	//粒子战争逻辑器
 	LLLogicParticleBattle *_particleLogicExcutor;
+
+	//Vote logic excutor
+	LLLogicVote *_voteLogicExcutor;
 };
 
 #endif /* PLLOGICLAYER_H_ */

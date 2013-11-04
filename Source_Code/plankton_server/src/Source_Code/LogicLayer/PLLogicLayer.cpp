@@ -32,6 +32,13 @@ string PLLogicLayer::excuteRequestWithLogicTypeAndVersion(string content,short t
 			break;
 		}
 
+		//Vote
+		case CML_PACKAGE_VOTE:{
+			PLog::logHint("======Current Use Vote Excutor======");
+			logicExcutor = _voteLogicExcutor;
+			break;
+		}
+
 		default:{
 			PLog::logWarning("======请求找不到适合的逻辑器!======");
 			return "";

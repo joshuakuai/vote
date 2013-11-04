@@ -37,6 +37,8 @@ private:
 	//数据库
 	DLDatabase *database;
 
+	//User wait to sign up
+
 	//注册
 	bool signUp(string firstName,string lastName,string email);
 

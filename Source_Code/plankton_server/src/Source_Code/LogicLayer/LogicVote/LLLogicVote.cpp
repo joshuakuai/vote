@@ -46,6 +46,6 @@ string LLLogicVote::excuteRequest(string requestString,short version,unsigned in
 //注册
 bool LLLogicVote::signUp(string firstName,string lastName,string email)
 {
-
+	return true;
 }
 
