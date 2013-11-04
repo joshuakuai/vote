@@ -17,7 +17,7 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     
     //set up the plankton server sdk
-    [PLServer setServerIP:DevServerAdd port:15231];
+    [PLServer setServerIP:DevServerAdd port:13145];
     [PLServer setLogicType:CML_PACKAGE_VOTE logicVersion:1];
     
     return YES;
