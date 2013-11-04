@@ -17,13 +17,11 @@ class CodeManager {
 public:
 	CodeManager();
 	virtual ~CodeManager();
-	typedef list<string> ListString;
-	typedef list<list<string>> ListList;
 	string getCode(string emailAdd);
 	int idConfirm(string emailAdd, string code);
 
 	//user waiting list
-	ListList userWl;
+	list<list<string> > userWl;
 };
 
 #endif /* CODEMANAGER_H_ */

@@ -16,14 +16,14 @@ string PLLogicLayer::excuteRequestWithLogicTypeAndVersion(string content,short t
 	switch(type){
 		case CML_PACKAGE_PLANKTON_LOGIC_LAYER_USER_MANAGEMENT:{
 			PLog::logHint("======当前使用用户管理逻辑器======");
-			logicExcutor = _userManagementLogicExcutor;
+			//logicExcutor = _userManagementLogicExcutor;
 			break;
 		}
 
 		//例子战争
 		case CML_PACKAGE_PLANKTON_LOGIC_LAYER_PARTICLE_BATTLE:{
 			PLog::logHint("======当前使用粒子战争逻辑器======");
-			logicExcutor = _particleLogicExcutor;
+			//logicExcutor = _particleLogicExcutor;
 			break;
 		}
 
