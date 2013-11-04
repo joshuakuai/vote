@@ -6,7 +6,8 @@
  */
 
 #include "CodeManager.h"
-#include<ctime>
+#include <ctime>
+#include <cstdlib>
 
 
 CodeManager::CodeManager() {
@@ -20,10 +21,10 @@ CodeManager::~CodeManager() {
 
 string CodeManager::getCode(string emailAdd){
 	//verification information, contains Email, Code, Created time
-	ListString veriInfo;
+	list<string> veriInfo;
 	string code;
 	char timetmp[9];
-	string time;
+	string createdTime;
 	short ranNum;
 
 	time_t t = time(0);
@@ -37,12 +38,12 @@ string CodeManager::getCode(string emailAdd){
 
 	//get time store in timetmp
 	strftime(timetmp, sizeof(timetmp), "%y%j%H%M", localtime(&t));
-	time = timetmp;
+	createdTime = timetmp;
 
 	//list to store a group infomation
 	veriInfo.push_back(emailAdd);
 	veriInfo.push_back(code);
-	veriInfo.push_back(time);
+	veriInfo.push_back(createdTime);
 	
 	//veriInfo list -> userWl list
 	userWl.push_back(veriInfo);
@@ -50,8 +51,8 @@ string CodeManager::getCode(string emailAdd){
 }
 
 int CodeManager::idConfirm(string emailAdd, string code){
-	ListList::iterator userIndex;
-	ListString::iterator infoIndex;
+	list<list<string> >::iterator userIndex;
+	list<string>::iterator infoIndex;
 
 	//*if it cannot match any email, this value does not change -1
 	// if there is a match, but the code is wrong, the value turn to 0
@@ -60,7 +61,7 @@ int CodeManager::idConfirm(string emailAdd, string code){
 
 	for(userIndex = userWl.begin(); userIndex!= userWl.end(); userIndex++){
 		infoIndex = (*userIndex).begin();
-		if(!(emailAdd.compare(*infoIndex)){
+		if(!(emailAdd.compare(*infoIndex))){
 			userMark ++;
 			infoIndex ++;
 			if(!(code.compare(*infoIndex))){
