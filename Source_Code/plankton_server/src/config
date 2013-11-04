@@ -1,0 +1,7 @@
+{
+   "Encrypt" : false,
+   "EncryptKey" : "",
+   "MaxUserNumber" : 100,
+   "PLogLevel" : 2,
+   "ServerPort" : 13145
+}
