@@ -15,6 +15,19 @@ Source_Code/CommunicationLayer/CMLSessionPool.d \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/LLLogicParticleBattle.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../LLLogicBase.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../../DataLayer/DLDatabase.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/LLLogicVote.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../LLLogicBase.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/DLDatabase.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/PLog.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/md5.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/json.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/autolink.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/config.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/value.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/forwards.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/reader.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h \
  ../Source_Code/CommunicationLayer/../Common/PLog.h
 
 ../Source_Code/CommunicationLayer/CMLSessionPool.h:
@@ -44,5 +57,31 @@ Source_Code/CommunicationLayer/CMLSessionPool.d \
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../LLLogicBase.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicParticleBattle/../../DataLayer/DLDatabase.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/LLLogicVote.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../LLLogicBase.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/DLDatabase.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/PLog.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/md5.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/json.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/autolink.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/config.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/value.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/forwards.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/reader.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h:
 
 ../Source_Code/CommunicationLayer/../Common/PLog.h:
