@@ -10,6 +10,7 @@
 #include <string>
 #include "LogicUserManagement/LLLogicUserManagement.h"
 #include "LogicParticleBattle/LLLogicParticleBattle.h"
+#include "LogicVote/LLLogicVote.h"
 
 using namespace std;
 

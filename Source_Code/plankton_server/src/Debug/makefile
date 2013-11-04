@@ -8,6 +8,7 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include Source_Code/LogicLayer/LogicVote/subdir.mk
 -include Source_Code/LogicLayer/LogicUserManagement/subdir.mk
 -include Source_Code/LogicLayer/LogicParticleBattle/subdir.mk
 -include Source_Code/LogicLayer/LogicFightGame/subdir.mk
