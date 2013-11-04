@@ -54,6 +54,7 @@ public:
 	bool executeSQL(string sql_str);
 	vector<vector<string> > querySQL(string sql_str);
 	bool create_table(string table_str_sql);
+	vector<char*> excuteCall(string sql_str,MYSQL_BIND *params);
 
 protected:
     MYSQL *connection;
@@ -63,6 +64,8 @@ protected:
     pthread_mutex_t connectionMutex;
 
     bool isMySQLSupportCall();
+    void test_error(MYSQL *mysql, int status);
+    void test_stmt_error(MYSQL_STMT *stmt, int status);
 };
 
 #endif /* DLDATABASE_H_ */

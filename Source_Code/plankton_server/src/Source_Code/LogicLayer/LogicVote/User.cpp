@@ -10,15 +10,21 @@
 User::User(DLDatabase *database) {
 	userid = -1;
 	this->database = database;
-	errorMessage = NULL;
+	errorMessage = "";
 }
 
-bool checkIfEmailExist(string email)
-{
+bool User::checkIfEmailExist() {
+	//Check if the email is exist
+	string queryString = "SELECT * FROM user WHERE email='" + email + "'";
 
+	vector<vector<string> > result = database->querySQL(queryString);
+	if (result.size() == 0) {
+		return false;
+	}else{
+		return true;
+	}
 }
 
-bool signUp(string firstName,string lastName,string email)
-{
-
+bool User::signUp() {
+	return true;
 }

@@ -17,6 +17,7 @@ Source_Code/LogicLayer/PLLogicLayer.d \
  ../Source_Code/LogicLayer/LogicVote/../../Lib/features.h \
  ../Source_Code/LogicLayer/LogicVote/../../Lib/writer.h \
  ../Source_Code/LogicLayer/LogicVote/User.h \
+ ../Source_Code/LogicLayer/LogicVote/CodeManager.h \
  ../Source_Code/LogicLayer/../Common/PLog.h
 
 ../Source_Code/LogicLayer/PLLogicLayer.h:
@@ -50,5 +51,7 @@ Source_Code/LogicLayer/PLLogicLayer.d \
 ../Source_Code/LogicLayer/LogicVote/../../Lib/writer.h:
 
 ../Source_Code/LogicLayer/LogicVote/User.h:
+
+../Source_Code/LogicLayer/LogicVote/CodeManager.h:
 
 ../Source_Code/LogicLayer/../Common/PLog.h:

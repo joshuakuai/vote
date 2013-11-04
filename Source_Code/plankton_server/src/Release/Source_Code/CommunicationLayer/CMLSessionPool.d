@@ -21,6 +21,8 @@ Source_Code/CommunicationLayer/CMLSessionPool.d \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/reader.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h \
  ../Source_Code/CommunicationLayer/../Common/PLog.h
 
 ../Source_Code/CommunicationLayer/CMLSessionPool.h:
@@ -62,5 +64,9 @@ Source_Code/CommunicationLayer/CMLSessionPool.d \
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h:
 
 ../Source_Code/CommunicationLayer/../Common/PLog.h:

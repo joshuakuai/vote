@@ -49,19 +49,20 @@ bool LLLogicVote::signUp(string firstName,string lastName,string email)
 	//check if this email has been registered
 	User *userObject = new User(this->database);
 
-	if(userObject->checkIfEmailExist(email)){
-		this->errorString = "Email has been registered.";
-		return false;
-	}
-
-	//put this user into the sign up holding list, wait until the code confirm success
 	//set up the data
 	userObject->firstName = firstName;
 	userObject->lastName = lastName;
 	userObject->email = email;
 
-	this->sighUpHoldOnList.push_back(userObject);
+	if(userObject->checkIfEmailExist()){
+		this->errorString = "Email has been registered.";
+		return false;
+	}
 
+	//put this user into the sign up holding list, wait until the code confirm success
+	string code = this->codeManager->getCode(userObject);
+
+	//send the code to the email
 
 	return true;
 }

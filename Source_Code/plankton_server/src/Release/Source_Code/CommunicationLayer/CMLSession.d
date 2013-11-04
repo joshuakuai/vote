@@ -20,6 +20,8 @@ Source_Code/CommunicationLayer/CMLSession.d \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/reader.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h \
  ../Source_Code/CommunicationLayer/../Common/PLog.h \
  ../Source_Code/CommunicationLayer/CMLPackage.h \
  ../Source_Code/CommunicationLayer/CMLPackageProtocal.h \
@@ -64,6 +66,10 @@ Source_Code/CommunicationLayer/CMLSession.d \
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h:
 
 ../Source_Code/CommunicationLayer/../Common/PLog.h:
 

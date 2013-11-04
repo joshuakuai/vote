@@ -23,6 +23,8 @@ Source_Code/CommunicationLayer/PLCommunicationLayer.d \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/reader.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h \
  ../Source_Code/CommunicationLayer/../Common/ConfigureManager.h \
  ../Source_Code/CommunicationLayer/../Common/../Lib/json.h
 
@@ -69,6 +71,10 @@ Source_Code/CommunicationLayer/PLCommunicationLayer.d \
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h:
 
 ../Source_Code/CommunicationLayer/../Common/ConfigureManager.h:
 

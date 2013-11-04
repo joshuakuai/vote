@@ -23,8 +23,8 @@ using namespace std;
 
 class CodeManager {
 public:
-	CodeManager();
-	virtual ~CodeManager();
+	CodeManager(){};
+	virtual ~CodeManager(){};
 	string getCode(User* userData);
 
 	//*if it cannot match any email, this value does not change -1

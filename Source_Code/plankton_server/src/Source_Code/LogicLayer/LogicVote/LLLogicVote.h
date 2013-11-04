@@ -27,7 +27,7 @@ public:
 	}VoteRequestType;
 
 	LLLogicVote(){
-		codeManager = new codeManager;
+		codeManager = new CodeManager();
     	database = new DLDatabase;
     	database->initDB("localhost", "root", "123456", "Vote");
     }
@@ -42,9 +42,6 @@ public:
 private:
 	//数据库
 	DLDatabase *database;
-
-	//User wait to sign up
-	list<User*> sighUpHoldOnList;
 
 	//Code Manager
 	CodeManager *codeManager;

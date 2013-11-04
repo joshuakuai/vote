@@ -130,6 +130,7 @@
 								<option id="gnu.cpp.link.option.paths.1605229473" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="/usr/lib64/mysql"/>
 								</option>
+								<option id="gnu.cpp.link.option.flags.1192224253" superClass="gnu.cpp.link.option.flags" value="-ldl -lrt" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1799827332" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

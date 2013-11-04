@@ -27,8 +27,8 @@ public:
 
 	string errorMessage;
 
-	bool checkIfEmailExist(string email);
-	bool signUp(string firstName,string lastName,string email);
+	bool checkIfEmailExist();
+	bool signUp();
 
 private:
 	//数据库
