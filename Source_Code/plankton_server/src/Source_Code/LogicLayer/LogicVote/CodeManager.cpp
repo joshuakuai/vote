@@ -6,37 +6,51 @@
  */
 
 #include "CodeManager.h"
-#include <ctime>
 #include <cstdlib>
 
 string CodeManager::getCode(User* userData){
 	//generate current time
-	char timetmp[9];
-	time_t t = time(0);
 
-	strftime(timetmp, sizeof(timetmp), "%y%j%H%M", localtime(&t));
+	//only one user could get code at the same time
+	pthread_mutex_lock(&getCodeMutex);
 
-	//check if user has already send the code
+	//get current time
+	time_t timeTmp = time(NULL);
+
+	//delete any record if the time interval of which is more than 5 minutes
 	list<CodeConfirmRecord>::iterator it = codeConfirmList.begin();
 
 	for(;it != codeConfirmList.end();++it){
+			double timeSpan = difftime(timeTmp, (*it).createTime);
+			if(timeSpan > 300){
+				codeConfirmList.erase(it);
+				it--;
+			}
+		}
+
+	//strftime(timetmp, sizeof(timetmp), "%y%j%H%M", localtime(&t));
+
+	//check if user has already send the code
+	it = codeConfirmList.begin();
+
+	for(;it != codeConfirmList.end();++it){
 		string recordEmail = (*it).userData->email;
-		if(recordEmail.compare(userData->email) != 0){
+		if(recordEmail.compare(userData->email) == 0){
 			//now we should refresh the code's create time and resend
-			(*it).createTime = timetmp;
+			(*it).createTime = timeTmp;
 			return (*it).code;
 		}
 	}
 
 	//no record, we create new record
 	CodeConfirmRecord newRecord;
-	newRecord.createTime = timetmp;
+	newRecord.createTime = timeTmp;
 	newRecord.userData = userData;
 
 	//create new code
 	short ranNum;
 
-	srand((unsigned)t);
+	srand((unsigned)timeTmp);
 	for(short i=0; i<4; i++){
 		ranNum = rand()%10;
 		newRecord.code.push_back((char)ranNum);
@@ -47,6 +61,8 @@ string CodeManager::getCode(User* userData){
 
 	//return the code
 	return newRecord.code;
+
+	pthread_mutex_unlock(&getCodeMutex);
 }
 
 int CodeManager::codeConfirm(string emailAdd, string code){

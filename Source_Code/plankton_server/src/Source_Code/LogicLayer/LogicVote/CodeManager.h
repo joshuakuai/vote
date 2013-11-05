@@ -10,13 +10,16 @@
 
 #include <list>
 #include <string>
+#include <ctime>
+#include <pthread.h>
 #include "User.h"
+
 
 //record struct
 struct CodeConfirmRecord{
 	User *userData;
 	string code;
-	string createTime;
+	time_t createTime;
 };
 
 using namespace std;
@@ -34,6 +37,7 @@ public:
 
 	//user waiting list
 	list<CodeConfirmRecord> codeConfirmList;
+	pthread_mutex_t getCodeMutex;
 };
 
 #endif /* CODEMANAGER_H_ */
