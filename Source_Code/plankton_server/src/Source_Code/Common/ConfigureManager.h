@@ -45,13 +45,15 @@ public:
 	void reset();  //重置设置
 	void save();   //保存文件
 
+	//The configure value, could get custom value from here
+	Json::Value value;
+
 protected:
 	static ConfigureManager* _instance;
 
 	ConfigureManager(){
 		//从文件读取JSON数据串
 		Json::Reader reader;
-		Json::Value value;
 
 		ifstream configureFile("config");
 		if (!configureFile.is_open()) {

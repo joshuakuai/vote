@@ -63,7 +63,8 @@ bool LLLogicVote::signUp(string firstName,string lastName,string email)
 	string code = this->codeManager->getCode(userObject);
 
 	//send the code to the email
-
+	string mailContent = "Dear customer,\n\nYour dynamic Code is" + code + ".\n Please confirm your code as soon as possible.\n\nThank you.\n Rampageworks";
+	mailManager->sendMail(mailContent,email,"[Vote]Confrim Vote");
 	return true;
 }
 
