@@ -78,7 +78,7 @@ static short logicVersion;
     if ([_tcpStream connected]) {
         [self sendData];
     }else{
-        //ini the tcpstream again
+        //init the tcpstream again
         _tcpStream = [[TcpStream alloc] initWithHost:ipString port:portNumber];
         _tcpStream.delegate = self;
         
@@ -108,8 +108,8 @@ static short logicVersion;
     head = (CMLPackageHead *)&data[len];
     head->indication = CML_PACKAGE_INDICATION;
     head->isEncrypt = false;
-    head->logicLayerType = CML_PACKAGE_PLANKTION_LOGIC_LAYER_DEFAULT_TYPE;
-    head->logicLayerVersion = 1;
+    head->logicLayerType = logicType;
+    head->logicLayerVersion = logicVersion;
     head->packageLength = (unsigned int)_sendString.length;
     len += sizeof(CMLPackageHead);
     NSMutableData *sendData = [[NSMutableData alloc] initWithBytes:head length:len];
