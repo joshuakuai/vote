@@ -51,16 +51,17 @@ string CodeManager::getCode(User* userData) {
 	srand((unsigned) timeTmp);
 	for (short i = 0; i < 4; i++) {
 		ranNum = rand() % 10;
+		ranNum += 48;
 		newRecord.code.push_back((char) ranNum);
 	}
 
 	//push to list
 	codeConfirmList.push_back(newRecord);
 
+	pthread_mutex_unlock(&getCodeMutex);
+
 	//return the code
 	return newRecord.code;
-
-	pthread_mutex_unlock(&getCodeMutex);
 }
 
 int CodeManager::codeConfirm(string emailAdd, string code) {

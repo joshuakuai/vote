@@ -10,7 +10,7 @@
 
 string PLLogicLayer::excuteRequestWithLogicTypeAndVersion(string content,short type,short version){
 	string resultString = "";
-	LLLogicBase *logicExcutor;
+	LLLogicBase *logicExcutor = NULL;
 
 	//根据请求生成不同的逻辑处理者
 	switch(type){
