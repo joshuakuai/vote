@@ -25,9 +25,9 @@
 		AA3F90121826E8AB007ABF9B /* UIViewController+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90111826E8AB007ABF9B /* UIViewController+Message.m */; };
 		AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */; };
 		AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901A1826EE61007ABF9B /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		AA3F90231826EE61007ABF9B /* PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901C1826EE61007ABF9B /* PLPackage.m */; };
 		AA3F90241826EE61007ABF9B /* PLServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901E1826EE61007ABF9B /* PLServer.m */; };
 		AA3F90251826EE61007ABF9B /* TcpStream.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90211826EE61007ABF9B /* TcpStream.m */; };
+		AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,13 +68,13 @@
 		AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ValidCheck.m"; sourceTree = "<group>"; };
 		AA3F90191826EE61007ABF9B /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
 		AA3F901A1826EE61007ABF9B /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONKit.m; sourceTree = "<group>"; };
-		AA3F901B1826EE61007ABF9B /* PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPackage.h; sourceTree = "<group>"; };
-		AA3F901C1826EE61007ABF9B /* PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPackage.m; sourceTree = "<group>"; };
 		AA3F901D1826EE61007ABF9B /* PLServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLServer.h; sourceTree = "<group>"; };
 		AA3F901E1826EE61007ABF9B /* PLServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLServer.m; sourceTree = "<group>"; };
 		AA3F901F1826EE61007ABF9B /* Protocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocal.h; sourceTree = "<group>"; };
 		AA3F90201826EE61007ABF9B /* TcpStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TcpStream.h; sourceTree = "<group>"; };
 		AA3F90211826EE61007ABF9B /* TcpStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TcpStream.m; sourceTree = "<group>"; };
+		AA9B75FE1829BBA800970739 /* NSMutableDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+PLPackage.h"; sourceTree = "<group>"; };
+		AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+PLPackage.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,13 +202,13 @@
 			children = (
 				AA3F90191826EE61007ABF9B /* JSONKit.h */,
 				AA3F901A1826EE61007ABF9B /* JSONKit.m */,
-				AA3F901B1826EE61007ABF9B /* PLPackage.h */,
-				AA3F901C1826EE61007ABF9B /* PLPackage.m */,
 				AA3F901D1826EE61007ABF9B /* PLServer.h */,
 				AA3F901E1826EE61007ABF9B /* PLServer.m */,
 				AA3F901F1826EE61007ABF9B /* Protocal.h */,
 				AA3F90201826EE61007ABF9B /* TcpStream.h */,
 				AA3F90211826EE61007ABF9B /* TcpStream.m */,
+				AA9B75FE1829BBA800970739 /* NSMutableDictionary+PLPackage.h */,
+				AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */,
 			);
 			path = PlanktonServerSDK;
 			sourceTree = "<group>";
@@ -316,8 +316,8 @@
 				AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */,
 				AA3F8FE21826B00C007ABF9B /* main.m in Sources */,
 				AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */,
-				AA3F90231826EE61007ABF9B /* PLPackage.m in Sources */,
 				AA3F90121826E8AB007ABF9B /* UIViewController+Message.m in Sources */,
+				AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */,
 				AA3F90251826EE61007ABF9B /* TcpStream.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

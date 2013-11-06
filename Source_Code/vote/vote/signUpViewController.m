@@ -73,12 +73,17 @@
     }
     
     //all pass, prepare the data
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                                   _lastNameTextField.text,@"lastName",
-                                                                   _firstNameTextField.text,@"firstName",
-                                                                   _emailTextField.text,@"email",nil];
+
     //[[PLServer shareInstance] sendDataWithDic:dic];
-    [self performSegueWithIdentifier:@"showCodeSegue" sender:self];
+    //[self performSegueWithIdentifier:@"showCodeSegue" sender:self];
+
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:Register];
+    [dic setObject:_firstNameTextField.text forKey:@"firstName"];
+    [dic setObject:_emailTextField.text forKey:@"email"];
+    [dic setObject:_lastNameTextField.text forKey:@"lastName"];
+
+    [[PLServer shareInstance] sendDataWithDic:dic];
+
 }
 
 #pragma mark - PLServer delegate

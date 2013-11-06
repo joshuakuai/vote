@@ -26,8 +26,17 @@ using namespace std;
 
 class CodeManager {
 public:
-	CodeManager(){};
-	virtual ~CodeManager(){};
+	CodeManager(){
+		//初始化互斥锁
+		if(pthread_mutex_init(&getCodeMutex,NULL) != 0){
+			string log = string("======Failed to create the CodeManager's thread mutex======");
+			PLog::logFatal(log);
+		}
+	};
+	virtual ~CodeManager(){
+		//销毁互斥锁
+		pthread_mutex_destroy(&getCodeMutex);
+	};
 	string getCode(User* userData);
 
 	//*if it cannot match any email, this value does not change -1
@@ -37,6 +46,8 @@ public:
 
 	//user waiting list
 	list<CodeConfirmRecord> codeConfirmList;
+
+private:
 	pthread_mutex_t getCodeMutex;
 };
 

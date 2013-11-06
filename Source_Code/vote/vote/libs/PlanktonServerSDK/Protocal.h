@@ -22,4 +22,9 @@ typedef struct _CMLPackageHead{
 	unsigned int  packageLength; //The package length,expect head length
 }CMLPackageHead;
 
+typedef enum _VoteRequestType {
+    Register = 0,
+}VoteRequestType;
+
+
 #endif

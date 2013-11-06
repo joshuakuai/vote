@@ -12,20 +12,23 @@ Source_Code/main.d Source_Code/main.o: ../Source_Code/main.cpp \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/DLDatabase.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/../Common/PLog.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/PLog.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/ConfigureManager.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/json.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/autolink.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/config.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/value.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/forwards.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/reader.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/features.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/writer.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/PLog.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/md5.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/json.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/autolink.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/config.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/value.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/forwards.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/reader.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h \
- ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/MailManager.h \
  ../Source_Code/LogicLayer/PLLogicLayer.h \
  ../Source_Code/Common/ConfigureManager.h \
- ../Source_Code/Common/../Lib/json.h ../Source_Code/Common/PLog.h \
  ../Source_Code/Common/NotificationCenter.h
 
 ../Source_Code/CommunicationLayer/PLCommunicationLayer.h:
@@ -54,34 +57,38 @@ Source_Code/main.d Source_Code/main.o: ../Source_Code/main.cpp \
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/PLog.h:
 
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/ConfigureManager.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/json.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/autolink.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/config.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/value.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/forwards.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/reader.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/features.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/../Lib/writer.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/PLog.h:
+
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/md5.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/json.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/autolink.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/config.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/value.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/forwards.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/reader.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/features.h:
-
-../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Lib/writer.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h:
 
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/MailManager.h:
+
 ../Source_Code/LogicLayer/PLLogicLayer.h:
 
 ../Source_Code/Common/ConfigureManager.h:
-
-../Source_Code/Common/../Lib/json.h:
-
-../Source_Code/Common/PLog.h:
 
 ../Source_Code/Common/NotificationCenter.h:

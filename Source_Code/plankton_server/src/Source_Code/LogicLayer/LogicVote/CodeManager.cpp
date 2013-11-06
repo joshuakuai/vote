@@ -8,7 +8,7 @@
 #include "CodeManager.h"
 #include <cstdlib>
 
-string CodeManager::getCode(User* userData){
+string CodeManager::getCode(User* userData) {
 	//generate current time
 
 	//only one user could get code at the same time
@@ -20,22 +20,20 @@ string CodeManager::getCode(User* userData){
 	//delete any record if the time interval of which is more than 5 minutes
 	list<CodeConfirmRecord>::iterator it = codeConfirmList.begin();
 
-	for(;it != codeConfirmList.end();++it){
-			double timeSpan = difftime(timeTmp, (*it).createTime);
-			if(timeSpan > 300){
-				codeConfirmList.erase(it);
-				it--;
-			}
+	for (; it != codeConfirmList.end(); ++it) {
+		double timeSpan = difftime(timeTmp, (*it).createTime);
+		if (timeSpan > 300) {
+			codeConfirmList.erase(it);
+			it--;
 		}
-
-	//strftime(timetmp, sizeof(timetmp), "%y%j%H%M", localtime(&t));
+	}
 
 	//check if user has already send the code
 	it = codeConfirmList.begin();
 
-	for(;it != codeConfirmList.end();++it){
+	for (; it != codeConfirmList.end(); ++it) {
 		string recordEmail = (*it).userData->email;
-		if(recordEmail.compare(userData->email) == 0){
+		if (recordEmail.compare(userData->email) == 0) {
 			//now we should refresh the code's create time and resend
 			(*it).createTime = timeTmp;
 			return (*it).code;
@@ -50,32 +48,33 @@ string CodeManager::getCode(User* userData){
 	//create new code
 	short ranNum;
 
-	srand((unsigned)timeTmp);
-	for(short i=0; i<4; i++){
-		ranNum = rand()%10;
-		newRecord.code.push_back((char)ranNum);
+	srand((unsigned) timeTmp);
+	for (short i = 0; i < 4; i++) {
+		ranNum = rand() % 10;
+		ranNum += 48;
+		newRecord.code.push_back((char) ranNum);
 	}
-	
+
 	//push to list
 	codeConfirmList.push_back(newRecord);
 
+	pthread_mutex_unlock(&getCodeMutex);
+
 	//return the code
 	return newRecord.code;
-
-	pthread_mutex_unlock(&getCodeMutex);
 }
 
-int CodeManager::codeConfirm(string emailAdd, string code){
+int CodeManager::codeConfirm(string emailAdd, string code) {
 	list<CodeConfirmRecord>::iterator it = codeConfirmList.begin();
 
-	for(; it != codeConfirmList.end(); it++){
+	for (; it != codeConfirmList.end(); it++) {
 		string recordEmail = (*it).userData->email;
 		string recordCode = (*it).code;
 
-		if(recordEmail.compare(emailAdd) == 0){
-			if(recordCode.compare(code) == 0){
+		if (recordEmail.compare(emailAdd) == 0) {
+			if (recordCode.compare(code) == 0) {
 				return 1;
-			}else{
+			} else {
 				return 0;
 			}
 		}
