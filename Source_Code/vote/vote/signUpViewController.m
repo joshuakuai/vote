@@ -27,12 +27,14 @@
     
     //set the plankton server's delegate
     [[PLServer shareInstance] setDelegate:self];
+  
     
     //set the the keyboard dismiss selector
     [_firstNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_lastNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_emailAgainTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_emailTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
+     
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,10 +73,12 @@
     }
     
     //all pass, prepare the data
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:_lastNameTextField.text,@"lastName",
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                                   _lastNameTextField.text,@"lastName",
                                                                    _firstNameTextField.text,@"firstName",
                                                                    _emailTextField.text,@"email",nil];
-    [[PLServer shareInstance] sendDataWithDic:dic];
+    //[[PLServer shareInstance] sendDataWithDic:dic];
+    [self performSegueWithIdentifier:@"showCodeSegue" sender:self];
 }
 
 #pragma mark - PLServer delegate

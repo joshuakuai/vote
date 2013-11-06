@@ -521,6 +521,7 @@
 				AA3F90001826B00C007ABF9B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AA3F90011826B00C007ABF9B /* Build configuration list for PBXNativeTarget "voteTests" */ = {
 			isa = XCConfigurationList;
@@ -529,6 +530,7 @@
 				AA3F90031826B00C007ABF9B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
