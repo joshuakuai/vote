@@ -133,7 +133,7 @@
                         <outlet property="emailTextField" destination="XVX-Gf-0cL" id="LE1-pH-POt"/>
                         <outlet property="firstNameTextField" destination="Kdm-go-QEb" id="BXg-3a-5Vq"/>
                         <outlet property="lastNameTextField" destination="6gK-wO-WD6" id="SiH-bX-dbp"/>
-                        <segue destination="EPJ-fM-a7o" kind="push" identifier="showCodeSegue" id="0JE-Rr-bGS"/>
+                        <segue destination="EPJ-fM-a7o" kind="push" identifier="showCodeViewSegue" id="2iS-F0-yxh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m5Q-Xs-5IL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -189,9 +189,6 @@
                                 <state key="normal" title="Done">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="sendCodeAction:" destination="EPJ-fM-a7o" eventType="touchUpInside" id="GIZ-Kr-fQk"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XVN-p8-AlZ">
                                 <rect key="frame" x="224" y="229" width="53" height="30"/>
@@ -199,23 +196,15 @@
                                 <state key="normal" title="Resend">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="ResendAction:" destination="EPJ-fM-a7o" eventType="touchUpInside" id="hXW-NO-FMe"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="hil-wA-7SS"/>
-                    <connections>
-                        <outlet property="codeTextField" destination="wrF-0f-Nzs" id="Cdy-p1-z8F"/>
-                        <outlet property="displayEmail" destination="J6G-Ww-nqZ" id="gld-CZ-vty"/>
-                        <outlet property="resendAction" destination="XVN-p8-AlZ" id="fsD-7A-0o3"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="Code Confirm" id="hil-wA-7SS"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aFP-UV-sCz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1976" y="57"/>
+            <point key="canvasLocation" x="1930" y="-92"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="N25-n0-tfp">

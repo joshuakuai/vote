@@ -50,6 +50,10 @@
 //begin signUp
 - (IBAction)singUp:(id)sender
 {
+    [self performSegueWithIdentifier:@"showCodeViewSegue" sender:self];
+    
+    return;
+    
     //check if the textfields has already filled
     if (_firstNameTextField.text == nil || [_firstNameTextField.text isEqualToString:@""] ||
         _lastNameTextField.text == nil || [_lastNameTextField.text isEqualToString:@""] ||
@@ -73,9 +77,7 @@
     }
     
     //all pass, prepare the data
-
-    //[[PLServer shareInstance] sendDataWithDic:dic];
-    //[self performSegueWithIdentifier:@"showCodeSegue" sender:self];
+    //
 
     NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:Register];
     [dic setObject:_firstNameTextField.text forKey:@"firstName"];
