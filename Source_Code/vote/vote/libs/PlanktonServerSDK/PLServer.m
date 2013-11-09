@@ -152,6 +152,9 @@ static short logicVersion;
 - (void)tcpStreamDidRemoteClosedConnection:(TcpStream *)tcpStream
 {
     NSLog(@"PLServer:Connection Closed");
+    if (_delegate && [_delegate respondsToSelector:@selector(connectionClosed:)]) {
+        [_delegate connectionClosed:self];
+    }
 }
 
 

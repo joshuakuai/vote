@@ -11,8 +11,9 @@
 
 //This class should be every controller's super class
 @interface BaseViewController : UIViewController<UIAlertViewDelegate>{
-        UIAlertView *_alertView;
-        UITextField *_alertTextFieldView;
+    UIAlertView *_alertView;
+    UITextField *_alertTextFieldView;
+    BOOL isShowingLoadingView;
 }
 
 //loading view

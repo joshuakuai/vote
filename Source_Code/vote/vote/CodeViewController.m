@@ -19,6 +19,9 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
+    
+    //set the plankton server's delegate
+    [[PLServer shareInstance] setDelegate:self];
 }
 
 - (void)viewDidLoad
@@ -74,7 +77,7 @@
 
 - (IBAction)submitCodeAction:(id)sender
 {
-    if ([_codeTextField.text isEqualToString:@""] || _codeTextField.text != nil || _codeTextField.text.length < 4) {
+    if ([_codeTextField.text isEqualToString:@""] || _codeTextField.text == nil || _codeTextField.text.length < 4) {
         [self showErrorMessage:@"Please input 4 digt code."];
         return;
     }
@@ -88,7 +91,6 @@
     [[PLServer shareInstance] sendDataWithDic:dic];
     
     [self showLoadingView:@"" isWithCancelButton:NO];
-
 }
 
 #pragma mark - PLServer delegate

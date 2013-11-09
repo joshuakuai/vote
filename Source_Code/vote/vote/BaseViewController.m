@@ -12,7 +12,6 @@
 @interface BaseViewController (){
     UIView *loadingView;
     UIView *messageView;
-    BOOL showAlert;
 }
 
 @end
@@ -39,6 +38,8 @@
         loadingView = processView;
         [processView show];
     }
+    
+    isShowingLoadingView = YES;
 }
 
 - (void)dismissLoadingView
@@ -52,6 +53,8 @@
     }else{
         [(ProccessView*)loadingView stop];
     }
+    
+    isShowingLoadingView = NO;
     
     [self loadingViewDidUnload];
 }

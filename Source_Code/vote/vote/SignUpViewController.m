@@ -22,14 +22,14 @@
     
     _emailTextField.text = @"";
     _emailAgainTextField.text = @"";
+    
+    //set the plankton server's delegate
+    [[PLServer shareInstance] setDelegate:self];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //set the plankton server's delegate
-    [[PLServer shareInstance] setDelegate:self];
     
     //set the the keyboard dismiss selector
     [_firstNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -96,9 +96,9 @@
 
 //prepare the data, transfer to the next scene
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"showCodeViewSegue"]) {
+    if ([segue.identifier isEqualToString:@"signUpShowCodeViewSegue"]) {
         CodeViewController *destViewController = segue.destinationViewController;
-        NSLog(@"%@", _emailTextField.text);
+        //NSLog(@"%@", _emailTextField.text);
         destViewController.emailAddress = [_emailTextField.text copy];
     }
 }
@@ -112,7 +112,7 @@
     if (result) {
         [self performSegueWithIdentifier:@"signUpShowCodeViewSegue" sender:self];
     }else{
-        [self showErrorMessage:[[cacheDic valueForKey:@"msg"] stringValue]];
+        [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
     }
 }
 
@@ -122,5 +122,12 @@
     [self showErrorMessage:[error description]];
 }
 
+- (void)connectionClosed:(PLServer *)plServer
+{
+    if (isShowingLoadingView) {
+        [self dismissLoadingView];
+        [self showErrorMessage:@"Lost connection,check your internet connection."];
+    }
+}
 
 @end
