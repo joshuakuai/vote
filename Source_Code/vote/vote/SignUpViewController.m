@@ -6,15 +6,15 @@
 //  Copyright (c) 2013 rampageworks. All rights reserved.
 //
 
-#import "signUpViewController.h"
+#import "SignUpViewController.h"
 #import "NSString+ValidCheck.h"
 #import "codeViewController.h"
 
-@interface signUpViewController ()
+@interface SignUpViewController ()
 
 @end
 
-@implementation signUpViewController
+@implementation SignUpViewController
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -36,7 +36,8 @@
     [_lastNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_emailAgainTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_emailTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
-     
+    
+    [_firstNameTextField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,9 +97,9 @@
 //prepare the data, transfer to the next scene
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"showCodeViewSegue"]) {
-        codeViewController *destViewController = segue.destinationViewController;
+        CodeViewController *destViewController = segue.destinationViewController;
         NSLog(@"%@", _emailTextField.text);
-        destViewController.emailAddress = _emailTextField.text;
+        destViewController.emailAddress = [_emailTextField.text copy];
     }
 }
 
@@ -109,7 +110,7 @@
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     if (result) {
-        [self performSegueWithIdentifier:@"showCodeViewSegue" sender:self];
+        [self performSegueWithIdentifier:@"signUpShowCodeViewSegue" sender:self];
     }else{
         [self showErrorMessage:[[cacheDic valueForKey:@"msg"] stringValue]];
     }

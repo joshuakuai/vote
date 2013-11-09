@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PLServer.h"
 
 //This class should be every controller's super class
-@interface baseViewController : UIViewController<UIAlertViewDelegate>{
+@interface BaseViewController : UIViewController<UIAlertViewDelegate>{
         UIAlertView *_alertView;
         UITextField *_alertTextFieldView;
 }

@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "baseViewController.h"
+#import "BaseViewController.h"
 
-@interface codeViewController : baseViewController
+@interface CodeViewController : BaseViewController<UITextFieldDelegate,PLServerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *displayEmail;
 @property (weak, nonatomic) IBOutlet UITextField *codeTextField;
 @property (strong, nonatomic) NSString *emailAddress;

@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 rampageworks. All rights reserved.
 //
 
-#import "baseViewController.h"
+#import "BaseViewController.h"
 #import "ProccessView.h"
 
-@interface baseViewController (){
+@interface BaseViewController (){
     UIView *loadingView;
     UIView *messageView;
     BOOL showAlert;
@@ -17,7 +17,7 @@
 
 @end
 
-@implementation baseViewController
+@implementation BaseViewController
 
 #pragma mark - Loading View Method
 - (void)showLoadingView:(NSString*)message isWithCancelButton:(BOOL)isWhitCancelButton
