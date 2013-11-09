@@ -135,9 +135,9 @@ void CMLSession::sendData(string content,short logicType,short logicVersion){
 	string sendString = CMLPackage::formPackage(content,logicType,logicVersion);
 
 	char log[30];
-	sprintf(log,"%d号会话开始发送包,包长度为%d",id,(int)content.length());
+	sprintf(log,"%d号会话开始发送包,包长度为%d",id,(int)sendString.length());
 	PLog::logHint(string(log));
-	int sendLength =  send(sessionSocket,content.c_str(),content.length(),0);
+	int sendLength =  send(sessionSocket,sendString.c_str(),sendString.length(),0);
 
 	if(sendLength < 0){
 		sprintf(log,"%d号会话======发送包失败!======",id);
