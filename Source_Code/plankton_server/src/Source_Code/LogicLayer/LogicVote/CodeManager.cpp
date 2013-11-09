@@ -17,26 +17,26 @@ string CodeManager::getCode(User* userData) {
 	//get current time
 	time_t timeTmp = time(NULL);
 
-	//delete any record if the time interval of which is more than 5 minutes
+	//check if user has already send the code
 	list<CodeConfirmRecord>::iterator it = codeConfirmList.begin();
 
-	for (; it != codeConfirmList.end(); ++it) {
-		double timeSpan = difftime(timeTmp, (*it).createTime);
-		if (timeSpan > 300) {
-			codeConfirmList.erase(it);
-			it--;
-		}
-	}
-
-	//check if user has already send the code
-	it = codeConfirmList.begin();
-
-	for (; it != codeConfirmList.end(); ++it) {
+	for (; it != codeConfirmList.end();++it) {
 		string recordEmail = (*it).userData->email;
 		if (recordEmail.compare(userData->email) == 0) {
 			//now we should refresh the code's create time and resend
 			(*it).createTime = timeTmp;
 			return (*it).code;
+		}
+	}
+
+	//delete any record if the time interval of which is more than 5 minutes
+	it = codeConfirmList.begin();
+	for (; it != codeConfirmList.end();) {
+		double timeSpan = difftime(timeTmp, (*it).createTime);
+		if (timeSpan > 300) {
+			it = codeConfirmList.erase(it);
+		}else{
+			it++;
 		}
 	}
 
@@ -64,7 +64,7 @@ string CodeManager::getCode(User* userData) {
 	return newRecord.code;
 }
 
-int CodeManager::codeConfirm(string emailAdd, string code) {
+int CodeManager::codeConfirm(string emailAdd, string code,User &userData) {
 	list<CodeConfirmRecord>::iterator it = codeConfirmList.begin();
 
 	for (; it != codeConfirmList.end(); it++) {
@@ -73,6 +73,16 @@ int CodeManager::codeConfirm(string emailAdd, string code) {
 
 		if (recordEmail.compare(emailAdd) == 0) {
 			if (recordCode.compare(code) == 0) {
+
+				//get current time,compare if this code is expire
+				time_t timeTmp = time(NULL);
+				double timeSpan = difftime(timeTmp, (*it).createTime);
+				if (timeSpan > 300) {
+					break;
+				}
+				userData.email = (*it).userData->email;
+				userData.lastName = (*it).userData->lastName;
+				userData.firstName = (*it).userData->firstName;
 				return 1;
 			} else {
 				return 0;
@@ -81,4 +91,22 @@ int CodeManager::codeConfirm(string emailAdd, string code) {
 	}
 
 	return -1;
+}
+
+void CodeManager::earseUser(string emailAdd)
+{
+	pthread_mutex_lock(&getCodeMutex);
+
+	//check if user has already send the code
+	list<CodeConfirmRecord>::iterator it = codeConfirmList.begin();
+
+	for (; it != codeConfirmList.end();++it) {
+		string recordEmail = (*it).userData->email;
+		if (recordEmail.compare(emailAdd) == 0) {
+			codeConfirmList.erase(it);
+			break;
+		}
+	}
+
+	pthread_mutex_unlock(&getCodeMutex);
 }

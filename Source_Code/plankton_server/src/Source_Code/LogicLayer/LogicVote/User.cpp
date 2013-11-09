@@ -25,6 +25,9 @@ bool User::checkIfEmailExist() {
 	}
 }
 
-bool User::signUp() {
-	return true;
+bool User::signUp()
+{
+	string queryString = "INSERT INTO user(email,lastName,firstName) VALUES('" + email + "','" + lastName + "','" + firstName + "')";
+
+	return database->executeSQL(queryString);
 }

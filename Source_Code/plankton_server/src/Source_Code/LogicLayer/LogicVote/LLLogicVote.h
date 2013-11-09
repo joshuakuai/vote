@@ -63,6 +63,14 @@ private:
 	//注册
 	bool signUp(string firstName,string lastName,string email);
 
+	//check code,checkType 0:signUp 1:signIn
+	bool checkCode(string email,string code,int checkType);
+
+	//resend the code
+	bool resendCode(string email);
+
+	bool signInWithPassword(string email,string password);
+
 	//登录
 	bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);
 };

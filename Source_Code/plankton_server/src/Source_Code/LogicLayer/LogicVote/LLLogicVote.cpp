@@ -7,36 +7,37 @@
 
 #include "LLLogicVote.h"
 
-string LLLogicVote::excuteRequest(string requestString,short version,unsigned int sessionID){
+string LLLogicVote::excuteRequest(string requestString, short version,
+		unsigned int sessionID) {
 	//获得请求类型
 	Json::Reader reader;
 	Json::Value receivedValue;
 	Json::Value sendValue;
 	Json::FastWriter writer;
 
-	if(reader.parse(requestString,receivedValue)){
+	if (reader.parse(requestString, receivedValue)) {
 		//根据请求版本进行执行
 
 		//根据请求类型进行执行
 		int requestType = receivedValue["requestType"].asInt();
 
-		switch(requestType){
-			case Register:{
-				string firstName = receivedValue["firstName"].asString();
-				string lastName = receivedValue["lastName"].asString();
-				string email = receivedValue["email"].asString();
+		switch (requestType) {
+		case Register: {
+			string firstName = receivedValue["firstName"].asString();
+			string lastName = receivedValue["lastName"].asString();
+			string email = receivedValue["email"].asString();
 
-				sendValue["success"] = this->signUp(firstName,lastName,email);
-				sendValue["msg"] = this->errorString;
+			sendValue["success"] = this->signUp(firstName, lastName, email);
+			sendValue["msg"] = this->errorString;
 
-				return writer.write(sendValue);
-				break;
-			}
+			return writer.write(sendValue);
+			break;
+		}
 
-			default:{
-				return "{\"msg\":\"Invalid request type\",\"success\":false}";
-				break;
-			}
+		default: {
+			return "{\"msg\":\"Invalid request type\",\"success\":false}";
+			break;
+		}
 		}
 	}
 
@@ -44,8 +45,7 @@ string LLLogicVote::excuteRequest(string requestString,short version,unsigned in
 }
 
 //注册
-bool LLLogicVote::signUp(string firstName,string lastName,string email)
-{
+bool LLLogicVote::signUp(string firstName, string lastName, string email) {
 	//check if this email has been registered
 	User *userObject = new User(this->database);
 
@@ -54,7 +54,7 @@ bool LLLogicVote::signUp(string firstName,string lastName,string email)
 	userObject->lastName = lastName;
 	userObject->email = email;
 
-	if(userObject->checkIfEmailExist()){
+	if (userObject->checkIfEmailExist()) {
 		this->errorString = "Email has been registered.";
 		return false;
 	}
@@ -63,8 +63,46 @@ bool LLLogicVote::signUp(string firstName,string lastName,string email)
 	string code = this->codeManager->getCode(userObject);
 
 	//send the code to the email
-	string mailContent = "Dear customer,\n\nYour dynamic Code is " + code + ".\nPlease confirm your code as soon as possible.\n\nThank you.\nRampageworks";
-	mailManager->sendMail(mailContent,email,"[Vote]Confrim Vote");
+	string mailContent =
+			"Dear customer,\n\nYour dynamic Code is " + code
+					+ ".\nPlease confirm your code as soon as possible.\n\nThank you.\nRampageworks";
+	mailManager->sendMail(mailContent, email, "[Vote]Confrim Vote");
 	return true;
 }
 
+bool LLLogicVote::checkCode(string email, string code, int checkType) {
+	//set return
+	User *userObject = new User(this->database);
+
+	//check the code is exist
+	int result = this->codeManager->codeConfirm(email,code,*userObject);
+
+	if(result == 1){
+		//check success
+		if(checkType == 0){
+			//this checking code is for signUp
+			//signUp to database now,clean that record in code manager
+			this->codeManager->earseUser(email);
+			bool result = userObject->signUp();
+			delete userObject;
+			return result;
+		}
+		return true;
+	}else if(result == 0){
+		this->errorString = "Wrong code";
+		return false;
+	}else{
+		this->errorString = "No record or expired.";
+		return false;
+	}
+}
+
+bool signInWithPassword(string email,string password)
+{
+
+}
+
+bool LLLogicVote::resendCode(string email)
+{
+
+}

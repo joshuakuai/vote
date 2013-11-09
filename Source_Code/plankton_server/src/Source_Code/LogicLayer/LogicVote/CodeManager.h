@@ -42,7 +42,10 @@ public:
 	//*if it cannot match any email, this value does not change -1
 	// if there is a match, but the code is wrong, the value turn to 0
 	// if the code is right, the value turn to 1*
-	int codeConfirm(string emailAdd, string code);
+	int codeConfirm(string emailAdd, string code,User &userData);
+
+	//call this method after success codefirm
+	void earseUser(string emailAdd);
 
 	//user waiting list
 	list<CodeConfirmRecord> codeConfirmList;
