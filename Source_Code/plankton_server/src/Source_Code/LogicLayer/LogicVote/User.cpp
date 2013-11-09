@@ -7,6 +7,7 @@
 
 #include "User.h"
 #include "../../Common/md5.h"
+#include "../../Common/Converter.h"
 
 User::User(DLDatabase *database) {
 	userid = -1;
@@ -40,11 +41,12 @@ bool User::signInWithPassword()
 	//convert the password to md5
 	MD5 md5Password(password);
 
-	queryString = "SELECT * FROM user WHERE email='" + email + "' AND password='" + md5Password.md5() + "'";
+	queryString = "SELECT iduser FROM user WHERE email='" + email + "' AND password='" + md5Password.md5() + "'";
 	result = database->querySQL(queryString);
 
 	if(result.size() > 0){
 		//verify success
+		this->userid = Converter::string_to_int(result[0][0]);
 		return true;
 	}else{
 		this->errorMessage = "Password invalid.";
@@ -54,7 +56,7 @@ bool User::signInWithPassword()
 
 bool User::signUp()
 {
-	string queryString = "INSERT INTO user(email,lastName,firstName) VALUES('" + email + "','" + lastName + "','" + firstName + "')";
+	string queryString = "INSERT INTO user(email,last_name,first_name) VALUES('" + email + "','" + lastName + "','" + firstName + "')";
 
 	return database->executeSQL(queryString);
 }

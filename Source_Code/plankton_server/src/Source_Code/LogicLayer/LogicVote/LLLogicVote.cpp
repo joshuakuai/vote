@@ -44,7 +44,11 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			string email = receivedValue["email"].asString();
 			string password = receivedValue["password"].asString();
 
-			sendValue["success"] = this->signInWithPassword(email, password);
+			int userID;
+			sendValue["success"] = this->signInWithPassword(email, password,userID);
+			if(sendValue["success"].asBool()){
+				sendValue["userid"] = userID;
+			}
 			sendValue["msg"] = this->errorString;
 			return writer.write(sendValue);
 		}
@@ -142,7 +146,7 @@ bool LLLogicVote::checkCode(string email, string code, int checkType) {
 	}
 }
 
-bool LLLogicVote::signInWithPassword(string email, string password) {
+bool LLLogicVote::signInWithPassword(string email, string password,int &userID) {
 	if (email.empty() || password.empty()) {
 		this->errorString = "Content can't be null";
 		return false;
@@ -153,7 +157,12 @@ bool LLLogicVote::signInWithPassword(string email, string password) {
 	userObject->password = password;
 
 	bool result = userObject->signInWithPassword();
-	this->errorString = userObject->errorMessage;
+	if(result){
+		userID = userObject->userid;
+	}else{
+		this->errorString = userObject->errorMessage;
+	}
+
 	return result;
 }
 
@@ -169,11 +178,6 @@ bool LLLogicVote::signInWithEmail(string email) {
 	//set up the data
 	userObject->email = email;
 
-	if (userObject->checkIfEmailExist()) {
-		this->errorString = "Email has been registered.";
-		return false;
-	}
-
 	//put this user into the sign in holding list, wait until the code confirm success
 	string code = this->codeManager->getCode(userObject);
 
@@ -182,6 +186,9 @@ bool LLLogicVote::signInWithEmail(string email) {
 			"Dear customer,\n\nYour dynamic Code is " + code
 					+ ".\nPlease confirm your code as soon as possible.\n\nThank you.\nRampageworks";
 	mailManager->sendMail(mailContent, email, "[Vote]Confrim Vote");
+
+	//check if user has password
+
 	return true;
 }
 

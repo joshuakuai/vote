@@ -28,7 +28,8 @@ public:
 		CheckCode,
 		SignInWithPassword,
 		SignInWithEmail,
-		ResendCode
+		ResendCode,
+		UploadToken
 	}VoteRequestType;
 
 	LLLogicVote(){
@@ -73,10 +74,12 @@ private:
 	bool resendCode(string email,string firstName,string lastName,int resendType);
 
 	//login with password
-	bool signInWithPassword(string email,string password);
+	bool signInWithPassword(string email,string password,int &userID);
 
 	//login with email
 	bool signInWithEmail(string email);
+
+	//upload Token
 
 	//登录
 	bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);

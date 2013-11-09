@@ -11,12 +11,18 @@
 #include <algorithm>
 #include <stdexcept>
 
-namespace Converter {
-	std::string string_to_hex(const std::string& input) {
+using namespace std;
+
+class Converter {
+public:
+	Converter(){}
+	virtual ~Converter(){};
+
+	static string string_to_hex(const string& input) {
 		static const char* const lut = "0123456789ABCDEF";
 		size_t len = input.length();
 
-		std::string output;
+		string output;
 		output.reserve(2 * len);
 		for (size_t i = 0; i < len; ++i) {
 			const unsigned char c = input[i];
@@ -26,13 +32,13 @@ namespace Converter {
 		return output;
 	}
 
-	std::string hex_to_string(const std::string& input)
+	static string hex_to_string(const string& input)
 	{
 	    static const char* const lut = "0123456789ABCDEF";
 	    size_t len = input.length();
 	    if (len & 1) throw std::invalid_argument("odd length");
 
-	    std::string output;
+	    string output;
 	    output.reserve(len / 2);
 	    for (size_t i = 0; i < len; i += 2)
 	    {
@@ -48,6 +54,11 @@ namespace Converter {
 	    }
 	    return output;
 	}
-}
+
+	static int string_to_int(const string& input)
+	{
+		return atoi(input.c_str());
+	}
+};
 
 #endif /* CONVERTER_H_ */
