@@ -27,12 +27,14 @@
     
     //set the plankton server's delegate
     [[PLServer shareInstance] setDelegate:self];
+  
     
     //set the the keyboard dismiss selector
     [_firstNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_lastNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_emailAgainTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_emailTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
+     
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,6 +50,10 @@
 //begin signUp
 - (IBAction)singUp:(id)sender
 {
+    [self performSegueWithIdentifier:@"showCodeViewSegue" sender:self];
+    
+    return;
+    
     //check if the textfields has already filled
     if (_firstNameTextField.text == nil || [_firstNameTextField.text isEqualToString:@""] ||
         _lastNameTextField.text == nil || [_lastNameTextField.text isEqualToString:@""] ||
@@ -71,12 +77,15 @@
     }
     
     //all pass, prepare the data
+    //
+
     NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:Register];
     [dic setObject:_firstNameTextField.text forKey:@"firstName"];
     [dic setObject:_emailTextField.text forKey:@"email"];
     [dic setObject:_lastNameTextField.text forKey:@"lastName"];
 
     [[PLServer shareInstance] sendDataWithDic:dic];
+
 }
 
 #pragma mark - PLServer delegate
