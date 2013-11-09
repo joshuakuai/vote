@@ -30,6 +30,7 @@ public:
 	bool checkIfEmailExist();
 	bool signUp();
 	bool signInWithPassword();
+	bool getUserByEmail(string email);
 
 private:
 	//数据库

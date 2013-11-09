@@ -36,8 +36,16 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			string code = receivedValue["code"].asString();
 			int checkType = receivedValue["checkType"].asInt();
 
-			sendValue["success"] = this->checkCode(email, code, checkType);
-			sendValue["msg"] = this->errorString;
+			int userID;
+			bool hasPassword;
+			sendValue["success"] = this->checkCode(email, code, checkType,userID,hasPassword);
+			if(sendValue["success"].asBool()){
+				sendValue["userid"] = userID;
+				sendValue["hasPassword"] = hasPassword;
+			}else{
+				sendValue["msg"] = this->errorString;
+			}
+
 			return writer.write(sendValue);
 		}
 		case SignInWithPassword: {
@@ -112,7 +120,7 @@ bool LLLogicVote::signUp(string firstName, string lastName, string email) {
 	return true;
 }
 
-bool LLLogicVote::checkCode(string email, string code, int checkType) {
+bool LLLogicVote::checkCode(string email, string code, int checkType,int &userID,bool &hasPassword) {
 	if (email.empty() || code.empty()) {
 		this->errorString = "Content can't be null";
 		return false;
@@ -121,6 +129,14 @@ bool LLLogicVote::checkCode(string email, string code, int checkType) {
 	//set return
 	User *userObject = new User(this->database);
 
+	if(checkType == 1){
+		//check if the email is exsit if use wanna use email to login
+		if (!userObject->checkIfEmailExist()) {
+			this->errorString = "This user does not exist.";
+			return false;
+		}
+	}
+
 	//check the code is exist
 	int result = this->codeManager->codeConfirm(email, code, *userObject);
 
@@ -128,13 +144,22 @@ bool LLLogicVote::checkCode(string email, string code, int checkType) {
 		//check success
 		//clean that record in code manager
 		this->codeManager->earseUser(email);
-
 		if (checkType == 0) {
 			//this checking code is for signUp
 			//signUp to database now
 			bool result = userObject->signUp();
+			hasPassword = false;
+
+			//get user id
+			userObject->getUserByEmail(email);
+			userID = userObject->userid;
+
 			delete userObject;
 			return result;
+		}else{
+			userObject->getUserByEmail(email);
+			hasPassword = userObject->password.empty() ? false:true;
+			userID = userObject->userid;
 		}
 		return true;
 	} else if (result == 0) {

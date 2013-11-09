@@ -68,7 +68,7 @@ private:
 	bool signUp(string firstName,string lastName,string email);
 
 	//check code,checkType 0:signUp 1:signIn
-	bool checkCode(string email,string code,int checkType);
+	bool checkCode(string email,string code,int checkType,int &userID,bool &hasPassword);
 
 	//resend the code
 	bool resendCode(string email,string firstName,string lastName,int resendType);
@@ -80,6 +80,7 @@ private:
 	bool signInWithEmail(string email);
 
 	//upload Token
+	bool uploadToken(int userID,string token);
 
 	//登录
 	bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);

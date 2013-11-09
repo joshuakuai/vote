@@ -54,6 +54,25 @@ bool User::signInWithPassword()
 	}
 }
 
+bool User::getUserByEmail(string email)
+{
+	string queryString = "SELECT * FROM user WHERE email='" + email + "'";
+
+	vector<vector<string> > result = this->database->querySQL(queryString);
+
+	if(result.size() > 0){
+		this->userid = Converter::string_to_int(result[0][0]);
+		this->firstName = result[0][1];
+		this->lastName = result[0][2];
+		this->email = result[0][3];
+		this->password = result[0][4];
+		this->token = result[0][5];
+		return true;
+	}else{
+		return false;
+	}
+}
+
 bool User::signUp()
 {
 	string queryString = "INSERT INTO user(email,last_name,first_name) VALUES('" + email + "','" + lastName + "','" + firstName + "')";
