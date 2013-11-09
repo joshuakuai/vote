@@ -52,10 +52,6 @@
 //begin signUp
 - (IBAction)singUp:(id)sender
 {
-    [self performSegueWithIdentifier:@"showCodeViewSegue" sender:self];
-    
-    return;
-    
     //check if the textfields has already filled
     if (_firstNameTextField.text == nil || [_firstNameTextField.text isEqualToString:@""] ||
         _lastNameTextField.text == nil || [_lastNameTextField.text isEqualToString:@""] ||
@@ -79,15 +75,12 @@
     }
     
     //all pass, prepare the data
-    //
-
     NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:Register];
     [dic setObject:_firstNameTextField.text forKey:@"firstName"];
     [dic setObject:_emailTextField.text forKey:@"email"];
     [dic setObject:_lastNameTextField.text forKey:@"lastName"];
 
     [[PLServer shareInstance] sendDataWithDic:dic];
-    [self performSegueWithIdentifier:@"codeViewController" sender:self];
 }
 
 
@@ -105,12 +98,16 @@
 {
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
-    NSLog(@"Received result:%d",result);
+    if (result) {
+        [self performSegueWithIdentifier:@"showCodeViewSegue" sender:self];
+    }else{
+        [self showErrorMessage:[[cacheDic valueForKey:@"msg"] stringValue]];
+    }
 }
 
 - (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
 {
-    NSLog(@"Error:%@",error);
+    [self showErrorMessage:[error description]];
 }
 
 

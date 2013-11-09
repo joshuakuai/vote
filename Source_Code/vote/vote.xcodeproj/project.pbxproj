@@ -27,6 +27,8 @@
 		AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901A1826EE61007ABF9B /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AA3F90241826EE61007ABF9B /* PLServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901E1826EE61007ABF9B /* PLServer.m */; };
 		AA3F90251826EE61007ABF9B /* TcpStream.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90211826EE61007ABF9B /* TcpStream.m */; };
+		AA58D3BB182EB77F00D9B9A5 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3BA182EB77F00D9B9A5 /* GCDAsyncSocket.m */; };
+		AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */; };
 		AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */; };
 		E909B0A61829E8FE00360DB2 /* codeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E909B0A51829E8FE00360DB2 /* codeViewController.m */; };
 /* End PBXBuildFile section */
@@ -74,6 +76,10 @@
 		AA3F901F1826EE61007ABF9B /* Protocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocal.h; sourceTree = "<group>"; };
 		AA3F90201826EE61007ABF9B /* TcpStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TcpStream.h; sourceTree = "<group>"; };
 		AA3F90211826EE61007ABF9B /* TcpStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TcpStream.m; sourceTree = "<group>"; };
+		AA58D3B9182EB77F00D9B9A5 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		AA58D3BA182EB77F00D9B9A5 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		AA58D3BC182EB94900D9B9A5 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
+		AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		AA9B75FE1829BBA800970739 /* NSMutableDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+PLPackage.h"; sourceTree = "<group>"; };
 		AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+PLPackage.m"; sourceTree = "<group>"; };
 		E909B0A41829E8FE00360DB2 /* codeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = codeViewController.h; sourceTree = "<group>"; };
@@ -205,6 +211,10 @@
 		AA3F90181826EE61007ABF9B /* PlanktonServerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AA58D3BC182EB94900D9B9A5 /* AsyncSocket.h */,
+				AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */,
+				AA58D3B9182EB77F00D9B9A5 /* GCDAsyncSocket.h */,
+				AA58D3BA182EB77F00D9B9A5 /* GCDAsyncSocket.m */,
 				AA3F90191826EE61007ABF9B /* JSONKit.h */,
 				AA3F901A1826EE61007ABF9B /* JSONKit.m */,
 				AA3F901D1826EE61007ABF9B /* PLServer.h */,
@@ -314,6 +324,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA58D3BB182EB77F00D9B9A5 /* GCDAsyncSocket.m in Sources */,
+				AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */,
 				AA3F8FE61826B00C007ABF9B /* AppDelegate.m in Sources */,
 				AA3F90081826D1A9007ABF9B /* rootViewController.m in Sources */,
 				AA3F900B1826D7F7007ABF9B /* signUpViewController.m in Sources */,

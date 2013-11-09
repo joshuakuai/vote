@@ -23,17 +23,6 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
-    
-    //check if the user has already logined in
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
 }
 
 - (void)viewDidLoad
@@ -49,15 +38,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-
-
-- (IBAction)resendCodeAction:(id)sender {
+- (IBAction)resendCodeAction:(id)sender
+{
     
 }
 
-- (IBAction)changeEmailAction:(id)sender {
+- (IBAction)changeEmailAction:(id)sender
+{
+    
 }
 
-- (IBAction)submitCodeAction:(id)sender {
+- (IBAction)submitCodeAction:(id)sender
+{
+    
 }
+
 @end
