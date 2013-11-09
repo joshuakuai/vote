@@ -28,11 +28,6 @@ bool User::checkIfEmailExist() {
 
 bool User::signInWithPassword()
 {
-	if(password.empty() || password.size() == 0){
-		this->errorMessage = "Password can be empty!";
-		return false;
-	}
-
 	//check if this user has password
 	string queryString = "SELECT * FROM user WHERE email='" + email + "' AND password IS NULL";
 	vector<vector<string> > result = database->querySQL(queryString);

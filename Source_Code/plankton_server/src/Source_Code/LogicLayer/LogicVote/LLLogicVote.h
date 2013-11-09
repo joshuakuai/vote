@@ -70,8 +70,9 @@ private:
 	bool checkCode(string email,string code,int checkType);
 
 	//resend the code
-	bool resendCode(string email);
+	bool resendCode(string email,string firstName,string lastName,int resendType);
 
+	//login with password
 	bool signInWithPassword(string email,string password);
 
 	//登录

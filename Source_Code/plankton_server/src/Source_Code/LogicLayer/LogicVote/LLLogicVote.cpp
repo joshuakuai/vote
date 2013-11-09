@@ -29,10 +29,36 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 
 			sendValue["success"] = this->signUp(firstName, lastName, email);
 			sendValue["msg"] = this->errorString;
-
 			return writer.write(sendValue);
-			break;
 		}
+		case CheckCode: {
+			string email = receivedValue["email"].asString();
+			string code = receivedValue["code"].asString();
+			int checkType = receivedValue["checkType"].asInt();
+
+			sendValue["success"] = this->checkCode(email,code,checkType);
+			sendValue["msg"] = this->errorString;
+			return writer.write(sendValue);
+		}
+		case SignInWithPassword: {
+			string email = receivedValue["email"].asString();
+			string password = receivedValue["password"].asString();
+
+			sendValue["success"] = this->signInWithPassword(email,password);
+			sendValue["msg"] = this->errorString;
+			return writer.write(sendValue);
+		}
+		case ResendCode: {
+			string email = receivedValue["email"].asString();
+			string firstName = receivedValue["firstName"].asString();
+			string lastName = receivedValue["lastName"].asString();
+			int resendType = receivedValue["resendType"].asInt();
+
+			sendValue["success"] = this->resendCode(email,firstName,lastName,resendType);
+			sendValue["msg"] = this->errorString;
+			return writer.write(sendValue);
+		}
+
 
 		default: {
 			return "{\"msg\":\"Invalid request type\",\"success\":false}";
@@ -46,6 +72,11 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 
 //注册
 bool LLLogicVote::signUp(string firstName, string lastName, string email) {
+	if(firstName.empty() || lastName.empty() || email.empty()){
+		this->errorString = "Content can't be null";
+		return false;
+	}
+
 	//check if this email has been registered
 	User *userObject = new User(this->database);
 
@@ -71,6 +102,11 @@ bool LLLogicVote::signUp(string firstName, string lastName, string email) {
 }
 
 bool LLLogicVote::checkCode(string email, string code, int checkType) {
+	if(email.empty() || code.empty()){
+		this->errorString = "Content can't be null";
+		return false;
+	}
+
 	//set return
 	User *userObject = new User(this->database);
 
@@ -99,6 +135,11 @@ bool LLLogicVote::checkCode(string email, string code, int checkType) {
 
 bool LLLogicVote::signInWithPassword(string email,string password)
 {
+	if(email.empty() || password.empty()){
+		this->errorString = "Content can't be null";
+		return false;
+	}
+
 	User *userObject = new User(this->database);
 	userObject->email = email;
 	userObject->password = password;
@@ -108,7 +149,7 @@ bool LLLogicVote::signInWithPassword(string email,string password)
 	return result;
 }
 
-bool LLLogicVote::resendCode(string email)
+bool LLLogicVote::resendCode(string email,string firstName,string lastName,int resendType)
 {
 	//maybe this code has already expire
 }
