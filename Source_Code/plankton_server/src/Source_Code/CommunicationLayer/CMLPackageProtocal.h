@@ -4,7 +4,7 @@
 #define CML_PACKAGE_INDICATION 0xFFFF
 
 typedef struct _CMLPackageHead{
-	int indication;              //Indication of package,always 0xef
+	int indication;              //Indication of package,always 0xff
 	short logicLayerType;
 	short logicLayerVersion;
 	bool isEncrypt;
