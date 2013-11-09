@@ -28,6 +28,7 @@
 		AA3F90241826EE61007ABF9B /* PLServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901E1826EE61007ABF9B /* PLServer.m */; };
 		AA3F90251826EE61007ABF9B /* TcpStream.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90211826EE61007ABF9B /* TcpStream.m */; };
 		AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */; };
+		E909B0A61829E8FE00360DB2 /* codeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E909B0A51829E8FE00360DB2 /* codeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,8 @@
 		AA3F90211826EE61007ABF9B /* TcpStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TcpStream.m; sourceTree = "<group>"; };
 		AA9B75FE1829BBA800970739 /* NSMutableDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+PLPackage.h"; sourceTree = "<group>"; };
 		AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+PLPackage.m"; sourceTree = "<group>"; };
+		E909B0A41829E8FE00360DB2 /* codeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = codeViewController.h; sourceTree = "<group>"; };
+		E909B0A51829E8FE00360DB2 /* codeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = codeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +142,8 @@
 				AA3F90071826D1A9007ABF9B /* rootViewController.m */,
 				AA3F90091826D7F7007ABF9B /* signUpViewController.h */,
 				AA3F900A1826D7F7007ABF9B /* signUpViewController.m */,
+				E909B0A41829E8FE00360DB2 /* codeViewController.h */,
+				E909B0A51829E8FE00360DB2 /* codeViewController.m */,
 				AA3F8FE41826B00C007ABF9B /* AppDelegate.h */,
 				AA3F8FE51826B00C007ABF9B /* AppDelegate.m */,
 				AA3F8FE71826B00C007ABF9B /* Images.xcassets */,
@@ -313,6 +318,7 @@
 				AA3F90081826D1A9007ABF9B /* rootViewController.m in Sources */,
 				AA3F900B1826D7F7007ABF9B /* signUpViewController.m in Sources */,
 				AA3F90241826EE61007ABF9B /* PLServer.m in Sources */,
+				E909B0A61829E8FE00360DB2 /* codeViewController.m in Sources */,
 				AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */,
 				AA3F8FE21826B00C007ABF9B /* main.m in Sources */,
 				AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */,

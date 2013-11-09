@@ -9,6 +9,7 @@
 #import "signUpViewController.h"
 #import "UIViewController+Message.h"
 #import "NSString+ValidCheck.h"
+#import "codeViewController.h"
 
 @interface signUpViewController ()
 
@@ -41,6 +42,7 @@
 {
     [super didReceiveMemoryWarning];
 }
+
 
 - (void)textFieldDone:(UITextField*)textField
 {
@@ -85,7 +87,17 @@
     [dic setObject:_lastNameTextField.text forKey:@"lastName"];
 
     [[PLServer shareInstance] sendDataWithDic:dic];
+    [self performSegueWithIdentifier:@"codeViewController" sender:self];
+}
 
+
+//prepare the data, transfer to the next scene
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"showCodeViewSegue"]) {
+        codeViewController *destViewController = segue.destinationViewController;
+        NSLog(@"%@", _emailTextField.text);
+        destViewController.emailAddress = _emailTextField.text;
+    }
 }
 
 #pragma mark - PLServer delegate
