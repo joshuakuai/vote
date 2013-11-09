@@ -36,7 +36,7 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			string code = receivedValue["code"].asString();
 			int checkType = receivedValue["checkType"].asInt();
 
-			sendValue["success"] = this->checkCode(email,code,checkType);
+			sendValue["success"] = this->checkCode(email, code, checkType);
 			sendValue["msg"] = this->errorString;
 			return writer.write(sendValue);
 		}
@@ -44,7 +44,14 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			string email = receivedValue["email"].asString();
 			string password = receivedValue["password"].asString();
 
-			sendValue["success"] = this->signInWithPassword(email,password);
+			sendValue["success"] = this->signInWithPassword(email, password);
+			sendValue["msg"] = this->errorString;
+			return writer.write(sendValue);
+		}
+		case SignInWithEmail: {
+			string email = receivedValue["email"].asString();
+
+			sendValue["msg"] = this->signInWithEmail(email);
 			sendValue["msg"] = this->errorString;
 			return writer.write(sendValue);
 		}
@@ -54,11 +61,11 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			string lastName = receivedValue["lastName"].asString();
 			int resendType = receivedValue["resendType"].asInt();
 
-			sendValue["success"] = this->resendCode(email,firstName,lastName,resendType);
+			sendValue["success"] = this->resendCode(email, firstName, lastName,
+					resendType);
 			sendValue["msg"] = this->errorString;
 			return writer.write(sendValue);
 		}
-
 
 		default: {
 			return "{\"msg\":\"Invalid request type\",\"success\":false}";
@@ -72,7 +79,7 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 
 //注册
 bool LLLogicVote::signUp(string firstName, string lastName, string email) {
-	if(firstName.empty() || lastName.empty() || email.empty()){
+	if (firstName.empty() || lastName.empty() || email.empty()) {
 		this->errorString = "Content can't be null";
 		return false;
 	}
@@ -102,7 +109,7 @@ bool LLLogicVote::signUp(string firstName, string lastName, string email) {
 }
 
 bool LLLogicVote::checkCode(string email, string code, int checkType) {
-	if(email.empty() || code.empty()){
+	if (email.empty() || code.empty()) {
 		this->errorString = "Content can't be null";
 		return false;
 	}
@@ -111,31 +118,32 @@ bool LLLogicVote::checkCode(string email, string code, int checkType) {
 	User *userObject = new User(this->database);
 
 	//check the code is exist
-	int result = this->codeManager->codeConfirm(email,code,*userObject);
+	int result = this->codeManager->codeConfirm(email, code, *userObject);
 
-	if(result == 1){
+	if (result == 1) {
 		//check success
-		if(checkType == 0){
+		//clean that record in code manager
+		this->codeManager->earseUser(email);
+
+		if (checkType == 0) {
 			//this checking code is for signUp
-			//signUp to database now,clean that record in code manager
-			this->codeManager->earseUser(email);
+			//signUp to database now
 			bool result = userObject->signUp();
 			delete userObject;
 			return result;
 		}
 		return true;
-	}else if(result == 0){
+	} else if (result == 0) {
 		this->errorString = "Wrong code";
 		return false;
-	}else{
+	} else {
 		this->errorString = "No record or expired.";
 		return false;
 	}
 }
 
-bool LLLogicVote::signInWithPassword(string email,string password)
-{
-	if(email.empty() || password.empty()){
+bool LLLogicVote::signInWithPassword(string email, string password) {
+	if (email.empty() || password.empty()) {
 		this->errorString = "Content can't be null";
 		return false;
 	}
@@ -149,7 +157,44 @@ bool LLLogicVote::signInWithPassword(string email,string password)
 	return result;
 }
 
-bool LLLogicVote::resendCode(string email,string firstName,string lastName,int resendType)
+bool LLLogicVote::signInWithEmail(string email) {
+	if (email.empty()) {
+		this->errorString = "Content can't be null";
+		return false;
+	}
+
+	//check if this email has been registered
+	User *userObject = new User(this->database);
+
+	//set up the data
+	userObject->email = email;
+
+	if (userObject->checkIfEmailExist()) {
+		this->errorString = "Email has been registered.";
+		return false;
+	}
+
+	//put this user into the sign in holding list, wait until the code confirm success
+	string code = this->codeManager->getCode(userObject);
+
+	//send the code to the email
+	string mailContent =
+			"Dear customer,\n\nYour dynamic Code is " + code
+					+ ".\nPlease confirm your code as soon as possible.\n\nThank you.\nRampageworks";
+	mailManager->sendMail(mailContent, email, "[Vote]Confrim Vote");
+	return true;
+}
+
+bool LLLogicVote::resendCode(string email, string firstName, string lastName,int resendType)
 {
-	//maybe this code has already expire
+	if(resendType == 0){
+		//sign up resend
+		return this->signUp(firstName,lastName,email);
+	}else if(resendType == 1){
+		//sign in resend
+		return this->signInWithEmail(email);
+	}else{
+		this->errorString = "Invalid resendType";
+		return false;
+	}
 }

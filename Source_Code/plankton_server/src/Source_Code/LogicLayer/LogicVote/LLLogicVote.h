@@ -75,6 +75,9 @@ private:
 	//login with password
 	bool signInWithPassword(string email,string password);
 
+	//login with email
+	bool signInWithEmail(string email);
+
 	//登录
 	bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);
 };

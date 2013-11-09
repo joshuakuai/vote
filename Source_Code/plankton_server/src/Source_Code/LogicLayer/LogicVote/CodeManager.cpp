@@ -43,6 +43,7 @@ string CodeManager::getCode(User* userData) {
 	//no record, we create new record
 	CodeConfirmRecord newRecord;
 	newRecord.createTime = timeTmp;
+	//TODO:we should deep copy this data
 	newRecord.userData = userData;
 
 	//create new code
