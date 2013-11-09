@@ -31,6 +31,8 @@ public:
 	bool signUp();
 	bool signInWithPassword();
 	bool getUserByEmail(string email);
+	bool getUserByID(int userid);
+	bool updateUser();
 
 private:
 	//数据库

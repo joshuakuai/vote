@@ -177,15 +177,15 @@ bool LLLogicVote::signInWithPassword(string email, string password,int &userID) 
 		return false;
 	}
 
-	User *userObject = new User(this->database);
-	userObject->email = email;
-	userObject->password = password;
+	User userObject(this->database);
+	userObject.email = email;
+	userObject.password = password;
 
-	bool result = userObject->signInWithPassword();
+	bool result = userObject.signInWithPassword();
 	if(result){
-		userID = userObject->userid;
+		userID = userObject.userid;
 	}else{
-		this->errorString = userObject->errorMessage;
+		this->errorString = userObject.errorMessage;
 	}
 
 	return result;
@@ -208,13 +208,28 @@ bool LLLogicVote::signInWithEmail(string email) {
 
 	//send the code to the email
 	string mailContent =
-			"Dear customer,\n\nYour dynamic Code is " + code
+			"Dear voter,\n\nYour dynamic Code is " + code
 					+ ".\nPlease confirm your code as soon as possible.\n\nThank you.\nRampageworks";
 	mailManager->sendMail(mailContent, email, "[Vote]Confrim Vote");
 
-	//check if user has password
-
 	return true;
+}
+
+bool LLLogicVote::uploadToken(int userID,string token)
+{
+	User userObject(this->database);
+	if(userObject.getUserByID(userID)){
+		userObject.token = token;
+		if(userObject.updateUser()){
+			return true;
+		}else{
+			this->errorString = userObject.errorMessage;
+			return false;
+		}
+	}else{
+		this->errorString = "Can't find user.";
+		return false;
+	}
 }
 
 bool LLLogicVote::resendCode(string email, string firstName, string lastName,int resendType)

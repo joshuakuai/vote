@@ -9,6 +9,8 @@
 #define CONVERTER_H_
 
 #include <algorithm>
+#include <iostream>
+#include <sstream>
 #include <stdexcept>
 
 using namespace std;
@@ -58,6 +60,15 @@ public:
 	static int string_to_int(const string& input)
 	{
 		return atoi(input.c_str());
+	}
+
+	static string int_to_string(const int& input)
+	{
+		ostringstream convert;
+
+		convert<<input;
+
+		return convert.str();
 	}
 };
 
