@@ -29,6 +29,7 @@ public:
 
 	bool checkIfEmailExist();
 	bool signUp();
+	bool signInWithPassword();
 
 private:
 	//数据库

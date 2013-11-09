@@ -24,8 +24,11 @@ using namespace std;
 class LLLogicVote:public LLLogicBase {
 public:
 	typedef enum _VoteRequestType{
-		Register = 0,
-		Login
+		SignUp = 0,
+		CheckCode,
+		SignInWithPassword,
+		SignInWithEmail,
+		ResendCode
 	}VoteRequestType;
 
 	LLLogicVote(){

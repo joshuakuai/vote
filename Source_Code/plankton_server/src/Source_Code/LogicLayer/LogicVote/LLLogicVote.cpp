@@ -22,7 +22,7 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 		int requestType = receivedValue["requestType"].asInt();
 
 		switch (requestType) {
-		case Register: {
+		case SignUp: {
 			string firstName = receivedValue["firstName"].asString();
 			string lastName = receivedValue["lastName"].asString();
 			string email = receivedValue["email"].asString();
@@ -97,12 +97,18 @@ bool LLLogicVote::checkCode(string email, string code, int checkType) {
 	}
 }
 
-bool signInWithPassword(string email,string password)
+bool LLLogicVote::signInWithPassword(string email,string password)
 {
+	User *userObject = new User(this->database);
+	userObject->email = email;
+	userObject->password = password;
 
+	bool result = userObject->signInWithPassword();
+	this->errorString = userObject->errorMessage;
+	return result;
 }
 
 bool LLLogicVote::resendCode(string email)
 {
-
+	//maybe this code has already expire
 }
