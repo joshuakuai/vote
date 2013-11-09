@@ -15,5 +15,8 @@
     #import <Foundation/Foundation.h>
 #endif
 
+#define ScreenHeigh  [UIScreen mainScreen].bounds.size.height
+#define ScreenWidth  [UIScreen mainScreen].bounds.size.width
+
 #define DevServerAdd @"192.168.1.13"
 #define RelServerAdd @""

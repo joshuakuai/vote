@@ -7,7 +7,6 @@
 //
 
 #import "signUpViewController.h"
-#import "UIViewController+Message.h"
 #import "NSString+ValidCheck.h"
 #import "codeViewController.h"
 
@@ -20,6 +19,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = NO;
+    
+    _emailTextField.text = @"";
+    _emailAgainTextField.text = @"";
 }
 
 - (void)viewDidLoad
@@ -28,7 +30,6 @@
     
     //set the plankton server's delegate
     [[PLServer shareInstance] setDelegate:self];
-  
     
     //set the the keyboard dismiss selector
     [_firstNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -81,6 +82,14 @@
     [dic setObject:_lastNameTextField.text forKey:@"lastName"];
 
     [[PLServer shareInstance] sendDataWithDic:dic];
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
+}
+
+//over written the loading dismisView
+- (void)loadingViewDidUnload
+{
+    
 }
 
 
@@ -96,6 +105,7 @@
 #pragma mark - PLServer delegate
 - (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
 {
+    [self dismissLoadingView];
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     if (result) {
@@ -107,6 +117,7 @@
 
 - (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
 {
+    [self dismissLoadingView];
     [self showErrorMessage:[error description]];
 }
 

@@ -14,10 +14,6 @@
 
 @implementation codeViewController
 
-@synthesize emailAddress;
-
-@synthesize displayEmail;
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -28,8 +24,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
-    displayEmail.text = emailAddress;
+
+    _displayEmail.text = _emailAddress;
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,7 +41,7 @@
 
 - (IBAction)changeEmailAction:(id)sender
 {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)submitCodeAction:(id)sender
