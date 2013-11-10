@@ -213,13 +213,22 @@
                                     <action selector="changeEmailAction:" destination="EPJ-fM-a7o" eventType="touchUpInside" id="8gA-R6-7Ws"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="60" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wcc-sO-7wH">
+                                <rect key="frame" x="241" y="226" width="20" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Code Confirm" id="hil-wA-7SS"/>
                     <connections>
                         <outlet property="codeTextField" destination="wrF-0f-Nzs" id="ENg-jb-JTT"/>
+                        <outlet property="countdownTimer" destination="Wcc-sO-7wH" id="oI3-My-PJX"/>
                         <outlet property="displayEmail" destination="J6G-Ww-nqZ" id="ufR-yL-rPY"/>
+                        <outlet property="resendButton" destination="XVN-p8-AlZ" id="bCP-ez-KQ3"/>
                         <segue destination="iAs-DH-6sZ" kind="modal" identifier="CodeViewShowMainViewSegue" id="pCz-Ul-wtn"/>
                     </connections>
                 </viewController>
@@ -251,7 +260,7 @@
             <objects>
                 <tabBarController definesPresentationContext="YES" id="iAs-DH-6sZ" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Gln-Wr-BlU"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="MXd-yY-1TK">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>

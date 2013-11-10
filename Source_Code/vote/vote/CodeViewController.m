@@ -8,8 +8,11 @@
 
 #import "CodeViewController.h"
 
-@interface CodeViewController ()
-
+@interface CodeViewController (){
+   
+    NSTimer *_time;
+    int _initTime;
+}
 @end
 
 @implementation CodeViewController
@@ -40,6 +43,10 @@
                            [[UIBarButtonItem alloc]initWithTitle:@"Apply" style:UIBarButtonItemStyleDone target:self action:@selector(doneWithNumberPad)],nil];
     [numberToolbar sizeToFit];
     _codeTextField.inputAccessoryView = numberToolbar;
+    
+    _time = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod) userInfo:nil repeats:YES];
+    _initTime = 60;
+    _resendButton.hidden = true;
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,6 +74,23 @@
 
 - (IBAction)resendCodeAction:(id)sender
 {
+    _time = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod) userInfo:nil repeats:YES];
+    _initTime = 60;
+    _countdownTimer.hidden = false;
+    _resendButton.hidden = true;
+}
+
+- (void)timerFireMethod
+{
+    _initTime --;
+    _countdownTimer.text = [NSString stringWithFormat:@"%d",_initTime];
+    if (_initTime == 0) {
+        
+        [_time invalidate];
+        _resendButton.hidden = FALSE;
+        _countdownTimer.hidden = TRUE;
+        _countdownTimer.text = @"60";
+    }
     
 }
 

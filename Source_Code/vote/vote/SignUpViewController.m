@@ -82,7 +82,7 @@
     [dic setObject:_emailTextField.text forKey:@"email"];
     [dic setObject:_lastNameTextField.text forKey:@"lastName"];
 
-    [[PLServer shareInstance] sendDataWithDic:dic];
+    //[[PLServer shareInstance] sendDataWithDic:dic];
     
     [self showLoadingView:@"" isWithCancelButton:NO];
 }
