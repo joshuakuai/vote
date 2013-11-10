@@ -33,7 +33,7 @@ string CodeManager::getCode(User* userData) {
 				(*it)->userData->lastName = userData->lastName;
 			}
 
-			cout<<"Resend the code"<<endl;
+			//cout<<"Resend the code"<<endl;
 			return (*it)->code;
 		}
 	}
