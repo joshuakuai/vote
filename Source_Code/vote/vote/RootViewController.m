@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 rampageworks. All rights reserved.
 //
 
-#import "rootViewController.h"
+#import "RootViewController.h"
 
-@interface rootViewController ()
+@interface RootViewController ()
 
 @end
 
-@implementation rootViewController
+@implementation RootViewController
 
 - (void)viewWillAppear:(BOOL)animated
 {

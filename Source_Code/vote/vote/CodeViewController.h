@@ -7,14 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface codeViewController : UIViewController
+@interface CodeViewController : BaseViewController<UITextFieldDelegate,PLServerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *displayEmail;
 @property (weak, nonatomic) IBOutlet UITextField *codeTextField;
 @property (strong, nonatomic) NSString *emailAddress;
+@property (weak, nonatomic) IBOutlet UIButton *resendButton;
+@property (weak, nonatomic) IBOutlet UILabel *countdownTimer;
 
 - (IBAction)resendCodeAction:(id)sender;
 - (IBAction)changeEmailAction:(id)sender;
 - (IBAction)submitCodeAction:(id)sender;
+
 
 @end

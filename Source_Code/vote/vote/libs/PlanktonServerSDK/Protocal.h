@@ -24,6 +24,7 @@ typedef struct _CMLPackageHead{
 
 typedef enum _VoteRequestType {
     Register = 0,
+    CheckCode
 }VoteRequestType;
 
 

@@ -25,6 +25,9 @@
 - (void)plServer:(PLServer*)plServer didReceivedJSONString:(id)jsonObejct;
 - (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error;
 
+@optional
+- (void)connectionClosed:(PLServer *)plServer;
+
 @end
 
 @interface PLServer : NSObject<TcpStreamDelegate>

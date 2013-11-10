@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 #import "PLServer.h"
 
-@interface signUpViewController : UIViewController<PLServerDelegate>
+@interface SignUpViewController : BaseViewController<PLServerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *firstNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *lastNameTextField;

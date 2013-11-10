@@ -6,36 +6,38 @@
 //  Copyright (c) 2013 rampageworks. All rights reserved.
 //
 
-#import "signUpViewController.h"
-#import "UIViewController+Message.h"
+#import "SignUpViewController.h"
 #import "NSString+ValidCheck.h"
 #import "codeViewController.h"
 
-@interface signUpViewController ()
+@interface SignUpViewController ()
 
 @end
 
-@implementation signUpViewController
+@implementation SignUpViewController
 
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBarHidden = NO;
+    
+    _emailTextField.text = @"";
+    _emailAgainTextField.text = @"";
+    
+    //set the plankton server's delegate
+    [[PLServer shareInstance] setDelegate:self];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    //set the plankton server's delegate
-    [[PLServer shareInstance] setDelegate:self];
-  
-    
     //set the the keyboard dismiss selector
     [_firstNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_lastNameTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_emailAgainTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_emailTextField addTarget:self action:@selector(textFieldDone:) forControlEvents:UIControlEventEditingDidEndOnExit];
-     
+    
+    [_firstNameTextField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,10 +54,6 @@
 //begin signUp
 - (IBAction)singUp:(id)sender
 {
-    [self performSegueWithIdentifier:@"showCodeViewSegue" sender:self];
-    
-    return;
-    
     //check if the textfields has already filled
     if (_firstNameTextField.text == nil || [_firstNameTextField.text isEqualToString:@""] ||
         _lastNameTextField.text == nil || [_lastNameTextField.text isEqualToString:@""] ||
@@ -79,39 +77,57 @@
     }
     
     //all pass, prepare the data
-    //
-
     NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:Register];
     [dic setObject:_firstNameTextField.text forKey:@"firstName"];
     [dic setObject:_emailTextField.text forKey:@"email"];
     [dic setObject:_lastNameTextField.text forKey:@"lastName"];
 
-    [[PLServer shareInstance] sendDataWithDic:dic];
-    [self performSegueWithIdentifier:@"codeViewController" sender:self];
+    //[[PLServer shareInstance] sendDataWithDic:dic];
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
+}
+
+//over written the loading dismisView
+- (void)loadingViewDidUnload
+{
+    
 }
 
 
 //prepare the data, transfer to the next scene
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"showCodeViewSegue"]) {
-        codeViewController *destViewController = segue.destinationViewController;
-        NSLog(@"%@", _emailTextField.text);
-        destViewController.emailAddress = _emailTextField.text;
+    if ([segue.identifier isEqualToString:@"signUpShowCodeViewSegue"]) {
+        CodeViewController *destViewController = segue.destinationViewController;
+        //NSLog(@"%@", _emailTextField.text);
+        destViewController.emailAddress = [_emailTextField.text copy];
     }
 }
 
 #pragma mark - PLServer delegate
 - (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
 {
+    [self dismissLoadingView];
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
-    NSLog(@"Received result:%d",result);
+    if (result) {
+        [self performSegueWithIdentifier:@"signUpShowCodeViewSegue" sender:self];
+    }else{
+        [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
+    }
 }
 
 - (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
 {
-    NSLog(@"Error:%@",error);
+    [self dismissLoadingView];
+    [self showErrorMessage:[error description]];
 }
 
+- (void)connectionClosed:(PLServer *)plServer
+{
+    if (isShowingLoadingView) {
+        [self dismissLoadingView];
+        [self showErrorMessage:@"Lost connection,check your internet connection."];
+    }
+}
 
 @end

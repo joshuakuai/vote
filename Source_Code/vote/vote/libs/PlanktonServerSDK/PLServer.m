@@ -119,7 +119,7 @@ static short logicVersion;
 
 - (BOOL)tcpStream:(TcpStream *)tcpStream didReceivedData:(NSData *)data
 {
-    //NSLog(@"The data of the package is :%@ Length is :%d" ,data,data.length);
+    NSLog(@"The data of the package is :%@ Length is :%lu" ,data,(unsigned long)data.length);
     if (data == nil || data.length == 0) {
         return YES;
     }
@@ -152,6 +152,9 @@ static short logicVersion;
 - (void)tcpStreamDidRemoteClosedConnection:(TcpStream *)tcpStream
 {
     NSLog(@"PLServer:Connection Closed");
+    if (_delegate && [_delegate respondsToSelector:@selector(connectionClosed:)]) {
+        [_delegate connectionClosed:self];
+    }
 }
 
 

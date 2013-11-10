@@ -1,5 +1,5 @@
 //
-//  UIViewController+Message.h
+//  rootViewController.h
 //  vote
 //
 //  Created by kuaijianghua on 11/3/13.
@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface UIViewController (Message)
-
-- (void)showErrorMessage:(NSString*)content;
+@interface RootViewController :  BaseViewController
 
 @end

@@ -20,15 +20,18 @@
 		AA3F8FF91826B00C007ABF9B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA3F8FF71826B00C007ABF9B /* InfoPlist.strings */; };
 		AA3F8FFB1826B00C007ABF9B /* voteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F8FFA1826B00C007ABF9B /* voteTests.m */; };
 		AA3F90051826B55B007ABF9B /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA3F90041826B55B007ABF9B /* Storyboard.storyboard */; };
-		AA3F90081826D1A9007ABF9B /* rootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90071826D1A9007ABF9B /* rootViewController.m */; };
-		AA3F900B1826D7F7007ABF9B /* signUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F900A1826D7F7007ABF9B /* signUpViewController.m */; };
-		AA3F90121826E8AB007ABF9B /* UIViewController+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90111826E8AB007ABF9B /* UIViewController+Message.m */; };
+		AA3F90081826D1A9007ABF9B /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90071826D1A9007ABF9B /* RootViewController.m */; };
+		AA3F900B1826D7F7007ABF9B /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F900A1826D7F7007ABF9B /* SignUpViewController.m */; };
 		AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */; };
 		AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901A1826EE61007ABF9B /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AA3F90241826EE61007ABF9B /* PLServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901E1826EE61007ABF9B /* PLServer.m */; };
 		AA3F90251826EE61007ABF9B /* TcpStream.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90211826EE61007ABF9B /* TcpStream.m */; };
+		AA58D3BB182EB77F00D9B9A5 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3BA182EB77F00D9B9A5 /* GCDAsyncSocket.m */; };
+		AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */; };
+		AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */; };
+		AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */; };
 		AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */; };
-		E909B0A61829E8FE00360DB2 /* codeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E909B0A51829E8FE00360DB2 /* codeViewController.m */; };
+		E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E909B0A51829E8FE00360DB2 /* CodeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,12 +62,10 @@
 		AA3F8FF81826B00C007ABF9B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		AA3F8FFA1826B00C007ABF9B /* voteTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = voteTests.m; sourceTree = "<group>"; };
 		AA3F90041826B55B007ABF9B /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
-		AA3F90061826D1A9007ABF9B /* rootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rootViewController.h; sourceTree = "<group>"; };
-		AA3F90071826D1A9007ABF9B /* rootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = rootViewController.m; sourceTree = "<group>"; };
-		AA3F90091826D7F7007ABF9B /* signUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = signUpViewController.h; sourceTree = "<group>"; };
-		AA3F900A1826D7F7007ABF9B /* signUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = signUpViewController.m; sourceTree = "<group>"; };
-		AA3F90101826E8AB007ABF9B /* UIViewController+Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Message.h"; sourceTree = "<group>"; };
-		AA3F90111826E8AB007ABF9B /* UIViewController+Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Message.m"; sourceTree = "<group>"; };
+		AA3F90061826D1A9007ABF9B /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		AA3F90071826D1A9007ABF9B /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		AA3F90091826D7F7007ABF9B /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		AA3F900A1826D7F7007ABF9B /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		AA3F90131826E962007ABF9B /* NSString+ValidCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+ValidCheck.h"; sourceTree = "<group>"; };
 		AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+ValidCheck.m"; sourceTree = "<group>"; };
 		AA3F90191826EE61007ABF9B /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
@@ -74,10 +75,18 @@
 		AA3F901F1826EE61007ABF9B /* Protocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocal.h; sourceTree = "<group>"; };
 		AA3F90201826EE61007ABF9B /* TcpStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TcpStream.h; sourceTree = "<group>"; };
 		AA3F90211826EE61007ABF9B /* TcpStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TcpStream.m; sourceTree = "<group>"; };
+		AA58D3B9182EB77F00D9B9A5 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		AA58D3BA182EB77F00D9B9A5 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
+		AA58D3BC182EB94900D9B9A5 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
+		AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
+		AA58D3EF182EBE5E00D9B9A5 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		AA58D3F3182EBF5300D9B9A5 /* ProccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProccessView.h; sourceTree = "<group>"; };
+		AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProccessView.m; sourceTree = "<group>"; };
 		AA9B75FE1829BBA800970739 /* NSMutableDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+PLPackage.h"; sourceTree = "<group>"; };
 		AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+PLPackage.m"; sourceTree = "<group>"; };
-		E909B0A41829E8FE00360DB2 /* codeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = codeViewController.h; sourceTree = "<group>"; };
-		E909B0A51829E8FE00360DB2 /* codeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = codeViewController.m; sourceTree = "<group>"; };
+		E909B0A41829E8FE00360DB2 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
+		E909B0A51829E8FE00360DB2 /* CodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,13 +146,14 @@
 		AA3F8FDB1826B00C007ABF9B /* vote */ = {
 			isa = PBXGroup;
 			children = (
+				AA58D3F2182EBF1500D9B9A5 /* Base */,
 				AA3F90161826E96A007ABF9B /* Category */,
-				AA3F90061826D1A9007ABF9B /* rootViewController.h */,
-				AA3F90071826D1A9007ABF9B /* rootViewController.m */,
-				AA3F90091826D7F7007ABF9B /* signUpViewController.h */,
-				AA3F900A1826D7F7007ABF9B /* signUpViewController.m */,
-				E909B0A41829E8FE00360DB2 /* codeViewController.h */,
-				E909B0A51829E8FE00360DB2 /* codeViewController.m */,
+				AA3F90061826D1A9007ABF9B /* RootViewController.h */,
+				AA3F90071826D1A9007ABF9B /* RootViewController.m */,
+				AA3F90091826D7F7007ABF9B /* SignUpViewController.h */,
+				AA3F900A1826D7F7007ABF9B /* SignUpViewController.m */,
+				E909B0A41829E8FE00360DB2 /* CodeViewController.h */,
+				E909B0A51829E8FE00360DB2 /* CodeViewController.m */,
 				AA3F8FE41826B00C007ABF9B /* AppDelegate.h */,
 				AA3F8FE51826B00C007ABF9B /* AppDelegate.m */,
 				AA3F8FE71826B00C007ABF9B /* Images.xcassets */,
@@ -186,8 +196,6 @@
 		AA3F90161826E96A007ABF9B /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				AA3F90101826E8AB007ABF9B /* UIViewController+Message.h */,
-				AA3F90111826E8AB007ABF9B /* UIViewController+Message.m */,
 				AA3F90131826E962007ABF9B /* NSString+ValidCheck.h */,
 				AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */,
 			);
@@ -205,6 +213,10 @@
 		AA3F90181826EE61007ABF9B /* PlanktonServerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				AA58D3BC182EB94900D9B9A5 /* AsyncSocket.h */,
+				AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */,
+				AA58D3B9182EB77F00D9B9A5 /* GCDAsyncSocket.h */,
+				AA58D3BA182EB77F00D9B9A5 /* GCDAsyncSocket.m */,
 				AA3F90191826EE61007ABF9B /* JSONKit.h */,
 				AA3F901A1826EE61007ABF9B /* JSONKit.m */,
 				AA3F901D1826EE61007ABF9B /* PLServer.h */,
@@ -216,6 +228,17 @@
 				AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */,
 			);
 			path = PlanktonServerSDK;
+			sourceTree = "<group>";
+		};
+		AA58D3F2182EBF1500D9B9A5 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				AA58D3F3182EBF5300D9B9A5 /* ProccessView.h */,
+				AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */,
+				AA58D3EF182EBE5E00D9B9A5 /* BaseViewController.h */,
+				AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */,
+			);
+			name = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,15 +337,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA58D3BB182EB77F00D9B9A5 /* GCDAsyncSocket.m in Sources */,
+				AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */,
+				AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */,
 				AA3F8FE61826B00C007ABF9B /* AppDelegate.m in Sources */,
-				AA3F90081826D1A9007ABF9B /* rootViewController.m in Sources */,
-				AA3F900B1826D7F7007ABF9B /* signUpViewController.m in Sources */,
+				AA3F90081826D1A9007ABF9B /* RootViewController.m in Sources */,
+				AA3F900B1826D7F7007ABF9B /* SignUpViewController.m in Sources */,
 				AA3F90241826EE61007ABF9B /* PLServer.m in Sources */,
-				E909B0A61829E8FE00360DB2 /* codeViewController.m in Sources */,
+				E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */,
 				AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */,
 				AA3F8FE21826B00C007ABF9B /* main.m in Sources */,
+				AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */,
 				AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */,
-				AA3F90121826E8AB007ABF9B /* UIViewController+Message.m in Sources */,
 				AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */,
 				AA3F90251826EE61007ABF9B /* TcpStream.m in Sources */,
 			);
