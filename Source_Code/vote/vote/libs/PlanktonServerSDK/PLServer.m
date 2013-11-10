@@ -16,7 +16,7 @@ static short logicType;
 static short logicVersion;
 
 @interface PLServer (){
-    TcpStream *_tcpStream;
+    AsyncSocket *_socket;
     NSString *_sendString;
 }
 
@@ -48,16 +48,17 @@ static short logicVersion;
 {
     self = [super init];
     if (self) {
-        _tcpStream = [[TcpStream alloc] initWithHost:ipString port:portNumber];
-        _tcpStream.delegate = self;
         _sendString = nil;
+        
+        _socket = [[AsyncSocket alloc] initWithDelegate:self];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [_tcpStream close];
+    _socket.delegate = nil;
+    [_socket disconnect];
 }
 
 -(void)openLongConnection
@@ -67,7 +68,9 @@ static short logicVersion;
 
 -(void)closeConnection
 {
-    [_tcpStream close];
+    if ([_socket isConnected]) {
+        [_socket disconnect];
+    }
 }
 
 -(void)sendDataWithString:(NSString*)jsonString
@@ -75,14 +78,14 @@ static short logicVersion;
     _sendString = [jsonString copy];
 
     //temporal request
-    if ([_tcpStream connected]) {
+    //[_tcpStream connected]
+    if ([_socket isConnected]) {
         [self sendData];
     }else{
-        //init the tcpstream again
-        _tcpStream = [[TcpStream alloc] initWithHost:ipString port:portNumber];
-        _tcpStream.delegate = self;
-        
-        [_tcpStream connect];
+        NSError *error = nil;
+        if (![_socket connectToHost:ipString onPort:portNumber withTimeout:5 error:&error]) {
+            [_delegate plServer:self failedWithError:error];
+        }
     }
     
     //Long connection
@@ -92,12 +95,6 @@ static short logicVersion;
 {
     NSString *jsonString = [josonDic JSONString];
     [self sendDataWithString:jsonString];
-}
-
-#pragma mark - TcpStream delegate
-- (void)tcpStreamDidConnected:(TcpStream *)tcpStream
-{
-    [self sendData];
 }
 
 - (void)sendData
@@ -114,14 +111,22 @@ static short logicVersion;
     len += sizeof(CMLPackageHead);
     NSMutableData *sendData = [[NSMutableData alloc] initWithBytes:head length:len];
     [sendData appendData:[_sendString dataUsingEncoding:NSUTF8StringEncoding]];
-    [_tcpStream sendData:sendData];
+    
+    [_socket readDataWithTimeout:10 buffer:nil bufferOffset:0 maxLength:1024*4 tag:1];
+    [_socket writeData:sendData withTimeout:6 tag:1];
 }
 
-- (BOOL)tcpStream:(TcpStream *)tcpStream didReceivedData:(NSData *)data
+#pragma mark - AsyncSocket delegate
+- (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host port:(UInt16)port
+{
+    [self sendData];
+}
+
+- (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
     NSLog(@"The data of the package is :%@ Length is :%lu" ,data,(unsigned long)data.length);
     if (data == nil || data.length == 0) {
-        return YES;
+        return;
     }
     
     //Get the json string
@@ -130,32 +135,34 @@ static short logicVersion;
     
     if (head->indication != CML_PACKAGE_INDICATION) {
         //Check indication failed,just ignore this data
-        return YES;
+        return;
     }
-
+    
     //We did not consider the situation of mutil package
     if (head->packageLength + sizeof(CMLPackageHead) == data.length) {
         NSString *jsonString = [[NSString alloc] initWithCString:&buffer[sizeof(CMLPackageHead)] encoding:NSUTF8StringEncoding];
         [_delegate plServer:self didReceivedJSONString:[jsonString objectFromJSONString]];
-        return YES;
     }else{
-        //Still did not received complete 
-        return NO;
-    }    
+        //does not finish,continue receive
+        [_socket readDataWithTimeout:10 buffer:[NSMutableData dataWithData:data] bufferOffset:[data length] maxLength:1024*4 tag:1];
+    }
 }
 
-- (void)tcpStream:(TcpStream *)tcpStream didFailWithError:(NSError *)error
+- (void)onSocket:(AsyncSocket *)sock didWriteDataWithTag:(long)tag
 {
-    [_delegate plServer:self failedWithError:error];
+    NSLog(@"PLServer:Successful write data to server");
 }
 
-- (void)tcpStreamDidRemoteClosedConnection:(TcpStream *)tcpStream
+- (void)onSocket:(AsyncSocket *)sock willDisconnectWithError:(NSError *)err
 {
-    NSLog(@"PLServer:Connection Closed");
+    [_delegate plServer:self failedWithError:err];
+}
+
+- (void)onSocketDidDisconnect:(AsyncSocket *)sock
+{
     if (_delegate && [_delegate respondsToSelector:@selector(connectionClosed:)]) {
         [_delegate connectionClosed:self];
     }
 }
-
 
 @end

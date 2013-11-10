@@ -18,6 +18,8 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     self.navigationController.navigationBarHidden = NO;
     
     _emailTextField.text = @"";
@@ -25,6 +27,12 @@
     
     //set the plankton server's delegate
     [[PLServer shareInstance] setDelegate:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[PLServer shareInstance] closeConnection];
 }
 
 - (void)viewDidLoad
@@ -119,7 +127,11 @@
 - (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
 {
     [self dismissLoadingView];
-    [self showErrorMessage:[error description]];
+    if (error) {
+        [self showErrorMessage:[error description]];
+    }else{
+        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
+    }
 }
 
 - (void)connectionClosed:(PLServer *)plServer

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TcpStream.h"
+#import "AsyncSocket.h"
 #import "NSMutableDictionary+PLPackage.h"
 #import "JSONKit.h"
 
@@ -30,7 +30,7 @@
 
 @end
 
-@interface PLServer : NSObject<TcpStreamDelegate>
+@interface PLServer : NSObject<AsyncSocketDelegate>
 
 @property(nonatomic,weak)id<PLServerDelegate>delegate;
 

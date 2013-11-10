@@ -27,6 +27,13 @@
     [[PLServer shareInstance] setDelegate:self];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[PLServer shareInstance] closeConnection];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -55,16 +62,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)textView:(UITextView *)aTextView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    // "Length of existing text" - "Length of replaced text" + "Length of replacement text"
-    NSInteger newTextLength = [aTextView.text length] - range.length + [text length];
-    
-    if (newTextLength > 4) {
-        // don't allow change
-        return NO;
-    }
-    _codeTextField.text = [NSString stringWithFormat:@"%li", (long)newTextLength];
-    return YES;
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSUInteger newLength = [textField.text length] + [string length] - range.length;
+    return (newLength > 4) ? NO : YES;
 }
 
 - (void)doneWithNumberPad
@@ -125,16 +127,28 @@
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     if (result) {
         //TODO:save the userid
-        [self performSegueWithIdentifier:@"signUpShowCodeViewSegue" sender:self];
+        [self performSegueWithIdentifier:@"CodeViewShowMainViewSegue" sender:self];
     }else{
-        [self showErrorMessage:[[cacheDic valueForKey:@"msg"] stringValue]];
+        [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
     }
 }
 
 - (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
 {
     [self dismissLoadingView];
-    [self showErrorMessage:[error description]];
+    if (error) {
+        [self showErrorMessage:[error description]];
+    }else{
+        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
+    }
+}
+
+- (void)connectionClosed:(PLServer *)plServer
+{
+    if (isShowingLoadingView) {
+        [self dismissLoadingView];
+        [self showErrorMessage:@"Lost connection,check your internet connection."];
+    }
 }
 
 @end
