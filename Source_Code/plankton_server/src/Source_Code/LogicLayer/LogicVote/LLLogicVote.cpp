@@ -127,18 +127,18 @@ bool LLLogicVote::checkCode(string email, string code, int checkType,int &userID
 	}
 
 	//set return
-	User *userObject = new User(this->database);
+	User userObject(this->database);
 
 	if(checkType == 1){
 		//check if the email is exsit if use wanna use email to login
-		if (!userObject->checkIfEmailExist()) {
+		if (!userObject.checkIfEmailExist()) {
 			this->errorString = "This user does not exist.";
 			return false;
 		}
 	}
 
 	//check the code is exist
-	int result = this->codeManager->codeConfirm(email, code, *userObject);
+	int result = this->codeManager->codeConfirm(email, code, userObject);
 
 	if (result == 1) {
 		//check success
@@ -147,19 +147,18 @@ bool LLLogicVote::checkCode(string email, string code, int checkType,int &userID
 		if (checkType == 0) {
 			//this checking code is for signUp
 			//signUp to database now
-			bool result = userObject->signUp();
+			bool result = userObject.signUp();
 			hasPassword = false;
 
 			//get user id
-			userObject->getUserByEmail(email);
-			userID = userObject->userid;
+			userObject.getUserByEmail(email);
+			userID = userObject.userid;
 
-			delete userObject;
 			return result;
 		}else{
-			userObject->getUserByEmail(email);
-			hasPassword = userObject->password.empty() ? false:true;
-			userID = userObject->userid;
+			userObject.getUserByEmail(email);
+			hasPassword = userObject.password.empty() ? false:true;
+			userID = userObject.userid;
 		}
 		return true;
 	} else if (result == 0) {

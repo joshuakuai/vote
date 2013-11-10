@@ -3,5 +3,12 @@
    "EncryptKey" : "",
    "MaxUserNumber" : 100,
    "PLogLevel" : 2,
-   "ServerPort" : 13145
+   "ServerPort" : 13145,
+   "EmailContentFileName" : "EmailContent",
+   "EmailTrustFileName" : "cert.crt",
+   "EmailAddress" : "bearworldbrave@gmail.com",
+   "EmailPassword" : "199143aA",
+   "DatabaseUserName" : "root",
+   "DatabasePassword" : "123456",
+   "DatabaseAddress" : "localhost"
 }

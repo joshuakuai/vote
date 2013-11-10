@@ -55,11 +55,13 @@ public:
 	vector<vector<string> > querySQL(string sql_str);
 	bool create_table(string table_str_sql);
 	vector<char*> excuteCall(string sql_str,MYSQL_BIND *params);
-
+	string getDatabaseName();
 protected:
     MYSQL *connection;
     MYSQL_RES *res;
     MYSQL_ROW row;
+
+    string databaseName;
 
     pthread_mutex_t connectionMutex;
 

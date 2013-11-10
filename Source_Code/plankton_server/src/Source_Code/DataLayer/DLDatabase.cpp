@@ -17,9 +17,16 @@ bool DLDatabase::initDB(string server_host, string user, string password,
 	if (connection == NULL) {
 		perror("mysql_real_connect");
 		exit(1);
+	}else{
+	    databaseName = db_name;
 	}
 
 	return true;
+}
+
+string DLDatabase::getDatabaseName()
+{
+	return this->databaseName;
 }
 
 //执行SQL语句(无结果)
@@ -66,11 +73,16 @@ vector<vector<string> > DLDatabase::querySQL(string sql_str) {
 				vector<string> rowVector;
 				//mysql_num_fields(res)  函数返回结果集中字段的数
 				for (unsigned int r = 0; r < mysql_num_fields(res); r++) {
-					rowVector.push_back(string(row[r]));
-					printf("%s\t", row[r]);
+					if(row[r] != NULL){
+						rowVector.push_back(string(row[r]));
+					}else{
+						rowVector.push_back(string(""));
+					}
+
+					//printf("%s\t", row[r]);
 				}
 				result.push_back(rowVector);
-				printf("\n");
+				//printf("\n");
 			}
 		}
 		//释放结果集使用的内存

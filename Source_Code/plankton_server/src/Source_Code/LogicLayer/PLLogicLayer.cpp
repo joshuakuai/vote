@@ -34,7 +34,7 @@ string PLLogicLayer::excuteRequestWithLogicTypeAndVersion(string content,short t
 
 		//Vote
 		case CML_PACKAGE_VOTE:{
-			PLog::logHint("======Current Use Vote Excutor======");
+			PLog::logHint("======Current Use Vote Executor======");
 			logicExcutor = _voteLogicExcutor;
 			break;
 		}

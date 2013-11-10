@@ -9,14 +9,13 @@
 #define LLLOGICVOTE_H_
 
 #include "../LLLogicBase.h"
-#include "../../DataLayer/DLDatabase.h"
+#include "../../DataLayer/PLDataLayer.h"
 #include "../../Common/PLog.h"
-#include "../../Common/ConfigureManager.h"
 #include "../../Common/md5.h"
 #include "../../Lib/json.h"
+#include "../../Common/MailManager.h"
 #include "User.h"
 #include "CodeManager.h"
-#include "MailManager.h"
 #include <list>
 
 using namespace std;
@@ -33,24 +32,12 @@ public:
 	}VoteRequestType;
 
 	LLLogicVote(){
-		//configure mail manager
-		ConfigureManager *configManager = ConfigureManager::Instance();
-		string trustFileName = configManager->value["EmailTrustFileName"].asString();
-		string contentFileName = configManager->value["EmailContentFileName"].asString();
-		string sender = configManager->value["EmailAddress"].asString();
-		string senderPassword= configManager->value["EmailPassword"].asString();
-		mailManager = new MailManager(trustFileName,contentFileName,sender,senderPassword);
-
-		codeManager = new CodeManager();
-    	database = new DLDatabase;
-    	database->initDB("localhost", "root", "123456", "Vote");
+		mailManager = MailManager::Instance();
+		codeManager = CodeManager::Instance();
+    	database = PLDataLayer::Instance()->getDatabaseByName("Vote");
     }
 
-	virtual ~LLLogicVote(){
-		delete database;
-		delete codeManager;
-		delete mailManager;
-	}
+	virtual ~LLLogicVote(){}
 
 	string excuteRequest(string requestString,short version,unsigned int sessionID);
 

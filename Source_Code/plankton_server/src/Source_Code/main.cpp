@@ -4,6 +4,8 @@
 #include "LogicLayer/PLLogicLayer.h"
 #include "Common/ConfigureManager.h"
 #include "Common/NotificationCenter.h"
+#include "Common/MailManager.h"
+#include "DataLayer/PLDataLayer.h"
 
 int main(){
 	//实例化配置管理器
@@ -11,6 +13,13 @@ int main(){
 
 	//实例化通知中心
 	NotificationCenter::Instance();
+
+	//Initial Database
+	PLDataLayer::Instance()->setDatabaseInfoFromConfigureManager();
+	PLDataLayer::Instance()->addDatabaseWithName("Vote");
+
+	//Initial Email Manager
+	MailManager::Instance()->setMailInfoFromConfigureManager();
 
 	//开启通讯层
 	PLCommunicationLayer *communicationLayer = new PLCommunicationLayer();
@@ -20,6 +29,7 @@ int main(){
 	delete communicationLayer;
 	NotificationCenter::Release();
 	ConfigureManager::Release();
+	PLDataLayer::Release();
 	return 0;
 }
 

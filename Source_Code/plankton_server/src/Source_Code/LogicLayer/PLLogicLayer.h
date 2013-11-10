@@ -17,12 +17,11 @@ public:
 	//构造函数
 	PLLogicLayer(unsigned int sessionID) {
 		this->sessionID = sessionID;
-		_voteLogicExcutor = new LLLogicVote;
+		_voteLogicExcutor = new LLLogicVote();
 	}
 
 	//析构
 	virtual ~PLLogicLayer() {
-
 		delete _voteLogicExcutor;
 	}
 
