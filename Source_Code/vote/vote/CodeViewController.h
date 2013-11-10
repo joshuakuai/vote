@@ -12,9 +12,12 @@
 @interface CodeViewController : BaseViewController<UITextFieldDelegate,PLServerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *displayEmail;
 @property (weak, nonatomic) IBOutlet UITextField *codeTextField;
-@property (strong, nonatomic) NSString *emailAddress;
 @property (weak, nonatomic) IBOutlet UIButton *resendButton;
 @property (weak, nonatomic) IBOutlet UILabel *countdownTimer;
+@property (strong, nonatomic) NSString *emailAddress;
+@property (strong, nonatomic) NSString *lastName;
+@property (strong, nonatomic) NSString *firstName;
+@property (assign, nonatomic) NSInteger checkType;
 
 - (IBAction)resendCodeAction:(id)sender;
 - (IBAction)changeEmailAction:(id)sender;
