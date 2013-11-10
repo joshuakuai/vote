@@ -19,4 +19,4 @@
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
 
 #define DevServerAdd @"192.168.1.13"
-#define RelServerAdd @""
+#define RelServerAdd @"69.164.196.243"
