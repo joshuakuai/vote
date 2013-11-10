@@ -25,8 +25,6 @@
 		AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */; };
 		AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901A1826EE61007ABF9B /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AA3F90241826EE61007ABF9B /* PLServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901E1826EE61007ABF9B /* PLServer.m */; };
-		AA3F90251826EE61007ABF9B /* TcpStream.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90211826EE61007ABF9B /* TcpStream.m */; };
-		AA58D3BB182EB77F00D9B9A5 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3BA182EB77F00D9B9A5 /* GCDAsyncSocket.m */; };
 		AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */; };
 		AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */; };
 		AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */; };
@@ -73,10 +71,6 @@
 		AA3F901D1826EE61007ABF9B /* PLServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLServer.h; sourceTree = "<group>"; };
 		AA3F901E1826EE61007ABF9B /* PLServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLServer.m; sourceTree = "<group>"; };
 		AA3F901F1826EE61007ABF9B /* Protocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocal.h; sourceTree = "<group>"; };
-		AA3F90201826EE61007ABF9B /* TcpStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TcpStream.h; sourceTree = "<group>"; };
-		AA3F90211826EE61007ABF9B /* TcpStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TcpStream.m; sourceTree = "<group>"; };
-		AA58D3B9182EB77F00D9B9A5 /* GCDAsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
-		AA58D3BA182EB77F00D9B9A5 /* GCDAsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		AA58D3BC182EB94900D9B9A5 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		AA58D3EF182EBE5E00D9B9A5 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -215,15 +209,11 @@
 			children = (
 				AA58D3BC182EB94900D9B9A5 /* AsyncSocket.h */,
 				AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */,
-				AA58D3B9182EB77F00D9B9A5 /* GCDAsyncSocket.h */,
-				AA58D3BA182EB77F00D9B9A5 /* GCDAsyncSocket.m */,
 				AA3F90191826EE61007ABF9B /* JSONKit.h */,
 				AA3F901A1826EE61007ABF9B /* JSONKit.m */,
 				AA3F901D1826EE61007ABF9B /* PLServer.h */,
 				AA3F901E1826EE61007ABF9B /* PLServer.m */,
 				AA3F901F1826EE61007ABF9B /* Protocal.h */,
-				AA3F90201826EE61007ABF9B /* TcpStream.h */,
-				AA3F90211826EE61007ABF9B /* TcpStream.m */,
 				AA9B75FE1829BBA800970739 /* NSMutableDictionary+PLPackage.h */,
 				AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */,
 			);
@@ -337,7 +327,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA58D3BB182EB77F00D9B9A5 /* GCDAsyncSocket.m in Sources */,
 				AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */,
 				AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */,
 				AA3F8FE61826B00C007ABF9B /* AppDelegate.m in Sources */,
@@ -350,7 +339,6 @@
 				AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */,
 				AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */,
 				AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */,
-				AA3F90251826EE61007ABF9B /* TcpStream.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
