@@ -28,6 +28,7 @@
 		AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */; };
 		AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */; };
 		AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */; };
+		AA58D3F818301A0B00D9B9A5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F718301A0B00D9B9A5 /* SignInViewController.m */; };
 		AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */; };
 		E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E909B0A51829E8FE00360DB2 /* CodeViewController.m */; };
 /* End PBXBuildFile section */
@@ -77,6 +78,8 @@
 		AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		AA58D3F3182EBF5300D9B9A5 /* ProccessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProccessView.h; sourceTree = "<group>"; };
 		AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProccessView.m; sourceTree = "<group>"; };
+		AA58D3F618301A0B00D9B9A5 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
+		AA58D3F718301A0B00D9B9A5 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		AA9B75FE1829BBA800970739 /* NSMutableDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+PLPackage.h"; sourceTree = "<group>"; };
 		AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+PLPackage.m"; sourceTree = "<group>"; };
 		E909B0A41829E8FE00360DB2 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
@@ -111,7 +114,6 @@
 			isa = PBXGroup;
 			children = (
 				AA3F8FDB1826B00C007ABF9B /* vote */,
-				AA3F8FF41826B00C007ABF9B /* voteTests */,
 				AA3F8FD41826B00C007ABF9B /* Frameworks */,
 				AA3F8FD31826B00C007ABF9B /* Products */,
 			);
@@ -148,12 +150,16 @@
 				AA3F900A1826D7F7007ABF9B /* SignUpViewController.m */,
 				E909B0A41829E8FE00360DB2 /* CodeViewController.h */,
 				E909B0A51829E8FE00360DB2 /* CodeViewController.m */,
+				AA58D3F618301A0B00D9B9A5 /* SignInViewController.h */,
+				AA58D3F718301A0B00D9B9A5 /* SignInViewController.m */,
 				AA3F8FE41826B00C007ABF9B /* AppDelegate.h */,
 				AA3F8FE51826B00C007ABF9B /* AppDelegate.m */,
 				AA3F8FE71826B00C007ABF9B /* Images.xcassets */,
 				AA3F90041826B55B007ABF9B /* Storyboard.storyboard */,
 				AA3F90171826EE61007ABF9B /* libs */,
 				AA3F8FDC1826B00C007ABF9B /* Supporting Files */,
+				AA3F8FF51826B00C007ABF9B /* Supporting Files */,
+				AA3F8FF41826B00C007ABF9B /* voteTests */,
 			);
 			path = vote;
 			sourceTree = "<group>";
@@ -173,10 +179,9 @@
 			isa = PBXGroup;
 			children = (
 				AA3F8FFA1826B00C007ABF9B /* voteTests.m */,
-				AA3F8FF51826B00C007ABF9B /* Supporting Files */,
 			);
 			path = voteTests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		AA3F8FF51826B00C007ABF9B /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -185,7 +190,8 @@
 				AA3F8FF71826B00C007ABF9B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
+			path = voteTests;
+			sourceTree = SOURCE_ROOT;
 		};
 		AA3F90161826E96A007ABF9B /* Category */ = {
 			isa = PBXGroup;
@@ -331,6 +337,7 @@
 				AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */,
 				AA3F8FE61826B00C007ABF9B /* AppDelegate.m in Sources */,
 				AA3F90081826D1A9007ABF9B /* RootViewController.m in Sources */,
+				AA58D3F818301A0B00D9B9A5 /* SignInViewController.m in Sources */,
 				AA3F900B1826D7F7007ABF9B /* SignUpViewController.m in Sources */,
 				AA3F90241826EE61007ABF9B /* PLServer.m in Sources */,
 				E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */,

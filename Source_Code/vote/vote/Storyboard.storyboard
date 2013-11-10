@@ -33,6 +33,9 @@
                                 <state key="normal" title="Sign In">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <segue destination="XoK-zd-Xzk" kind="push" id="SKr-4d-30g"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -42,6 +45,78 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sbf-dt-a33" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="890" y="267"/>
+        </scene>
+        <!--Sign In View Controller - Sign In-->
+        <scene sceneID="d1A-rt-Asx">
+            <objects>
+                <viewController id="XoK-zd-Xzk" customClass="SignInViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hjR-gL-GRq"/>
+                        <viewControllerLayoutGuide type="bottom" id="RcU-lV-aGf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1ic-QG-9XU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Email Address" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oIh-uJ-GIS">
+                                <rect key="frame" x="20" y="77" width="110" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dXT-Sm-VQ8">
+                                <rect key="frame" x="20" y="106" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="done"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9yQ-Eq-i2x">
+                                <rect key="frame" x="20" y="144" width="76" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ChD-X7-XmW">
+                                <rect key="frame" x="20" y="173" width="280" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKs-rc-VKt">
+                                <rect key="frame" x="45" y="211" width="205" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Sign in with Email verification">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInWithEmail:" destination="XoK-zd-Xzk" eventType="touchUpInside" id="uit-u6-6XW"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cB2-MX-kgY">
+                                <rect key="frame" x="142" y="249" width="37" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="signInWithPassword:" destination="XoK-zd-Xzk" eventType="touchUpInside" id="EdP-ZE-KEI"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Sign In" id="JeL-c0-acd"/>
+                    <connections>
+                        <outlet property="emailTextField" destination="dXT-Sm-VQ8" id="eNN-ie-api"/>
+                        <outlet property="passwordTextField" destination="ChD-X7-XmW" id="gJw-ZJ-jyy"/>
+                        <segue destination="EPJ-fM-a7o" kind="push" identifier="signInShowCodeViewSegue" id="VK6-dj-L1L"/>
+                        <segue destination="iAs-DH-6sZ" kind="modal" identifier="signInShowMainViewSegue" id="lbX-8c-sUK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Ia-3z-cTt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1428" y="670"/>
         </scene>
         <!--Sign Up View Controller - Sign Up-->
         <scene sceneID="61q-kA-XOj">
@@ -229,7 +304,7 @@
                         <outlet property="countdownTimer" destination="Wcc-sO-7wH" id="oI3-My-PJX"/>
                         <outlet property="displayEmail" destination="J6G-Ww-nqZ" id="ufR-yL-rPY"/>
                         <outlet property="resendButton" destination="XVN-p8-AlZ" id="bCP-ez-KQ3"/>
-                        <segue destination="iAs-DH-6sZ" kind="modal" identifier="CodeViewShowMainViewSegue" id="pCz-Ul-wtn"/>
+                        <segue destination="iAs-DH-6sZ" kind="modal" identifier="codeViewShowMainViewSegue" id="pCz-Ul-wtn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aFP-UV-sCz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -318,4 +393,8 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="lbX-8c-sUK"/>
+        <segue reference="VK6-dj-L1L"/>
+    </inferredMetricsTieBreakers>
 </document>

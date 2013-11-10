@@ -9,7 +9,6 @@
 #import "CodeViewController.h"
 
 @interface CodeViewController (){
-   
     NSTimer *_time;
     int _initTime;
 }
@@ -43,6 +42,7 @@
     _codeTextField.keyboardType = UIKeyboardTypeNumberPad;
     _codeTextField.delegate = self;
     
+    //Add number pad
     UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
     numberToolbar.barStyle = UIBarStyleBlackTranslucent;
     numberToolbar.items = [NSArray arrayWithObjects:
@@ -56,12 +56,12 @@
     _resendButton.hidden = true;
 }
 
-- (void)didReceiveMemoryWarning
+- (void)dealloc
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    _emailAddress = nil;
+    _lastName = nil;
+    _firstName = nil;
 }
-
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
@@ -78,8 +78,26 @@
 {
     _time = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerFireMethod) userInfo:nil repeats:YES];
     _initTime = 60;
-    _countdownTimer.hidden = false;
-    _resendButton.hidden = true;
+    _countdownTimer.hidden = NO;
+    _resendButton.hidden = YES;
+    [_resendButton setEnabled:NO];
+    
+    //Resend code to the server
+    //prepare the data
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:CheckCode];
+    [dic setObject:_codeTextField.text forKey:@"code"];
+    [dic setObject:_emailAddress forKey:@"email"];
+    [dic setObject:[NSNumber numberWithInteger:_checkType] forKey:@"checkType"];
+    
+    //if checkType is sign in, we should resend the lastname and firstname of user
+    if (_checkType == 0) {
+        [dic setObject:_firstName forKey:@"firstName"];
+        [dic setObject:_lastName forKey:@"lastName"];
+    }
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
 }
 
 - (void)timerFireMethod
@@ -89,11 +107,11 @@
     if (_initTime == 0) {
         
         [_time invalidate];
-        _resendButton.hidden = FALSE;
-        _countdownTimer.hidden = TRUE;
+        _resendButton.hidden = NO;
+        _countdownTimer.hidden = YES;
         _countdownTimer.text = @"60";
+        [_resendButton setEnabled:YES];
     }
-    
 }
 
 - (IBAction)changeEmailAction:(id)sender
@@ -112,7 +130,7 @@
     NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:CheckCode];
     [dic setObject:_codeTextField.text forKey:@"code"];
     [dic setObject:_emailAddress forKey:@"email"];
-    [dic setObject:[NSNumber numberWithInt:0] forKey:@"checkType"];
+    [dic setObject:[NSNumber numberWithInteger:_checkType] forKey:@"checkType"];
     
     [[PLServer shareInstance] sendDataWithDic:dic];
     
@@ -127,7 +145,7 @@
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     if (result) {
         //TODO:save the userid
-        [self performSegueWithIdentifier:@"CodeViewShowMainViewSegue" sender:self];
+        [self performSegueWithIdentifier:@"codeViewShowMainViewSegue" sender:self];
     }else{
         [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
     }

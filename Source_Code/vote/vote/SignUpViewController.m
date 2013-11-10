@@ -8,7 +8,7 @@
 
 #import "SignUpViewController.h"
 #import "NSString+ValidCheck.h"
-#import "codeViewController.h"
+#import "CodeViewController.h"
 
 @interface SignUpViewController ()
 
@@ -47,12 +47,6 @@
     
     [_firstNameTextField becomeFirstResponder];
 }
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 
 - (void)textFieldDone:(UITextField*)textField
 {
@@ -108,6 +102,9 @@
         CodeViewController *destViewController = segue.destinationViewController;
         //NSLog(@"%@", _emailTextField.text);
         destViewController.emailAddress = [_emailTextField.text copy];
+        destViewController.lastName = [_lastNameTextField.text copy];
+        destViewController.firstName = [_firstNameTextField.text copy];
+        destViewController.checkType = 0;
     }
 }
 
