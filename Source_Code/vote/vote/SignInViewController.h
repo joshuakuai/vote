@@ -8,7 +8,7 @@
 
 #import "BaseViewController.h"
 
-@interface SignInViewController : BaseViewController
+@interface SignInViewController : BaseViewController<PLServerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *emailTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 

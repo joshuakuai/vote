@@ -7,6 +7,8 @@
 //
 
 #import "SignInViewController.h"
+#import "NSString+ValidCheck.h"
+#import "CodeViewController.h"
 
 @interface SignInViewController ()
 
@@ -22,6 +24,9 @@
     
     //set the plankton server's delegate
     [[PLServer shareInstance] setDelegate:self];
+    
+    _emailTextField.text = @"";
+    _passwordTextField.text = @"";
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -46,14 +51,88 @@
     [textField resignFirstResponder];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"signInShowCodeViewSegue"]) {
+        CodeViewController *destViewController = segue.destinationViewController;
+        //NSLog(@"%@", _emailTextField.text);
+        destViewController.emailAddress = [_emailTextField.text copy];
+        destViewController.checkType = 1;
+    }
+}
+
 - (IBAction)signInWithEmail:(id)sender
 {
+    if (_emailTextField.text == nil || [_emailTextField.text isEqualToString:@""]) {
+        [self showErrorMessage:@"Please input your email to verify."];
+        return;
+    }
     
+    //check if the email is valid
+    if (![_emailTextField.text isValidEmail]) {
+        [self showErrorMessage:@"Email address is not valid."];
+        return;
+    }
+    
+    //all pass, prepare the data
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:SignInWithEmail];
+    [dic setObject:_emailTextField.text forKey:@"email"];
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
 }
 
 - (IBAction)signInWithPassword:(id)sender
 {
+    if (_emailTextField.text == nil || [_emailTextField.text isEqualToString:@""] ||
+        _passwordTextField.text == nil || [_passwordTextField.text isEqualToString:@""]) {
+        [self showErrorMessage:@"Please input your email and password to verify. If you forget your password or you haven't set it yet,please use the email verfication to login"];
+        return;
+    }
     
+    //check if the email is valid
+    if (![_emailTextField.text isValidEmail]) {
+        [self showErrorMessage:@"Email address is not valid."];
+        return;
+    }
+}
+
+#pragma mark - PLServer delegate
+- (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
+{
+    [self dismissLoadingView];
+    NSDictionary *cacheDic = (NSDictionary*)jsonString;
+    BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
+    if (result) {
+        //check if userid is avaliable
+        if ([cacheDic valueForKey:@"userid"]) {
+            //login with password
+            //TODO:save the userid
+            [self performSegueWithIdentifier:@"signInShowMainViewSegue" sender:self];
+        }else{
+            [self performSegueWithIdentifier:@"signInShowCodeViewSegue" sender:self];
+        }
+    }else{
+        [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
+    }
+}
+
+- (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
+{
+    [self dismissLoadingView];
+    if (error) {
+        [self showErrorMessage:[error description]];
+    }else{
+        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
+    }
+}
+
+- (void)connectionClosed:(PLServer *)plServer
+{
+    if (isShowingLoadingView) {
+        [self dismissLoadingView];
+        [self showErrorMessage:@"Lost connection,check your internet connection."];
+    }
 }
 
 @end
