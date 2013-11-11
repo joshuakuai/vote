@@ -21,6 +21,9 @@
     self.navigationController.navigationBarHidden = YES;
     
     //check if the user has already logined in
+    if ([[NSUserDefaults standardUserDefaults] integerForKey:@"userid"]) {
+        [self performSegueWithIdentifier:@"rootViewShowMainViewSegue" sender:self];
+    }
 }
 
 - (void)viewDidLoad

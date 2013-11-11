@@ -30,6 +30,8 @@
 {
     [super viewWillDisappear:animated];
     
+    [self dismissLoadingView];
+    [_locationManager stopUpdatingLocation];
     [[PLServer shareInstance] closeConnection];
 }
 
@@ -49,6 +51,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _voteSearchBar.delegate = self;
 }
 
 - (void)startRefreshVoteNearBy
@@ -63,12 +67,37 @@
     [_locationManager startUpdatingLocation];
 }
 
+#pragma mark - Search bar delegate
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = YES;
+    
+    //show the search result view
+}
+
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton = NO;
+    
+    //hide the search reult view
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    [searchBar resignFirstResponder];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    //begin search the
+}
+
 #pragma mark - Location Manager delegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     [_locationManager stopUpdatingLocation];
     
-    
+    //get current location and prepare the data
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
