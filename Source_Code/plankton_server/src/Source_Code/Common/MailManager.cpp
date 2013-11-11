@@ -57,7 +57,7 @@ void MailManager::sendMail(string mailContent, string destination,
 
 	//set up the command mail string
 	string commandString =
-			"cat " + contentFileName
+			"timeout 8s cat " + contentFileName
 					+ " | msmtp --host=smtp.gmail.com --port=587 --tls=on --tls-trust-file="
 					+ this->trustFileName
 					+ " --timeout=3 --protocol=smtp --auth=on --user=" + from

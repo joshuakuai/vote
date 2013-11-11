@@ -25,7 +25,6 @@ void ConfigureManager::save(){
 	if(!configureFile.is_open()){
 		PLog::logWarning("保存配置文件失败!");
 	}else{
-		Json::Value value;
 		value["Encrypt"] = this->encrypt;
 		value["EncryptKey"] = this->encryptKey;
 		value["PLogLevel"] = this->plogLevel;

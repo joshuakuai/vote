@@ -63,7 +63,7 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 		case SignInWithEmail: {
 			string email = receivedValue["email"].asString();
 
-			sendValue["msg"] = this->signInWithEmail(email);
+			sendValue["success"] = this->signInWithEmail(email);
 			sendValue["msg"] = this->errorString;
 			return writer.write(sendValue);
 		}
@@ -73,8 +73,7 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			string lastName = receivedValue["lastName"].asString();
 			int resendType = receivedValue["resendType"].asInt();
 
-			sendValue["success"] = this->resendCode(email, firstName, lastName,
-					resendType);
+			sendValue["success"] = this->resendCode(email, firstName, lastName,resendType);
 			sendValue["msg"] = this->errorString;
 			return writer.write(sendValue);
 		}
@@ -128,6 +127,8 @@ bool LLLogicVote::checkCode(string email, string code, int checkType,int &userID
 
 	//set return
 	User userObject(this->database);
+
+	userObject.email = email;
 
 	if(checkType == 1){
 		//check if the email is exsit if use wanna use email to login
@@ -202,6 +203,12 @@ bool LLLogicVote::signInWithEmail(string email) {
 	//set up the data
 	userObject->email = email;
 
+	//check if the email is exsit if use wanna use email to login
+	if (!userObject->checkIfEmailExist()) {
+		this->errorString = "This user does not exist.";
+		return false;
+	}
+
 	//put this user into the sign in holding list, wait until the code confirm success
 	string code = this->codeManager->getCode(userObject);
 
@@ -233,6 +240,7 @@ bool LLLogicVote::uploadToken(int userID,string token)
 
 bool LLLogicVote::resendCode(string email, string firstName, string lastName,int resendType)
 {
+	cout<<"The content is"<<email<<firstName<<lastName<<endl;
 	if(resendType == 0){
 		//sign up resend
 		return this->signUp(firstName,lastName,email);
