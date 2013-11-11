@@ -84,10 +84,10 @@
     
     //Resend code to the server
     //prepare the data
-    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:CheckCode];
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:ResendCode];
     [dic setObject:_codeTextField.text forKey:@"code"];
     [dic setObject:_emailAddress forKey:@"email"];
-    [dic setObject:[NSNumber numberWithInteger:_checkType] forKey:@"checkType"];
+    [dic setObject:[NSNumber numberWithInteger:_checkType] forKey:@"resendType"];
     
     //if checkType is sign in, we should resend the lastname and firstname of user
     if (_checkType == 0) {
