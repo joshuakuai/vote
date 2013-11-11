@@ -21,6 +21,9 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 		//根据请求类型进行执行
 		int requestType = receivedValue["requestType"].asInt();
 
+		//set request type
+		sendValue["requestType"] = requestType;
+
 		switch (requestType) {
 		case SignUp: {
 			string firstName = receivedValue["firstName"].asString();
@@ -28,8 +31,8 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			string email = receivedValue["email"].asString();
 
 			sendValue["success"] = this->signUp(firstName, lastName, email);
-			sendValue["msg"] = this->errorString;
-			return writer.write(sendValue);
+
+			break;
 		}
 		case CheckCode: {
 			string email = receivedValue["email"].asString();
@@ -42,11 +45,9 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			if(sendValue["success"].asBool()){
 				sendValue["userid"] = userID;
 				sendValue["hasPassword"] = hasPassword;
-			}else{
-				sendValue["msg"] = this->errorString;
 			}
 
-			return writer.write(sendValue);
+			break;
 		}
 		case SignInWithPassword: {
 			string email = receivedValue["email"].asString();
@@ -57,15 +58,14 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			if(sendValue["success"].asBool()){
 				sendValue["userid"] = userID;
 			}
-			sendValue["msg"] = this->errorString;
-			return writer.write(sendValue);
+
+			break;
 		}
 		case SignInWithEmail: {
 			string email = receivedValue["email"].asString();
 
 			sendValue["success"] = this->signInWithEmail(email);
-			sendValue["msg"] = this->errorString;
-			return writer.write(sendValue);
+			break;
 		}
 		case ResendCode: {
 			string email = receivedValue["email"].asString();
@@ -74,8 +74,7 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			int resendType = receivedValue["resendType"].asInt();
 
 			sendValue["success"] = this->resendCode(email, firstName, lastName,resendType);
-			sendValue["msg"] = this->errorString;
-			return writer.write(sendValue);
+			break;
 		}
 
 		default: {
@@ -83,9 +82,15 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			break;
 		}
 		}
+	}else{
+		return "{\"msg\":\"Invalid jsonString\",\"success\":false}";
 	}
 
-	return "{\"msg\":\"Invalid jsonString\",\"success\":false}";
+	if(!sendValue["msg"].asBool()){
+		sendValue["msg"] = this->errorString;
+	}
+
+	return writer.write(sendValue);
 }
 
 //注册
