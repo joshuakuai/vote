@@ -7,7 +7,10 @@
 //
 
 #import "BaseViewController.h"
+#include <CoreLocation/CoreLocation.h>
 
-@interface searchVoteViewController : BaseViewController<PLServerDelegate>
+@interface searchVoteViewController : BaseViewController<PLServerDelegate,CLLocationManagerDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *locationServiceUnavailableLabel;
+@property (weak, nonatomic) IBOutlet UISearchBar *voteSearchBar;
 
 @end

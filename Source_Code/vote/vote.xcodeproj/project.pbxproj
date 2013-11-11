@@ -32,6 +32,7 @@
 		AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */; };
 		AAAB414E183065B000A968EA /* searchVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB414D183065B000A968EA /* searchVoteViewController.m */; };
 		AAAB4151183079BC00A968EA /* NSDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */; };
+		AAAB415318307B5B00A968EA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAAB415218307B5B00A968EA /* CoreLocation.framework */; };
 		E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E909B0A51829E8FE00360DB2 /* CodeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		AAAB414D183065B000A968EA /* searchVoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = searchVoteViewController.m; sourceTree = "<group>"; };
 		AAAB414F183079BC00A968EA /* NSDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+PLPackage.h"; sourceTree = "<group>"; };
 		AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+PLPackage.m"; sourceTree = "<group>"; };
+		AAAB415218307B5B00A968EA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		E909B0A41829E8FE00360DB2 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
 		E909B0A51829E8FE00360DB2 /* CodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAAB415318307B5B00A968EA /* CoreLocation.framework in Frameworks */,
 				AA3F8FD81826B00C007ABF9B /* CoreGraphics.framework in Frameworks */,
 				AA3F8FDA1826B00C007ABF9B /* UIKit.framework in Frameworks */,
 				AA3F8FD61826B00C007ABF9B /* Foundation.framework in Frameworks */,
@@ -137,6 +140,7 @@
 		AA3F8FD41826B00C007ABF9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AAAB415218307B5B00A968EA /* CoreLocation.framework */,
 				AA3F8FD51826B00C007ABF9B /* Foundation.framework */,
 				AA3F8FD71826B00C007ABF9B /* CoreGraphics.framework */,
 				AA3F8FD91826B00C007ABF9B /* UIKit.framework */,
@@ -148,16 +152,11 @@
 		AA3F8FDB1826B00C007ABF9B /* vote */ = {
 			isa = PBXGroup;
 			children = (
+				AAAB41541830955200A968EA /* UserManagementControllers */,
 				AA58D3F2182EBF1500D9B9A5 /* Base */,
 				AA3F90161826E96A007ABF9B /* Category */,
 				AA3F90061826D1A9007ABF9B /* RootViewController.h */,
 				AA3F90071826D1A9007ABF9B /* RootViewController.m */,
-				AA3F90091826D7F7007ABF9B /* SignUpViewController.h */,
-				AA3F900A1826D7F7007ABF9B /* SignUpViewController.m */,
-				E909B0A41829E8FE00360DB2 /* CodeViewController.h */,
-				E909B0A51829E8FE00360DB2 /* CodeViewController.m */,
-				AA58D3F618301A0B00D9B9A5 /* SignInViewController.h */,
-				AA58D3F718301A0B00D9B9A5 /* SignInViewController.m */,
 				AAAB414C183065B000A968EA /* searchVoteViewController.h */,
 				AAAB414D183065B000A968EA /* searchVoteViewController.m */,
 				AA3F8FE41826B00C007ABF9B /* AppDelegate.h */,
@@ -245,6 +244,19 @@
 				AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */,
 			);
 			name = Base;
+			sourceTree = "<group>";
+		};
+		AAAB41541830955200A968EA /* UserManagementControllers */ = {
+			isa = PBXGroup;
+			children = (
+				AA3F90091826D7F7007ABF9B /* SignUpViewController.h */,
+				AA3F900A1826D7F7007ABF9B /* SignUpViewController.m */,
+				E909B0A41829E8FE00360DB2 /* CodeViewController.h */,
+				E909B0A51829E8FE00360DB2 /* CodeViewController.m */,
+				AA58D3F618301A0B00D9B9A5 /* SignInViewController.h */,
+				AA58D3F718301A0B00D9B9A5 /* SignInViewController.m */,
+			);
+			name = UserManagementControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

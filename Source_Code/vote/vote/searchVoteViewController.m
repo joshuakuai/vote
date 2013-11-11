@@ -8,7 +8,9 @@
 
 #import "searchVoteViewController.h"
 
-@interface searchVoteViewController ()
+@interface searchVoteViewController (){
+    CLLocationManager *_locationManager;
+}
 
 @end
 
@@ -31,10 +33,47 @@
     [[PLServer shareInstance] closeConnection];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //try to get the user's location,if the 
+    if ([CLLocationManager locationServicesEnabled]) {
+        [self startRefreshVoteNearBy];
+        _locationServiceUnavailableLabel.hidden = YES;
+    }else{
+        _locationServiceUnavailableLabel.hidden = NO;
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+}
+
+- (void)startRefreshVoteNearBy
+{
+    if (!_locationManager) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+    }
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
+    
+    [_locationManager startUpdatingLocation];
+}
+
+#pragma mark - Location Manager delegate
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    [_locationManager stopUpdatingLocation];
+    
+    
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    [self showErrorMessage:@"Failed to fetch vote near by, please check your setting and network."];
 }
 
 #pragma mark - PLServer delegate

@@ -314,7 +314,7 @@
             </objects>
             <point key="canvasLocation" x="1946" y="-388"/>
         </scene>
-        <!--View Controller - Item 1-->
+        <!--View Controller - Initiate-->
         <scene sceneID="9Hw-Bk-iPk">
             <objects>
                 <viewController id="f3o-wZ-8tB" sceneMemberID="viewController">
@@ -327,7 +327,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="TIl-Ro-0aP"/>
+                    <tabBarItem key="tabBarItem" title="Initiate" id="TIl-Ro-0aP"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K23-7v-oVG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -354,10 +354,10 @@
             </objects>
             <point key="canvasLocation" x="2491" y="255"/>
         </scene>
-        <!--View Controller - Attend-->
+        <!--Search Vote View Controller-->
         <scene sceneID="bjv-WM-RqS">
             <objects>
-                <viewController id="rRZ-pZ-Vwi" sceneMemberID="viewController">
+                <viewController id="rRZ-pZ-Vwi" customClass="searchVoteViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MPa-al-QJS"/>
                         <viewControllerLayoutGuide type="bottom" id="IR0-zX-3gH"/>
@@ -365,15 +365,33 @@
                     <view key="view" contentMode="scaleToFill" id="8gS-bm-H46">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search by vote ID..." translatesAutoresizingMaskIntoConstraints="NO" id="NOK-el-0hu">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Location Service is not available now" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y0S-WW-VyZ">
+                                <rect key="frame" x="18" y="263" width="284" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Attend" id="ubs-C4-DQc"/>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="ubs-C4-DQc"/>
+                    <connections>
+                        <outlet property="locationServiceUnavailableLabel" destination="y0S-WW-VyZ" id="4FM-tX-cyT"/>
+                        <outlet property="voteSearchBar" destination="NOK-el-0hu" id="spL-hl-wnT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iB7-0d-bWd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3129" y="255"/>
         </scene>
-        <!--View Controller - Item 2-->
+        <!--View Controller-->
         <scene sceneID="Lo7-Ak-apR">
             <objects>
                 <viewController id="Nt8-Sc-TU2" sceneMemberID="viewController">
@@ -386,7 +404,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 2" id="yaO-g8-8uu"/>
+                    <tabBarItem key="tabBarItem" systemItem="history" id="yaO-g8-8uu"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rlX-q7-3zq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -417,7 +435,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="829-Ub-LCV"/>
-        <segue reference="2iS-F0-yxh"/>
+        <segue reference="VK6-dj-L1L"/>
+        <segue reference="lbX-8c-sUK"/>
     </inferredMetricsTieBreakers>
 </document>

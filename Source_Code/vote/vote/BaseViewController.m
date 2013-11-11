@@ -38,8 +38,8 @@
         loadingView = processView;
         [processView show];
     }
-    
-    isShowingLoadingView = YES;
+
+    isShowingLoadingView = YES;    
 }
 
 - (void)dismissLoadingView
