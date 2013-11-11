@@ -54,7 +54,6 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"signInShowCodeViewSegue"]) {
         CodeViewController *destViewController = segue.destinationViewController;
-        //NSLog(@"%@", _emailTextField.text);
         destViewController.emailAddress = [_emailTextField.text copy];
         destViewController.checkType = 1;
     }
