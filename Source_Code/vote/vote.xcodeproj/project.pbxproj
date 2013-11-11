@@ -7,6 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AA3A28621831314B004B8791 /* intimate.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A284D1831314B004B8791 /* intimate.png */; };
+		AA3A28631831314B004B8791 /* 数字圆圈颜色K50.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A284E1831314B004B8791 /* 数字圆圈颜色K50.png */; };
+		AA3A28641831314B004B8791 /* 灰暂倯.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A284F1831314B004B8791 /* 灰暂倯.png */; };
+		AA3A28651831314B004B8791 /* 灰空箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28501831314B004B8791 /* 灰空箭头.png */; };
+		AA3A28661831314B004B8791 /* 灰色 CMYK K50.doc in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28511831314B004B8791 /* 灰色 CMYK K50.doc */; };
+		AA3A28671831314B004B8791 /* location_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28521831314B004B8791 /* location_arrow.png */; };
+		AA3A28681831314B004B8791 /* 灰色箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28531831314B004B8791 /* 灰色箭头.png */; };
+		AA3A28691831314B004B8791 /* 红空箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28541831314B004B8791 /* 红空箭头.png */; };
+		AA3A286A1831314B004B8791 /* 红色圆角四边形14mm.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28551831314B004B8791 /* 红色圆角四边形14mm.png */; };
+		AA3A286B1831314B004B8791 /* 红色圆角四边形7.5mm.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28561831314B004B8791 /* 红色圆角四边形7.5mm.png */; };
+		AA3A286C1831314B004B8791 /* 红色禁止.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28571831314B004B8791 /* 红色禁止.png */; };
+		AA3A286D1831314B004B8791 /* 红色箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28581831314B004B8791 /* 红色箭头.png */; };
+		AA3A286E1831314B004B8791 /* 绿色箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28591831314B004B8791 /* 绿色箭头.png */; };
+		AA3A286F1831314B004B8791 /* 蓝底勾.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A285A1831314B004B8791 /* 蓝底勾.png */; };
+		AA3A28701831314B004B8791 /* 蓝空箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A285B1831314B004B8791 /* 蓝空箭头.png */; };
+		AA3A28711831314B004B8791 /* 蓝色椭圆.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A285C1831314B004B8791 /* 蓝色椭圆.png */; };
+		AA3A28721831314B004B8791 /* 蓝色箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A285D1831314B004B8791 /* 蓝色箭头.png */; };
+		AA3A28731831314B004B8791 /* 黄空箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A285E1831314B004B8791 /* 黄空箭头.png */; };
+		AA3A28741831314B004B8791 /* 黄色箭头.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A285F1831314B004B8791 /* 黄色箭头.png */; };
+		AA3A28751831314B004B8791 /* 黑底勾.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28601831314B004B8791 /* 黑底勾.png */; };
+		AA3A28761831314B004B8791 /* 黑播放.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A28611831314B004B8791 /* 黑播放.png */; };
+		AA3A287B1831425F004B8791 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3A287A1831425F004B8791 /* QuartzCore.framework */; };
+		AA3A288218314641004B8791 /* EGORefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A287E18314641004B8791 /* EGORefreshTableFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		AA3A288318314641004B8791 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3A288018314641004B8791 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		AA3A288D18315602004B8791 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A288518315602004B8791 /* blackArrow.png */; };
+		AA3A288E18315602004B8791 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A288618315602004B8791 /* blackArrow@2x.png */; };
+		AA3A288F18315602004B8791 /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A288718315602004B8791 /* blueArrow.png */; };
+		AA3A289018315602004B8791 /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A288818315602004B8791 /* blueArrow@2x.png */; };
+		AA3A289118315602004B8791 /* grayArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A288918315602004B8791 /* grayArrow.png */; };
+		AA3A289218315602004B8791 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A288A18315602004B8791 /* grayArrow@2x.png */; };
+		AA3A289318315602004B8791 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A288B18315602004B8791 /* whiteArrow.png */; };
+		AA3A289418315602004B8791 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = AA3A288C18315602004B8791 /* whiteArrow@2x.png */; };
 		AA3F8FD61826B00C007ABF9B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3F8FD51826B00C007ABF9B /* Foundation.framework */; };
 		AA3F8FD81826B00C007ABF9B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3F8FD71826B00C007ABF9B /* CoreGraphics.framework */; };
 		AA3F8FDA1826B00C007ABF9B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA3F8FD91826B00C007ABF9B /* UIKit.framework */; };
@@ -47,6 +79,41 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AA3A284D1831314B004B8791 /* intimate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = intimate.png; sourceTree = "<group>"; };
+		AA3A284E1831314B004B8791 /* 数字圆圈颜色K50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "数字圆圈颜色K50.png"; sourceTree = "<group>"; };
+		AA3A284F1831314B004B8791 /* 灰暂倯.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "灰暂倯.png"; sourceTree = "<group>"; };
+		AA3A28501831314B004B8791 /* 灰空箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "灰空箭头.png"; sourceTree = "<group>"; };
+		AA3A28511831314B004B8791 /* 灰色 CMYK K50.doc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "灰色 CMYK K50.doc"; sourceTree = "<group>"; };
+		AA3A28521831314B004B8791 /* location_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = location_arrow.png; sourceTree = "<group>"; };
+		AA3A28531831314B004B8791 /* 灰色箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "灰色箭头.png"; sourceTree = "<group>"; };
+		AA3A28541831314B004B8791 /* 红空箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "红空箭头.png"; sourceTree = "<group>"; };
+		AA3A28551831314B004B8791 /* 红色圆角四边形14mm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "红色圆角四边形14mm.png"; sourceTree = "<group>"; };
+		AA3A28561831314B004B8791 /* 红色圆角四边形7.5mm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "红色圆角四边形7.5mm.png"; sourceTree = "<group>"; };
+		AA3A28571831314B004B8791 /* 红色禁止.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "红色禁止.png"; sourceTree = "<group>"; };
+		AA3A28581831314B004B8791 /* 红色箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "红色箭头.png"; sourceTree = "<group>"; };
+		AA3A28591831314B004B8791 /* 绿色箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "绿色箭头.png"; sourceTree = "<group>"; };
+		AA3A285A1831314B004B8791 /* 蓝底勾.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蓝底勾.png"; sourceTree = "<group>"; };
+		AA3A285B1831314B004B8791 /* 蓝空箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蓝空箭头.png"; sourceTree = "<group>"; };
+		AA3A285C1831314B004B8791 /* 蓝色椭圆.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蓝色椭圆.png"; sourceTree = "<group>"; };
+		AA3A285D1831314B004B8791 /* 蓝色箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蓝色箭头.png"; sourceTree = "<group>"; };
+		AA3A285E1831314B004B8791 /* 黄空箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "黄空箭头.png"; sourceTree = "<group>"; };
+		AA3A285F1831314B004B8791 /* 黄色箭头.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "黄色箭头.png"; sourceTree = "<group>"; };
+		AA3A28601831314B004B8791 /* 黑底勾.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "黑底勾.png"; sourceTree = "<group>"; };
+		AA3A28611831314B004B8791 /* 黑播放.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "黑播放.png"; sourceTree = "<group>"; };
+		AA3A287A1831425F004B8791 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		AA3A287D18314641004B8791 /* EGORefreshTableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableFooterView.h; sourceTree = "<group>"; };
+		AA3A287E18314641004B8791 /* EGORefreshTableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableFooterView.m; sourceTree = "<group>"; };
+		AA3A287F18314641004B8791 /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		AA3A288018314641004B8791 /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		AA3A288118314641004B8791 /* EGOViewCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGOViewCommon.h; sourceTree = "<group>"; };
+		AA3A288518315602004B8791 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
+		AA3A288618315602004B8791 /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
+		AA3A288718315602004B8791 /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
+		AA3A288818315602004B8791 /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
+		AA3A288918315602004B8791 /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayArrow.png; sourceTree = "<group>"; };
+		AA3A288A18315602004B8791 /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
+		AA3A288B18315602004B8791 /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
+		AA3A288C18315602004B8791 /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		AA3F8FD21826B00C007ABF9B /* vote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA3F8FD51826B00C007ABF9B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AA3F8FD71826B00C007ABF9B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -99,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA3A287B1831425F004B8791 /* QuartzCore.framework in Frameworks */,
 				AAAB415318307B5B00A968EA /* CoreLocation.framework in Frameworks */,
 				AA3F8FD81826B00C007ABF9B /* CoreGraphics.framework in Frameworks */,
 				AA3F8FDA1826B00C007ABF9B /* UIKit.framework in Frameworks */,
@@ -119,6 +187,70 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AA3A284B1831314B004B8791 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA3A288418315602004B8791 /* EGO_Resources */,
+				AA3A284C1831314B004B8791 /* UI */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		AA3A284C1831314B004B8791 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				AA3A284D1831314B004B8791 /* intimate.png */,
+				AA3A284E1831314B004B8791 /* 数字圆圈颜色K50.png */,
+				AA3A284F1831314B004B8791 /* 灰暂倯.png */,
+				AA3A28501831314B004B8791 /* 灰空箭头.png */,
+				AA3A28511831314B004B8791 /* 灰色 CMYK K50.doc */,
+				AA3A28521831314B004B8791 /* location_arrow.png */,
+				AA3A28531831314B004B8791 /* 灰色箭头.png */,
+				AA3A28541831314B004B8791 /* 红空箭头.png */,
+				AA3A28551831314B004B8791 /* 红色圆角四边形14mm.png */,
+				AA3A28561831314B004B8791 /* 红色圆角四边形7.5mm.png */,
+				AA3A28571831314B004B8791 /* 红色禁止.png */,
+				AA3A28581831314B004B8791 /* 红色箭头.png */,
+				AA3A28591831314B004B8791 /* 绿色箭头.png */,
+				AA3A285A1831314B004B8791 /* 蓝底勾.png */,
+				AA3A285B1831314B004B8791 /* 蓝空箭头.png */,
+				AA3A285C1831314B004B8791 /* 蓝色椭圆.png */,
+				AA3A285D1831314B004B8791 /* 蓝色箭头.png */,
+				AA3A285E1831314B004B8791 /* 黄空箭头.png */,
+				AA3A285F1831314B004B8791 /* 黄色箭头.png */,
+				AA3A28601831314B004B8791 /* 黑底勾.png */,
+				AA3A28611831314B004B8791 /* 黑播放.png */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		AA3A287C18314641004B8791 /* EGO */ = {
+			isa = PBXGroup;
+			children = (
+				AA3A287D18314641004B8791 /* EGORefreshTableFooterView.h */,
+				AA3A287E18314641004B8791 /* EGORefreshTableFooterView.m */,
+				AA3A287F18314641004B8791 /* EGORefreshTableHeaderView.h */,
+				AA3A288018314641004B8791 /* EGORefreshTableHeaderView.m */,
+				AA3A288118314641004B8791 /* EGOViewCommon.h */,
+			);
+			path = EGO;
+			sourceTree = "<group>";
+		};
+		AA3A288418315602004B8791 /* EGO_Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA3A288518315602004B8791 /* blackArrow.png */,
+				AA3A288618315602004B8791 /* blackArrow@2x.png */,
+				AA3A288718315602004B8791 /* blueArrow.png */,
+				AA3A288818315602004B8791 /* blueArrow@2x.png */,
+				AA3A288918315602004B8791 /* grayArrow.png */,
+				AA3A288A18315602004B8791 /* grayArrow@2x.png */,
+				AA3A288B18315602004B8791 /* whiteArrow.png */,
+				AA3A288C18315602004B8791 /* whiteArrow@2x.png */,
+			);
+			path = EGO_Resources;
+			sourceTree = "<group>";
+		};
 		AA3F8FC91826B00C007ABF9B = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +272,7 @@
 		AA3F8FD41826B00C007ABF9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AA3A287A1831425F004B8791 /* QuartzCore.framework */,
 				AAAB415218307B5B00A968EA /* CoreLocation.framework */,
 				AA3F8FD51826B00C007ABF9B /* Foundation.framework */,
 				AA3F8FD71826B00C007ABF9B /* CoreGraphics.framework */,
@@ -164,6 +297,7 @@
 				AA3F8FE71826B00C007ABF9B /* Images.xcassets */,
 				AA3F90041826B55B007ABF9B /* Storyboard.storyboard */,
 				AA3F90171826EE61007ABF9B /* libs */,
+				AA3A284B1831314B004B8791 /* resources */,
 				AA3F8FDC1826B00C007ABF9B /* Supporting Files */,
 				AA3F8FF41826B00C007ABF9B /* voteTests */,
 			);
@@ -212,6 +346,7 @@
 		AA3F90171826EE61007ABF9B /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				AA3A287C18314641004B8791 /* EGO */,
 				AA3F90181826EE61007ABF9B /* PlanktonServerSDK */,
 			);
 			path = libs;
@@ -334,9 +469,38 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA3A286B1831314B004B8791 /* 红色圆角四边形7.5mm.png in Resources */,
 				AA3F8FE01826B00C007ABF9B /* InfoPlist.strings in Resources */,
+				AA3A28661831314B004B8791 /* 灰色 CMYK K50.doc in Resources */,
+				AA3A289218315602004B8791 /* grayArrow@2x.png in Resources */,
+				AA3A28671831314B004B8791 /* location_arrow.png in Resources */,
+				AA3A286C1831314B004B8791 /* 红色禁止.png in Resources */,
+				AA3A28751831314B004B8791 /* 黑底勾.png in Resources */,
+				AA3A28761831314B004B8791 /* 黑播放.png in Resources */,
+				AA3A289318315602004B8791 /* whiteArrow.png in Resources */,
+				AA3A288D18315602004B8791 /* blackArrow.png in Resources */,
+				AA3A28651831314B004B8791 /* 灰空箭头.png in Resources */,
+				AA3A28741831314B004B8791 /* 黄色箭头.png in Resources */,
+				AA3A28631831314B004B8791 /* 数字圆圈颜色K50.png in Resources */,
+				AA3A286F1831314B004B8791 /* 蓝底勾.png in Resources */,
+				AA3A289118315602004B8791 /* grayArrow.png in Resources */,
+				AA3A288E18315602004B8791 /* blackArrow@2x.png in Resources */,
 				AA3F8FE81826B00C007ABF9B /* Images.xcassets in Resources */,
+				AA3A28641831314B004B8791 /* 灰暂倯.png in Resources */,
+				AA3A28621831314B004B8791 /* intimate.png in Resources */,
+				AA3A28731831314B004B8791 /* 黄空箭头.png in Resources */,
+				AA3A286D1831314B004B8791 /* 红色箭头.png in Resources */,
+				AA3A28681831314B004B8791 /* 灰色箭头.png in Resources */,
 				AA3F90051826B55B007ABF9B /* Storyboard.storyboard in Resources */,
+				AA3A286E1831314B004B8791 /* 绿色箭头.png in Resources */,
+				AA3A288F18315602004B8791 /* blueArrow.png in Resources */,
+				AA3A28701831314B004B8791 /* 蓝空箭头.png in Resources */,
+				AA3A289418315602004B8791 /* whiteArrow@2x.png in Resources */,
+				AA3A28711831314B004B8791 /* 蓝色椭圆.png in Resources */,
+				AA3A289018315602004B8791 /* blueArrow@2x.png in Resources */,
+				AA3A28691831314B004B8791 /* 红空箭头.png in Resources */,
+				AA3A286A1831314B004B8791 /* 红色圆角四边形14mm.png in Resources */,
+				AA3A28721831314B004B8791 /* 蓝色箭头.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +519,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA3A288318314641004B8791 /* EGORefreshTableHeaderView.m in Sources */,
 				AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */,
 				AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */,
 				AA3F8FE61826B00C007ABF9B /* AppDelegate.m in Sources */,
@@ -367,6 +532,7 @@
 				AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */,
 				AA3F8FE21826B00C007ABF9B /* main.m in Sources */,
 				AAAB4151183079BC00A968EA /* NSDictionary+PLPackage.m in Sources */,
+				AA3A288218314641004B8791 /* EGORefreshTableFooterView.m in Sources */,
 				AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */,
 				AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */,
 				AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */,

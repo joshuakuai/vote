@@ -8,9 +8,12 @@
 
 #import "BaseViewController.h"
 #include <CoreLocation/CoreLocation.h>
+#import "EGORefreshTableHeaderView.h"
 
-@interface searchVoteViewController : BaseViewController<PLServerDelegate,CLLocationManagerDelegate,UISearchBarDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *locationServiceUnavailableLabel;
+@interface searchVoteViewController : BaseViewController<PLServerDelegate,CLLocationManagerDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate,EGORefreshTableDelegate,UIScrollViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UISearchBar *voteSearchBar;
+@property (strong, nonatomic) UITableView *voteByLocationTableView;
+@property (strong, nonatomic) NSMutableArray *voteByLocationArray;
 
 @end
