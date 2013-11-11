@@ -14,13 +14,21 @@
 
 @implementation searchVoteViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)viewWillAppear:(BOOL)animated
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
+    
+    //set the plankton server's delegate
+    [[PLServer shareInstance] setDelegate:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [[PLServer shareInstance] closeConnection];
 }
 
 - (void)viewDidLoad
@@ -29,10 +37,36 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
+#pragma mark - PLServer delegate
+- (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self dismissLoadingView];
+    NSDictionary *cacheDic = (NSDictionary*)jsonString;
+    BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
+    if (result) {
+        
+    }else{
+        [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
+    }
 }
+
+- (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
+{
+    [self dismissLoadingView];
+    if (error) {
+        [self showErrorMessage:[error description]];
+    }else{
+        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
+    }
+}
+
+- (void)connectionClosed:(PLServer *)plServer
+{
+    if (isShowingLoadingView) {
+        [self dismissLoadingView];
+        [self showErrorMessage:@"Lost connection,check your internet connection."];
+    }
+}
+
 
 @end

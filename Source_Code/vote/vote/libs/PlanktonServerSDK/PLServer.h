@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AsyncSocket.h"
 #import "NSMutableDictionary+PLPackage.h"
+#import "NSDictionary+PLPackage.h"
 #import "JSONKit.h"
 
 /*The main class to use to communicate with the Plankton server

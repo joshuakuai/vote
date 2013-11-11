@@ -89,7 +89,7 @@
     [dic setObject:_emailAddress forKey:@"email"];
     [dic setObject:[NSNumber numberWithInteger:_checkType] forKey:@"resendType"];
     
-    //if checkType is sign in, we should resend the lastname and firstname of user
+    //if checkType is sign up, we should resend the lastname and firstname of user
     if (_checkType == 0) {
         [dic setObject:_firstName forKey:@"firstName"];
         [dic setObject:_lastName forKey:@"lastName"];
@@ -144,7 +144,14 @@
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     if (result) {
-        //TODO:save the userid
+        //save userid
+        [[NSUserDefaults standardUserDefaults] setInteger:[[cacheDic valueForKey:@"userid"] integerValue] forKey:@"userid"];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"hasPassword"];
+        
+        if (_checkType == 1 && [[cacheDic valueForKey:@"hasPassword"] boolValue]) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasPassword"];
+        }
+        
         [self performSegueWithIdentifier:@"codeViewShowMainViewSegue" sender:self];
     }else{
         [self showErrorMessage:[cacheDic valueForKey:@"msg"]];

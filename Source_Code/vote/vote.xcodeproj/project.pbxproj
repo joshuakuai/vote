@@ -31,6 +31,7 @@
 		AA58D3F818301A0B00D9B9A5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F718301A0B00D9B9A5 /* SignInViewController.m */; };
 		AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */; };
 		AAAB414E183065B000A968EA /* searchVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB414D183065B000A968EA /* searchVoteViewController.m */; };
+		AAAB4151183079BC00A968EA /* NSDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */; };
 		E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E909B0A51829E8FE00360DB2 /* CodeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +86,8 @@
 		AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+PLPackage.m"; sourceTree = "<group>"; };
 		AAAB414C183065B000A968EA /* searchVoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchVoteViewController.h; sourceTree = "<group>"; };
 		AAAB414D183065B000A968EA /* searchVoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = searchVoteViewController.m; sourceTree = "<group>"; };
+		AAAB414F183079BC00A968EA /* NSDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+PLPackage.h"; sourceTree = "<group>"; };
+		AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+PLPackage.m"; sourceTree = "<group>"; };
 		E909B0A41829E8FE00360DB2 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
 		E909B0A51829E8FE00360DB2 /* CodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,7 +166,6 @@
 				AA3F90041826B55B007ABF9B /* Storyboard.storyboard */,
 				AA3F90171826EE61007ABF9B /* libs */,
 				AA3F8FDC1826B00C007ABF9B /* Supporting Files */,
-				AA3F8FF51826B00C007ABF9B /* Supporting Files */,
 				AA3F8FF41826B00C007ABF9B /* voteTests */,
 			);
 			path = vote;
@@ -183,6 +185,7 @@
 		AA3F8FF41826B00C007ABF9B /* voteTests */ = {
 			isa = PBXGroup;
 			children = (
+				AA3F8FF51826B00C007ABF9B /* Supporting Files */,
 				AA3F8FFA1826B00C007ABF9B /* voteTests.m */,
 			);
 			path = voteTests;
@@ -227,6 +230,8 @@
 				AA3F901F1826EE61007ABF9B /* Protocal.h */,
 				AA9B75FE1829BBA800970739 /* NSMutableDictionary+PLPackage.h */,
 				AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */,
+				AAAB414F183079BC00A968EA /* NSDictionary+PLPackage.h */,
+				AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */,
 			);
 			path = PlanktonServerSDK;
 			sourceTree = "<group>";
@@ -349,6 +354,7 @@
 				E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */,
 				AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */,
 				AA3F8FE21826B00C007ABF9B /* main.m in Sources */,
+				AAAB4151183079BC00A968EA /* NSDictionary+PLPackage.m in Sources */,
 				AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */,
 				AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */,
 				AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */,

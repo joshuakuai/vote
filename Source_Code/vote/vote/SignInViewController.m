@@ -104,9 +104,9 @@
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     if (result) {
         //check if userid is avaliable
-        if ([cacheDic valueForKey:@"userid"]) {
-            //login with password
-            //TODO:save the userid
+        if ([cacheDic getRequestType] == SignInWithPassword) {
+            [[NSUserDefaults standardUserDefaults] setObject:[cacheDic valueForKey:@"userid"] forKey:@"userid"];
+            
             [self performSegueWithIdentifier:@"signInShowMainViewSegue" sender:self];
         }else{
             [self performSegueWithIdentifier:@"signInShowCodeViewSegue" sender:self];

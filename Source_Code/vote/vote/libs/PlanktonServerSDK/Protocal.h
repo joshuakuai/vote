@@ -23,6 +23,7 @@ typedef struct _CMLPackageHead{
 }CMLPackageHead;
 
 typedef enum _VoteRequestType {
+    Unknow = -1,
     Register = 0,
     CheckCode,
     SignInWithPassword,

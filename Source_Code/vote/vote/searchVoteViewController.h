@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface searchVoteViewController : BaseViewController
+@interface searchVoteViewController : BaseViewController<PLServerDelegate>
 
 @end
