@@ -19,6 +19,8 @@
     //set up the plankton server sdk
     [PLServer setServerIP:RelServerAdd port:13145];
     [PLServer setLogicType:CML_PACKAGE_VOTE logicVersion:1];
+    
+    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:209 green:211 blue:212 alpha:1]];
         
     return YES;
 }
