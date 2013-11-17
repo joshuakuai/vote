@@ -24,6 +24,7 @@ Source_Code/CommunicationLayer/CMLSession.d \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../Common/MailManager.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/DLDatabase.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/Vote.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h \
  ../Source_Code/CommunicationLayer/../Common/PLog.h \
  ../Source_Code/CommunicationLayer/CMLPackage.h \
@@ -77,6 +78,8 @@ Source_Code/CommunicationLayer/CMLSession.d \
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/DLDatabase.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/Vote.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h:
 

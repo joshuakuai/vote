@@ -77,6 +77,24 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			break;
 		}
 
+		case SearchVote:{
+			int searchType = receivedValue["searchtype"].asInt();
+			sendValue["searchtype"] = searchType;
+
+			if(searchType == 0){
+				//get the longitude and latitude
+				double longitude = receivedValue["longitude"].asDouble();
+				double latitude = receivedValue["latitude"].asDouble();
+
+				sendValue["success"] = this->searchVoteByLocation(longitude,latitude,sendValue);
+			}else{
+				int voteid = receivedValue["voteid"].asInt();
+				sendValue["success"] = this->searchVoteByID(voteid,sendValue);
+			}
+
+			break;
+		}
+
 		default: {
 			return "{\"msg\":\"Invalid request type\",\"success\":false}";
 			break;
@@ -239,6 +257,77 @@ bool LLLogicVote::uploadToken(int userID,string token)
 		}
 	}else{
 		this->errorString = "Can't find user.";
+		return false;
+	}
+}
+
+bool LLLogicVote::searchVoteByLocation(double longitude,double latitude,Json::Value &sendValue)
+{
+	if(longitude > 180 || longitude < -180 || latitude > 90 || latitude < -90){
+		this->errorString = "Invalid location.";
+		return false;
+	}
+
+	Vote *vote = new Vote(this->database);
+	vote->longitude = longitude;
+	vote->latitude = latitude;
+
+	vector<Vote*> result = vote->indexVoteNearByLocation();
+
+	delete vote;
+
+	//establish the array in send value
+	Json::Value arrayValue(Json::arrayValue);
+
+	for(unsigned int i = 0; i<result.size();i++){
+		Vote *tmpVote = result[i];
+
+		Json::Value arrayItemValue;
+		arrayItemValue["initiator"] = tmpVote->initiator;
+		arrayItemValue["voteid"] = tmpVote->voteid;
+		arrayItemValue["color"] = tmpVote->colorIndex;
+
+		arrayValue.append(arrayItemValue);
+
+		delete tmpVote;
+	}
+
+	sendValue["votelist"] = arrayValue;
+
+	result.clear();
+
+	return true;
+}
+
+bool LLLogicVote::searchVoteByID(int voteid,Json::Value &sendValue)
+{
+	Vote *tmpVote = new Vote(this->database);
+	tmpVote->voteid = voteid;
+
+	//get the vote
+	if(tmpVote->getVoteByID()){
+		//check if this vote has fnished
+		time_t currentTime = time(NULL);
+		double timeSpan = difftime(currentTime, tmpVote->endTime);
+		if(tmpVote->isFnished == true || timeSpan > 0){
+			this->errorString = "This vote even has already finished.";
+			return false;
+		}
+
+		//establish the array in send value
+		Json::Value arrayValue(Json::arrayValue);
+		Json::Value arrayItem;
+		arrayItem["initiator"] = tmpVote->initiator;
+		arrayItem["voteid"] = tmpVote->voteid;
+		arrayItem["color"] = tmpVote->colorIndex;
+
+		arrayValue.append(arrayItem);
+		sendValue["votelist"] = arrayValue;
+
+		return true;
+	}else{
+		this->errorString = tmpVote->errorMessage;
+		delete tmpVote;
 		return false;
 	}
 }

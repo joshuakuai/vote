@@ -12,6 +12,7 @@
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <ctime>
 
 using namespace std;
 
@@ -64,11 +65,38 @@ public:
 
 	static string int_to_string(const int& input)
 	{
+		return Converter::double_to_string(input);
+	}
+
+	static string double_to_string(const double& input)
+	{
 		ostringstream convert;
 
 		convert<<input;
 
 		return convert.str();
+	}
+
+	static double string_to_double(const string& input)
+	{
+		return atof(input.c_str());
+	}
+
+	static string time_t_to_mysql_datetime_string(const time_t time)
+	{
+		tm * ptm = localtime(&time);
+
+		char buffer[32];
+		strftime(buffer,32,"%Y-%m-%d %H:%M:%S",ptm);
+
+		return string(buffer);
+	}
+
+	static time_t mysql_datetime_string_to_time_t(const string& input)
+	{
+		struct tm tmlol;
+		strptime(input.c_str(),"Y%-m%-d% %H-%M-%S",&tmlol);
+		return mktime(&tmlol);
 	}
 };
 

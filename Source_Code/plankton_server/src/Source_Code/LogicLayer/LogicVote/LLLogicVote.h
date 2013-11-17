@@ -15,6 +15,7 @@
 #include "../../Lib/json.h"
 #include "../../Common/MailManager.h"
 #include "User.h"
+#include "Vote.h"
 #include "CodeManager.h"
 #include <list>
 
@@ -23,12 +24,14 @@ using namespace std;
 class LLLogicVote:public LLLogicBase {
 public:
 	typedef enum _VoteRequestType{
+		Unknow = -1,
 		SignUp = 0,
 		CheckCode,
 		SignInWithPassword,
 		SignInWithEmail,
 		ResendCode,
-		UploadToken
+		UploadToken,
+		SearchVote
 	}VoteRequestType;
 
 	LLLogicVote(){
@@ -68,6 +71,12 @@ private:
 
 	//upload Token
 	bool uploadToken(int userID,string token);
+
+	//search vote by location
+	bool searchVoteByLocation(double longitude,double latitude,Json::Value &sendValue);
+
+	//search vote by id
+	bool searchVoteByID(int voteid,Json::Value &sendValue);
 
 	//登录
 	bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);

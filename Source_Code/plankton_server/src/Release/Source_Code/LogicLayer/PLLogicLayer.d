@@ -20,6 +20,7 @@ Source_Code/LogicLayer/PLLogicLayer.d \
  ../Source_Code/LogicLayer/LogicVote/../../Common/MailManager.h \
  ../Source_Code/LogicLayer/LogicVote/User.h \
  ../Source_Code/LogicLayer/LogicVote/../../DataLayer/DLDatabase.h \
+ ../Source_Code/LogicLayer/LogicVote/Vote.h \
  ../Source_Code/LogicLayer/LogicVote/CodeManager.h \
  ../Source_Code/LogicLayer/../Common/PLog.h
 
@@ -60,6 +61,8 @@ Source_Code/LogicLayer/PLLogicLayer.d \
 ../Source_Code/LogicLayer/LogicVote/User.h:
 
 ../Source_Code/LogicLayer/LogicVote/../../DataLayer/DLDatabase.h:
+
+../Source_Code/LogicLayer/LogicVote/Vote.h:
 
 ../Source_Code/LogicLayer/LogicVote/CodeManager.h:
 
