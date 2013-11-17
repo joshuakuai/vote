@@ -8,11 +8,11 @@
 
 #import "searchVoteViewController.h"
 #import "VoteSearchResultCell.h"
-#import "Vote.h"
 
 @interface searchVoteViewController (){
     CLLocationManager *_locationManager;
     EGORefreshTableHeaderView *_refreshHeaderView;
+    VoteSearchResultCell *_voteByIDResultView;
     BOOL _isReloading;
     BOOL _isAutoScroll;
 }
@@ -60,16 +60,16 @@
 {
     [super viewDidLoad];
     
-    _voteSearchBar.delegate = self;
+    self.voteSearchBar.delegate = self;
     
-    _voteByLocationArray = [[NSMutableArray alloc] initWithCapacity:3];
+    self.voteByLocationArray = [[NSMutableArray alloc] initWithCapacity:3];
     
     //init the vote by location table view
-    _voteByLocationTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, 320, ScreenHeigh-44) style:UITableViewStyleGrouped];
-    _voteByLocationTableView.delegate = self;
-    _voteByLocationTableView.dataSource = self;
-    _voteByLocationTableView.separatorColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
-    _voteByLocationTableView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
+    self.voteByLocationTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, 320, ScreenHeigh-44) style:UITableViewStyleGrouped];
+    self.voteByLocationTableView.delegate = self;
+    self.voteByLocationTableView.dataSource = self;
+    self.voteByLocationTableView.separatorColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
+    self.voteByLocationTableView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
     
     //add refresh
     _isReloading = NO;
@@ -81,13 +81,51 @@
     [_refreshHeaderView refreshLastUpdatedDate];
     
     [self.view addSubview:_voteByLocationTableView];
+    
+    //init the vote by id view
+    _voteByIDResultView = [[VoteSearchResultCell alloc] init];
+    _voteByIDResultView.frame = CGRectMake(0, 44, _voteByIDResultView.frame.size.width, _voteByIDResultView.frame.size.height);
+    [_voteByIDResultView setHidden:YES];
+    [self.view addSubview:_voteByIDResultView];
+    
+    //hide the index label
+    _voteByIDResultView.indexCircleImageView.hidden = YES;
+    
+    //init the vote object which will store the result of searching by id
+    self.voteByIDInfo = [[Vote alloc] init];
 }
 
 - (void)dealloc
 {
-    _voteByLocationTableView = nil;
-    _voteByLocationArray = nil;
+    self.voteByLocationTableView = nil;
+    self.voteByLocationArray = nil;
+    self.voteByIDInfo = nil;
     _refreshHeaderView = nil;
+    _locationManager = nil;
+    _voteByIDResultView = nil;
+}
+
+- (void)setVoteArrayByJSONArray:(NSArray*)voteJSONArray
+{
+    NSMutableArray *tmpArray = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *voteDic in voteJSONArray) {
+        Vote* vote = [[Vote alloc] init];
+        vote.initiator = [voteDic objectForKey:@"initiator"];
+        vote.voteID = [[voteDic objectForKey:@"voteid"] integerValue];
+        vote.colorIndex = [[voteDic objectForKey:@"color"] intValue];
+        
+        [tmpArray addObject:vote];
+    }
+    
+    self.voteByLocationArray = tmpArray;
+}
+
+#pragma mark - Loading Relate
+- (void)doneLoadingVoteNearBy
+{
+    _isReloading = NO;
+    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_voteByLocationTableView];
 }
 
 - (void)refreshVoteNearByHandler
@@ -100,13 +138,6 @@
     }
     
     [_locationManager startUpdatingLocation];
-}
-
-#pragma mark - Loading Relate
-- (void)doneLoadingVoteNearBy
-{
-    _isReloading = NO;
-    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:_voteByLocationTableView];
 }
 
 #pragma mark - UIScrollViewDelegate Methods
@@ -150,7 +181,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    //request the vote data and prepare to segue to detial
+    //TODO:request the vote data and prepare to segue to detial
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -196,7 +227,7 @@
             //get the vote object
             Vote *tmpVote = [_voteByLocationArray objectAtIndex:indexPath.row];
             tmpCellView.arrowCorlor = tmpVote.colorIndex;
-            tmpCellView.initiatorLabel.text = tmpVote.initiator;
+            tmpCellView.initiatorLabel.text = [NSString stringWithFormat:@"Initiator: %@",tmpVote.initiator];
             
             [cell addSubview:tmpCellView];
         }
@@ -241,7 +272,8 @@
 {
     searchBar.showsCancelButton = YES;
     
-    //show the search result view
+    //hide the table view
+    _voteByLocationTableView.hidden = YES;
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar
@@ -249,6 +281,9 @@
     searchBar.showsCancelButton = NO;
     
     //hide the search reult view
+    //hide the table view
+    _voteByLocationTableView.hidden = NO;
+    _voteByIDResultView.hidden = YES;
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -259,6 +294,20 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     //begin search by id
+    
+    //check if the id is valid
+    if (!searchBar.text || !searchBar.text.length) {
+        [self showErrorMessage:@"The id can't be empty!"];
+        return;
+    }
+    
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:SearchVote];
+    [dic setObject:[NSNumber numberWithInt:0] forKey:@"searchtype"];
+    [dic setObject:[NSNumber numberWithInt:[searchBar.text intValue]] forKey:@"voteid"];
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
 }
 
 #pragma mark - Location Manager delegate
@@ -267,7 +316,14 @@
     [_locationManager stopUpdatingLocation];
     
     //get current location and prepare the data
-    //manager.location.coordinate.longitude
+    CLLocationCoordinate2D location = manager.location.coordinate;
+    
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:SearchVote];
+    [dic setObject:[NSNumber numberWithInt:0] forKey:@"searchtype"];
+    [dic setObject:[NSNumber numberWithDouble:location.longitude] forKey:@"longtitude"];
+    [dic setObject:[NSNumber numberWithDouble:location.latitude] forKey:@"latitude"];
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -279,13 +335,42 @@
 - (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
 {
     [self dismissLoadingView];
+    [self doneLoadingVoteNearBy];
+
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     if (result) {
         //check if is the refresh by location
-        //refresh finish
-        [self doneLoadingVoteNearBy];
+        VoteRequestType requetType = [cacheDic getRequestType];
         
+        switch (requetType) {
+            case SearchVote:{
+                //check the request type
+                if ([[cacheDic valueForKey:@"searchtype"] intValue] == 0) {
+                    //location
+                    [self setVoteArrayByJSONArray:[cacheDic objectForKey:@"votelist"]];
+                    [_voteByLocationTableView reloadData];
+                }else{
+                    NSArray *result = [cacheDic objectForKey:@"votelist"];
+                    NSDictionary *voteDic = [result objectAtIndex:0];
+                    
+                    self.voteByIDInfo.initiator = [voteDic objectForKey:@"initiator"];
+                    self.voteByIDInfo.voteID = [[voteDic objectForKey:@"voteid"] integerValue];
+                    self.voteByIDInfo.colorIndex = [[voteDic objectForKey:@"color"] intValue];
+                    
+                    _voteByIDResultView.initiatorLabel.text =[NSString stringWithFormat:@"Initiator: %@",_voteByIDInfo.initiator];
+                    _voteByIDResultView.arrowCorlor = _voteByIDInfo.colorIndex;
+                    
+                    //show the result
+                    _voteByIDResultView.hidden = NO;
+                }
+                
+                break;
+            }
+                
+            default:
+                break;
+        }
         
     }else{
         [self showErrorMessage:[cacheDic valueForKey:@"msg"]];

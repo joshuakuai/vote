@@ -19,7 +19,7 @@
     //set up the plankton server sdk
     [PLServer setServerIP:RelServerAdd port:13145];
     [PLServer setLogicType:CML_PACKAGE_VOTE logicVersion:1];
-    
+        
     return YES;
 }
 

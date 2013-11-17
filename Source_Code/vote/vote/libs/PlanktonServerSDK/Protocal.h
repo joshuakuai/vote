@@ -29,7 +29,8 @@ typedef enum _VoteRequestType {
     SignInWithPassword,
     SignInWithEmail,
     ResendCode,
-    UploadToken
+    UploadToken,
+    SearchVote
 }VoteRequestType;
 
 #endif
