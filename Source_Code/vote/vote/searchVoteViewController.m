@@ -7,6 +7,8 @@
 //
 
 #import "searchVoteViewController.h"
+#import "VoteSearchResultCell.h"
+#import "Vote.h"
 
 @interface searchVoteViewController (){
     CLLocationManager *_locationManager;
@@ -77,7 +79,6 @@
     _refreshHeaderView.delegate = self;
 	[_voteByLocationTableView addSubview:_refreshHeaderView];
     [_refreshHeaderView refreshLastUpdatedDate];
-
     
     [self.view addSubview:_voteByLocationTableView];
 }
@@ -165,15 +166,39 @@
 #pragma mark - Tableview datasource
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* identifier = @"SearchVoteCell";
+    UITableViewCell *cell = nil;
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    static NSString* emptyCellIdentifier = @"SearchVoteEmptyCell";
+    static NSString* arrowCellIdentifier = @"SearchVoteArrowCell";
     
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    if (_voteByLocationArray.count == 0) {
         
-        if (_voteByLocationArray.count == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:emptyCellIdentifier];
+        
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:emptyCellIdentifier];
+            cell.textLabel.frame = CGRectMake(0, 0, 320, 60);
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
             cell.textLabel.text  = @"No Vote avaiable near by.";
+        }
+        
+    }else{
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:arrowCellIdentifier];
+        
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:arrowCellIdentifier];
+            
+            VoteSearchResultCell *tmpCellView = [[VoteSearchResultCell alloc] init];
+        
+            tmpCellView.indexNumber = indexPath.row;
+        
+            //get the vote object
+            Vote *tmpVote = [_voteByLocationArray objectAtIndex:indexPath.row];
+            tmpCellView.arrowCorlor = tmpVote.colorIndex;
+            tmpCellView.initiatorLabel.text = tmpVote.initiator;
+            
+            [cell addSubview:tmpCellView];
         }
     }
     
@@ -242,6 +267,7 @@
     [_locationManager stopUpdatingLocation];
     
     //get current location and prepare the data
+    //manager.location.coordinate.longitude
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error

@@ -78,7 +78,6 @@ static short logicVersion;
     _sendString = [jsonString copy];
 
     //temporal request
-    //[_tcpStream connected]
     if ([_socket isConnected]) {
         [self sendData];
     }else{

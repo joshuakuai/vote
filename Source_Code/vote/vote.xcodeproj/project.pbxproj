@@ -61,6 +61,8 @@
 		AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */; };
 		AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */; };
 		AA58D3F818301A0B00D9B9A5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F718301A0B00D9B9A5 /* SignInViewController.m */; };
+		AA846832183839AC00C9B632 /* VoteSearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA846831183839AC00C9B632 /* VoteSearchResultCell.m */; };
+		AA84683618384A5600C9B632 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = AA84683518384A5600C9B632 /* Vote.m */; };
 		AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */; };
 		AAAB414E183065B000A968EA /* searchVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB414D183065B000A968EA /* searchVoteViewController.m */; };
 		AAAB4151183079BC00A968EA /* NSDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */; };
@@ -150,6 +152,10 @@
 		AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProccessView.m; sourceTree = "<group>"; };
 		AA58D3F618301A0B00D9B9A5 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		AA58D3F718301A0B00D9B9A5 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		AA846830183839AC00C9B632 /* VoteSearchResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteSearchResultCell.h; sourceTree = "<group>"; };
+		AA846831183839AC00C9B632 /* VoteSearchResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteSearchResultCell.m; sourceTree = "<group>"; };
+		AA84683418384A5600C9B632 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vote.h; sourceTree = "<group>"; };
+		AA84683518384A5600C9B632 /* Vote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vote.m; sourceTree = "<group>"; };
 		AA9B75FE1829BBA800970739 /* NSMutableDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+PLPackage.h"; sourceTree = "<group>"; };
 		AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+PLPackage.m"; sourceTree = "<group>"; };
 		AAAB414C183065B000A968EA /* searchVoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchVoteViewController.h; sourceTree = "<group>"; };
@@ -285,13 +291,13 @@
 		AA3F8FDB1826B00C007ABF9B /* vote */ = {
 			isa = PBXGroup;
 			children = (
+				AA846833183849E500C9B632 /* Model */,
+				AA84682F1838393300C9B632 /* VoteSearchControllers */,
 				AAAB41541830955200A968EA /* UserManagementControllers */,
 				AA58D3F2182EBF1500D9B9A5 /* Base */,
 				AA3F90161826E96A007ABF9B /* Category */,
 				AA3F90061826D1A9007ABF9B /* RootViewController.h */,
 				AA3F90071826D1A9007ABF9B /* RootViewController.m */,
-				AAAB414C183065B000A968EA /* searchVoteViewController.h */,
-				AAAB414D183065B000A968EA /* searchVoteViewController.m */,
 				AA3F8FE41826B00C007ABF9B /* AppDelegate.h */,
 				AA3F8FE51826B00C007ABF9B /* AppDelegate.m */,
 				AA3F8FE71826B00C007ABF9B /* Images.xcassets */,
@@ -379,6 +385,26 @@
 				AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */,
 			);
 			name = Base;
+			sourceTree = "<group>";
+		};
+		AA84682F1838393300C9B632 /* VoteSearchControllers */ = {
+			isa = PBXGroup;
+			children = (
+				AAAB414C183065B000A968EA /* searchVoteViewController.h */,
+				AAAB414D183065B000A968EA /* searchVoteViewController.m */,
+				AA846830183839AC00C9B632 /* VoteSearchResultCell.h */,
+				AA846831183839AC00C9B632 /* VoteSearchResultCell.m */,
+			);
+			name = VoteSearchControllers;
+			sourceTree = "<group>";
+		};
+		AA846833183849E500C9B632 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				AA84683418384A5600C9B632 /* Vote.h */,
+				AA84683518384A5600C9B632 /* Vote.m */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		AAAB41541830955200A968EA /* UserManagementControllers */ = {
@@ -523,8 +549,10 @@
 				AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */,
 				AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */,
 				AA3F8FE61826B00C007ABF9B /* AppDelegate.m in Sources */,
+				AA846832183839AC00C9B632 /* VoteSearchResultCell.m in Sources */,
 				AA3F90081826D1A9007ABF9B /* RootViewController.m in Sources */,
 				AAAB414E183065B000A968EA /* searchVoteViewController.m in Sources */,
+				AA84683618384A5600C9B632 /* Vote.m in Sources */,
 				AA58D3F818301A0B00D9B9A5 /* SignInViewController.m in Sources */,
 				AA3F900B1826D7F7007ABF9B /* SignUpViewController.m in Sources */,
 				AA3F90241826EE61007ABF9B /* PLServer.m in Sources */,
