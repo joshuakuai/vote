@@ -320,7 +320,7 @@
     
     NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:SearchVote];
     [dic setObject:[NSNumber numberWithInt:0] forKey:@"searchtype"];
-    [dic setObject:[NSNumber numberWithDouble:location.longitude] forKey:@"longtitude"];
+    [dic setObject:[NSNumber numberWithDouble:location.longitude] forKey:@"longitude"];
     [dic setObject:[NSNumber numberWithDouble:location.latitude] forKey:@"latitude"];
     
     [[PLServer shareInstance] sendDataWithDic:dic];
