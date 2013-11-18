@@ -21,9 +21,11 @@ VoteOption::~VoteOption() {
 }
 
 vector<VoteOption*> VoteOption::getVoteOptionsByVoteid() {
+	vector<VoteOption*> result;
+
 	if (this->idvote == -1) {
 		this->errorMessage = "VoteID invalid!";
-		return NULL;
+		return result;
 	}
 
 	string queryString = "SELECT * FROM voteOption WHERE idvoteOption="
@@ -31,7 +33,7 @@ vector<VoteOption*> VoteOption::getVoteOptionsByVoteid() {
 
 	vector<vector<string> > voteOptionResult = this->database->querySQL(queryString);
 
-	vector<VoteOption*> result;
+
 
 	for(unsigned int i =0; i<voteOptionResult.size() ;i++){
 		VoteOption *tmpOption = new VoteOption(this->database);

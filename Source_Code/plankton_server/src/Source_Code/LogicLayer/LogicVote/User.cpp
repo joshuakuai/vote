@@ -99,6 +99,11 @@ bool User::getUserByID(int userid)
 	}
 }
 
+bool User::getUserByID()
+{
+	return this->getUserByID(this->userid);
+}
+
 bool User::updateUser()
 {
 	string queryString = "UPDATE user SET email='" + email +"',first_name='" + firstName + "',last_name='" + lastName + "',token='" + token + "',password='" + password + "' WHERE iduser=" + Converter::int_to_string(userid) + ";";

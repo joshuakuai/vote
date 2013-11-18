@@ -16,6 +16,8 @@
 #include "../../Common/MailManager.h"
 #include "User.h"
 #include "Vote.h"
+#include "VoteOption.h"
+#include "VoteSelection.h"
 #include "CodeManager.h"
 #include <list>
 
@@ -32,7 +34,8 @@ public:
 		ResendCode,
 		UploadToken,
 		SearchVote,
-		GetDuplicateSelection
+		GetDuplicateSelection,
+		CancelSelection
 	}VoteRequestType;
 
 	LLLogicVote(){
@@ -83,8 +86,11 @@ private:
 	//return the name list that have different choice
 	bool getDuplicateNameList(int voteid,Json::Value &sendValue);
 
+	//cancel the user's selection
+	bool cancelUserSelection(int voteid,string userEmail,Json::Value &sendValue);
+
 	//登录
-	bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);
+	//bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);
 };
 
 #endif /* LLLOGICVOTE_H_ */

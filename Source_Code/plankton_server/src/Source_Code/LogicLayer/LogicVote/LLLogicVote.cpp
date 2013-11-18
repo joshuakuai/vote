@@ -41,8 +41,9 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 
 			int userID;
 			bool hasPassword;
-			sendValue["success"] = this->checkCode(email, code, checkType,userID,hasPassword);
-			if(sendValue["success"].asBool()){
+			sendValue["success"] = this->checkCode(email, code, checkType,
+					userID, hasPassword);
+			if (sendValue["success"].asBool()) {
 				sendValue["userid"] = userID;
 				sendValue["hasPassword"] = hasPassword;
 			}
@@ -54,8 +55,9 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			string password = receivedValue["password"].asString();
 
 			int userID;
-			sendValue["success"] = this->signInWithPassword(email, password,userID);
-			if(sendValue["success"].asBool()){
+			sendValue["success"] = this->signInWithPassword(email, password,
+					userID);
+			if (sendValue["success"].asBool()) {
 				sendValue["userid"] = userID;
 			}
 
@@ -73,32 +75,35 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			string lastName = receivedValue["lastName"].asString();
 			int resendType = receivedValue["resendType"].asInt();
 
-			sendValue["success"] = this->resendCode(email, firstName, lastName,resendType);
+			sendValue["success"] = this->resendCode(email, firstName, lastName,
+					resendType);
 			break;
 		}
 
-		case SearchVote:{
+		case SearchVote: {
 			int searchType = receivedValue["searchtype"].asInt();
 			sendValue["searchtype"] = searchType;
 
-			if(searchType == 0){
+			if (searchType == 0) {
 				//get the longitude and latitude
 				double longitude = receivedValue["longitude"].asDouble();
 				double latitude = receivedValue["latitude"].asDouble();
 
-				sendValue["success"] = this->searchVoteByLocation(longitude,latitude,sendValue);
-			}else{
+				sendValue["success"] = this->searchVoteByLocation(longitude,
+						latitude, sendValue);
+			} else {
 				int voteid = receivedValue["voteid"].asInt();
-				sendValue["success"] = this->searchVoteByID(voteid,sendValue);
+				sendValue["success"] = this->searchVoteByID(voteid, sendValue);
 			}
 
 			break;
 		}
 
-		case GetDuplicateSelection:{
+		case GetDuplicateSelection: {
 			int voteid = receivedValue["voteid"].asInt();
-
-
+			sendValue["success"] = this->getDuplicateNameList(voteid,
+					sendValue);
+			break;
 		}
 
 		default: {
@@ -106,11 +111,11 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			break;
 		}
 		}
-	}else{
+	} else {
 		return "{\"msg\":\"Invalid jsonString\",\"success\":false}";
 	}
 
-	if(!sendValue["msg"].asBool()){
+	if (!sendValue["msg"].asBool()) {
 		sendValue["msg"] = this->errorString;
 	}
 
@@ -148,7 +153,8 @@ bool LLLogicVote::signUp(string firstName, string lastName, string email) {
 	return true;
 }
 
-bool LLLogicVote::checkCode(string email, string code, int checkType,int &userID,bool &hasPassword) {
+bool LLLogicVote::checkCode(string email, string code, int checkType,
+		int &userID, bool &hasPassword) {
 	if (email.empty() || code.empty()) {
 		this->errorString = "Content can't be null";
 		return false;
@@ -159,7 +165,7 @@ bool LLLogicVote::checkCode(string email, string code, int checkType,int &userID
 
 	userObject.email = email;
 
-	if(checkType == 1){
+	if (checkType == 1) {
 		//check if the email is exsit if use wanna use email to login
 		if (!userObject.checkIfEmailExist()) {
 			this->errorString = "This user does not exist.";
@@ -185,9 +191,9 @@ bool LLLogicVote::checkCode(string email, string code, int checkType,int &userID
 			userID = userObject.userid;
 
 			return result;
-		}else{
+		} else {
 			userObject.getUserByEmail(email);
-			hasPassword = userObject.password.empty() ? false:true;
+			hasPassword = userObject.password.empty() ? false : true;
 			userID = userObject.userid;
 		}
 		return true;
@@ -200,7 +206,8 @@ bool LLLogicVote::checkCode(string email, string code, int checkType,int &userID
 	}
 }
 
-bool LLLogicVote::signInWithPassword(string email, string password,int &userID) {
+bool LLLogicVote::signInWithPassword(string email, string password,
+		int &userID) {
 	if (email.empty() || password.empty()) {
 		this->errorString = "Content can't be null";
 		return false;
@@ -211,9 +218,9 @@ bool LLLogicVote::signInWithPassword(string email, string password,int &userID) 
 	userObject.password = password;
 
 	bool result = userObject.signInWithPassword();
-	if(result){
+	if (result) {
 		userID = userObject.userid;
-	}else{
+	} else {
 		this->errorString = userObject.errorMessage;
 	}
 
@@ -250,26 +257,26 @@ bool LLLogicVote::signInWithEmail(string email) {
 	return true;
 }
 
-bool LLLogicVote::uploadToken(int userID,string token)
-{
+bool LLLogicVote::uploadToken(int userID, string token) {
 	User userObject(this->database);
-	if(userObject.getUserByID(userID)){
+	if (userObject.getUserByID(userID)) {
 		userObject.token = token;
-		if(userObject.updateUser()){
+		if (userObject.updateUser()) {
 			return true;
-		}else{
+		} else {
 			this->errorString = userObject.errorMessage;
 			return false;
 		}
-	}else{
+	} else {
 		this->errorString = "Can't find user.";
 		return false;
 	}
 }
 
-bool LLLogicVote::searchVoteByLocation(double longitude,double latitude,Json::Value &sendValue)
-{
-	if(longitude > 180 || longitude < -180 || latitude > 90 || latitude < -90){
+bool LLLogicVote::searchVoteByLocation(double longitude, double latitude,
+		Json::Value &sendValue) {
+	if (longitude > 180 || longitude < -180 || latitude > 90
+			|| latitude < -90) {
 		this->errorString = "Invalid location.";
 		return false;
 	}
@@ -285,7 +292,7 @@ bool LLLogicVote::searchVoteByLocation(double longitude,double latitude,Json::Va
 	//establish the array in send value
 	Json::Value arrayValue(Json::arrayValue);
 
-	for(unsigned int i = 0; i<result.size();i++){
+	for (unsigned int i = 0; i < result.size(); i++) {
 		Vote *tmpVote = result[i];
 
 		Json::Value arrayItemValue;
@@ -305,17 +312,16 @@ bool LLLogicVote::searchVoteByLocation(double longitude,double latitude,Json::Va
 	return true;
 }
 
-bool LLLogicVote::searchVoteByID(int voteid,Json::Value &sendValue)
-{
-	Vote *tmpVote = new Vote(this->database);
-	tmpVote->voteid = voteid;
+bool LLLogicVote::searchVoteByID(int voteid, Json::Value &sendValue) {
+	Vote tmpVote(this->database);
+	tmpVote.voteid = voteid;
 
 	//get the vote
-	if(tmpVote->getVoteByID()){
+	if (tmpVote.getVoteByID()) {
 		//check if this vote has fnished
 		time_t currentTime = time(NULL);
-		double timeSpan = difftime(currentTime, tmpVote->endTime);
-		if(tmpVote->isFnished == true || timeSpan > 0){
+		double timeSpan = difftime(currentTime, tmpVote.endTime);
+		if (tmpVote.isFnished || timeSpan > 0) {
 			this->errorString = "This vote even has already finished.";
 			return false;
 		}
@@ -323,37 +329,75 @@ bool LLLogicVote::searchVoteByID(int voteid,Json::Value &sendValue)
 		//establish the array in send value
 		Json::Value arrayValue(Json::arrayValue);
 		Json::Value arrayItem;
-		arrayItem["initiator"] = tmpVote->initiator;
-		arrayItem["voteid"] = tmpVote->voteid;
-		arrayItem["color"] = tmpVote->colorIndex;
+		arrayItem["initiator"] = tmpVote.initiator;
+		arrayItem["voteid"] = tmpVote.voteid;
+		arrayItem["color"] = tmpVote.colorIndex;
 
 		arrayValue.append(arrayItem);
 		sendValue["votelist"] = arrayValue;
 
 		return true;
-	}else{
-		this->errorString = tmpVote->errorMessage;
-		delete tmpVote;
+	} else {
+		this->errorString = tmpVote.errorMessage;
 		return false;
 	}
 }
 
-bool LLLogicVote::resendCode(string email, string firstName, string lastName,int resendType)
-{
-	cout<<"The content is"<<email<<firstName<<lastName<<endl;
-	if(resendType == 0){
+bool LLLogicVote::resendCode(string email, string firstName, string lastName,
+		int resendType) {
+	cout << "The content is" << email << firstName << lastName << endl;
+	if (resendType == 0) {
 		//sign up resend
-		return this->signUp(firstName,lastName,email);
-	}else if(resendType == 1){
+		return this->signUp(firstName, lastName, email);
+	} else if (resendType == 1) {
 		//sign in resend
 		return this->signInWithEmail(email);
-	}else{
+	} else {
 		this->errorString = "Invalid resendType";
 		return false;
 	}
 }
 
-bool LLLogicVote::getDuplicateNameList(int voteid,Json::Value &sendValue)
+bool LLLogicVote::getDuplicateNameList(int voteid, Json::Value &sendValue) {
+	Vote tmpVote(this->database);
+	tmpVote.voteid = voteid;
+
+	if (!tmpVote.getVoteByID()) {
+		this->errorString = "This vote does not exist.";
+		return false;
+	}
+
+	//Duplicate vote could be overtime but can't be finished
+	if (tmpVote.isFnished) {
+		this->errorString = "This vote even has already finished.";
+		return false;
+	}
+
+	vector<vector<string> > result = tmpVote.getDuplicateNameList();
+
+	Json::Value resultListArray(Json::arrayValue);
+
+	for (unsigned int i = 0; i < result.size(); i++) {
+		Json::Value arrayItem;
+		Json::Value emailList(Json::arrayValue);
+		for (unsigned int j = 0; j < result[i].size(); j++) {
+			if (j == 0) {
+				arrayItem["name"] = result[i][0];
+			} else {
+				emailList[j] = result[i][j];
+			}
+		}
+
+		arrayItem["emaillist"] = emailList;
+		resultListArray.append(arrayItem);
+	}
+
+	sendValue["duplicatelist"] = resultListArray;
+
+	return true;
+}
+
+bool LLLogicVote::cancelUserSelection(int voteid,string userEmail,Json::Value &sendValue)
 {
 
 }

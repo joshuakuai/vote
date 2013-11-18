@@ -9,6 +9,7 @@
 #define VOTEOPTION_H_
 
 #include <string>
+#include "../../DataLayer/DLDatabase.h"
 
 using namespace std;
 

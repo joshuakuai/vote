@@ -34,6 +34,7 @@ public:
 	bool signInWithPassword();
 	bool getUserByEmail(string email);
 	bool getUserByID(int userid);
+	bool getUserByID();
 	bool updateUser();
 
 private:

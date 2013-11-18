@@ -26,6 +26,8 @@ Source_Code/main.d Source_Code/main.o: ../Source_Code/main.cpp \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/User.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/DLDatabase.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/Vote.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/VoteOption.h \
+ ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/VoteSelection.h \
  ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h \
  ../Source_Code/LogicLayer/PLLogicLayer.h \
  ../Source_Code/Common/ConfigureManager.h \
@@ -87,6 +89,10 @@ Source_Code/main.d Source_Code/main.o: ../Source_Code/main.cpp \
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/../../DataLayer/DLDatabase.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/Vote.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/VoteOption.h:
+
+../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/VoteSelection.h:
 
 ../Source_Code/CommunicationLayer/../LogicLayer/LogicVote/CodeManager.h:
 

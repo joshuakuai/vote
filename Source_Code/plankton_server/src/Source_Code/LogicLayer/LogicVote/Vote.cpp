@@ -9,6 +9,8 @@
 #include "../../Common/Converter.h"
 #include "../../Common/LocationCalculator.h"
 #include "VoteOption.h"
+#include "VoteSelection.h"
+#include "User.h"
 
 Vote::Vote(DLDatabase *database) {
 	this->initiatorid = -1;
@@ -54,7 +56,7 @@ vector<Vote*> Vote::indexVoteNearByLocation() {
 		Vote *vote = new Vote(this->database);
 
 		vote->voteid = Converter::string_to_int(sqlResult[i][0]);
-		vote->initiator = sqlResult[i][1] + sqlResult[i][2];
+		vote->initiator = sqlResult[i][1] + " " + sqlResult[i][2];
 		vote->colorIndex = Converter::string_to_int(sqlResult[i][3]);
 		vote->longitude = Converter::string_to_double(sqlResult[i][4]);
 		vote->latitude = Converter::string_to_double(sqlResult[i][5]);
@@ -112,9 +114,11 @@ bool Vote::getVoteByID() {
 }
 
 vector<vector<string> > Vote::getDuplicateNameList() {
-	if(this->voteid == -1){
+	vector<vector<string> > result;
+
+	if (this->voteid == -1) {
 		this->errorMessage = "Invalid voteID.";
-		return NULL;
+		return result;
 	}
 
 	//get vote's all selection
@@ -123,13 +127,79 @@ vector<vector<string> > Vote::getDuplicateNameList() {
 
 	vector<VoteOption*> optionList = tmpVoteOption.getVoteOptionsByVoteid();
 
-	if(optionList.size() == 0){
+	if (optionList.size() == 0) {
 		this->errorMessage = "This vote does not have any option.";
-		return NULL;
+		return result;
 	}
+
+	vector<VoteSelection*> selectionList;
+
+	VoteSelection tmpSelection(this->database);
 
 	//get all selection of each option
-	for(unsigned int i = 0; i<optionList.size() ;i++ ){
+	for (unsigned int i = 0; i < optionList.size(); i++) {
+		//get the option id
+		int voteOptionID = optionList[i]->idvoteOption;
 
+		tmpSelection.idvoteOption = voteOptionID;
+
+		//get the selection list
+		vector<VoteSelection*> tmpSelectionList =
+				tmpSelection.getSelectionByVoteOptionID();
+
+		for (unsigned int j = 0; j < tmpSelectionList.size(); j++) {
+			selectionList.push_back(tmpSelectionList[j]);
+		}
+
+		delete optionList[i];
 	}
+
+	optionList.clear();
+
+	//check if there is any duplicate
+	vector<vector<string> > tmpNameList;
+
+	for (unsigned int i = 0; i < selectionList.size(); i++) {
+		//check if this selection is pending
+		if(selectionList[i]->state != 0){
+			//confirmed or canceled
+			continue;
+		}
+
+		//get the user name
+		User tmpUser(this->database);
+		tmpUser.userid = selectionList[i]->iduser;
+		tmpUser.getUserByID();
+
+		string userFullName = tmpUser.firstName + "" + tmpUser.lastName;
+
+		bool hasFindOverlap = false;
+		for (unsigned int j = 0; j < tmpNameList.size(); j++) {
+			if (tmpNameList[j][0].compare(userFullName) == 0) {
+				//push back this email and break
+				tmpNameList[j].push_back(tmpUser.email);
+				hasFindOverlap = true;
+				break;
+			}
+		}
+
+		if (!hasFindOverlap) {
+			//did not find any name overlap
+			vector<string> nameInfoList;
+			nameInfoList.push_back(userFullName);
+			nameInfoList.push_back(tmpUser.email);
+
+			tmpNameList.push_back(nameInfoList);
+		}
+	}
+
+	//add those has overlap to the result
+
+	for (unsigned int i = 0; i < tmpNameList.size(); i++) {
+		if(tmpNameList[i].size() > 2){
+			result.push_back(tmpNameList[i]);
+		}
+	}
+
+	return result;
 }
