@@ -31,7 +31,8 @@ public:
 		SignInWithEmail,
 		ResendCode,
 		UploadToken,
-		SearchVote
+		SearchVote,
+		GetDuplicateSelection
 	}VoteRequestType;
 
 	LLLogicVote(){
@@ -77,6 +78,10 @@ private:
 
 	//search vote by id
 	bool searchVoteByID(int voteid,Json::Value &sendValue);
+
+	//get vote duplicate selection
+	//return the name list that have different choice
+	bool getDuplicateNameList(int voteid,Json::Value &sendValue);
 
 	//登录
 	bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);

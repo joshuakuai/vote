@@ -33,6 +33,7 @@ public:
 
 	//get the vote near by 1000m
 	vector<Vote*> indexVoteNearByLocation();
+	vector<vector<string> > getDuplicateNameList();
 	bool getVoteByID();
 
 private:

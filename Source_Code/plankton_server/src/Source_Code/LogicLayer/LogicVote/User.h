@@ -16,7 +16,9 @@ using namespace std;
 class User {
 public:
 	User(DLDatabase *database);
-	virtual ~User(){};
+	virtual ~User(){
+		this->database = NULL;
+	};
 
 	int userid;
 	string firstName;

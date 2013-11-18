@@ -8,6 +8,7 @@
 #include "Vote.h"
 #include "../../Common/Converter.h"
 #include "../../Common/LocationCalculator.h"
+#include "VoteOption.h"
 
 Vote::Vote(DLDatabase *database) {
 	this->initiatorid = -1;
@@ -108,4 +109,27 @@ bool Vote::getVoteByID() {
 	this->initiator = result[0][0] + result[0][1];
 
 	return true;
+}
+
+vector<vector<string> > Vote::getDuplicateNameList() {
+	if(this->voteid == -1){
+		this->errorMessage = "Invalid voteID.";
+		return NULL;
+	}
+
+	//get vote's all selection
+	VoteOption tmpVoteOption(this->database);
+	tmpVoteOption.idvote = this->voteid;
+
+	vector<VoteOption*> optionList = tmpVoteOption.getVoteOptionsByVoteid();
+
+	if(optionList.size() == 0){
+		this->errorMessage = "This vote does not have any option.";
+		return NULL;
+	}
+
+	//get all selection of each option
+	for(unsigned int i = 0; i<optionList.size() ;i++ ){
+
+	}
 }

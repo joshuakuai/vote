@@ -95,6 +95,12 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			break;
 		}
 
+		case GetDuplicateSelection:{
+			int voteid = receivedValue["voteid"].asInt();
+
+
+		}
+
 		default: {
 			return "{\"msg\":\"Invalid request type\",\"success\":false}";
 			break;
@@ -345,4 +351,9 @@ bool LLLogicVote::resendCode(string email, string firstName, string lastName,int
 		this->errorString = "Invalid resendType";
 		return false;
 	}
+}
+
+bool LLLogicVote::getDuplicateNameList(int voteid,Json::Value &sendValue)
+{
+
 }
