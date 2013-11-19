@@ -161,7 +161,7 @@ vector<vector<string> > Vote::getDuplicateNameList() {
 
 	for (unsigned int i = 0; i < selectionList.size(); i++) {
 		//check if this selection is pending
-		if(selectionList[i]->state != 0){
+		if (selectionList[i]->state != 0) {
 			//confirmed or canceled
 			continue;
 		}
@@ -196,10 +196,77 @@ vector<vector<string> > Vote::getDuplicateNameList() {
 	//add those has overlap to the result
 
 	for (unsigned int i = 0; i < tmpNameList.size(); i++) {
-		if(tmpNameList[i].size() > 2){
+		if (tmpNameList[i].size() > 2) {
 			result.push_back(tmpNameList[i]);
 		}
 	}
 
 	return result;
+}
+
+bool Vote::setVoteFinish() {
+	if (this->voteid == -1) {
+		this->errorMessage = "Invalid vote id.";
+		return false;
+	}
+	string queryString = "UPDATE vote SET is_finish=true WHERE idvote="
+			+ Converter::int_to_string(this->voteid) + ";";
+
+	return this->database->executeSQL(queryString);
+}
+
+//MUST GET THE VOTE'S INFO BEFORE CALL THIS METHOD
+bool Vote::hasReachMaxValidNumber() {
+	if (this->voteid == -1) {
+		this->errorMessage = "Invalid vote id.";
+		return false;
+	}
+
+	string queryString =
+			"SELECT * FROM vote,voteOption,voteSelection WHERE vote.idvote=voteOption.idvote AND voteOption.idvoteOption = voteSelection.idvoteOption AND voteSelection.state!=-1";
+
+	vector<vector<string> > result = this->database->querySQL(queryString);
+
+	if ((int)result.size() == this->maxValidUser) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+vector<Vote*> Vote::getAllUnfinishedVote() {
+	//get all unfinished votes
+	string queryString = "SELECT * FROM vote WHERE is_finish=false";
+
+	vector<vector<string> > sqlResult = this->database->querySQL(queryString);
+
+	vector<Vote*> result;
+	for (unsigned int i = 0; i < result.size(); i++) {
+		Vote *tmpVote = new Vote(this->database);
+
+		tmpVote->initiatorid = Converter::string_to_int(sqlResult[i][1]);
+		tmpVote->title = sqlResult[i][2];
+		tmpVote->maxValidUser = Converter::string_to_int(sqlResult[i][3]);
+		tmpVote->password = sqlResult[i][4];
+		tmpVote->longitude = Converter::string_to_double(sqlResult[i][5]);
+		tmpVote->latitude = Converter::string_to_double(sqlResult[i][6]);
+		tmpVote->createTime = Converter::mysql_datetime_string_to_time_t(
+				sqlResult[i][7]);
+		tmpVote->endTime = Converter::mysql_datetime_string_to_time_t(
+				sqlResult[i][8]);
+		tmpVote->isFnished = Converter::string_to_int(sqlResult[i][9]);
+		tmpVote->colorIndex = Converter::string_to_int(sqlResult[i][10]);
+
+		result.push_back(tmpVote);
+	}
+
+	return result;
+}
+
+int Vote::getPendingSelectionNumber() {
+	string queryString = "SELECT * FROM vote,voteOption,voteSelection WHERE vote.idvote=voteOption.idvote AND voteOption.idvoteOption = voteSelection.idvoteOption AND voteSelection.state=0";
+
+	vector<vector<string> > result = this->database->querySQL(queryString);
+
+	return result.size();
 }

@@ -34,7 +34,12 @@ public:
 	//get the vote near by 1000m
 	vector<Vote*> indexVoteNearByLocation();
 	vector<vector<string> > getDuplicateNameList();
+	bool setVoteFinish();
 	bool getVoteByID();
+	bool hasReachMaxValidNumber();
+	int getPendingSelectionNumber();
+
+	vector<Vote*> getAllUnfinishedVote();
 
 private:
 	//数据库

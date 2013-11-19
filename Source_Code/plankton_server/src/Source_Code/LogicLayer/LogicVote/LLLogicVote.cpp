@@ -7,6 +7,8 @@
 
 #include "LLLogicVote.h"
 
+bool LLLogicVote::doesAutoScanOpened = false;
+
 string LLLogicVote::excuteRequest(string requestString, short version,
 		unsigned int sessionID) {
 	//获得请求类型
@@ -79,7 +81,6 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 					resendType);
 			break;
 		}
-
 		case SearchVote: {
 			int searchType = receivedValue["searchtype"].asInt();
 			sendValue["searchtype"] = searchType;
@@ -98,14 +99,23 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 
 			break;
 		}
-
 		case GetDuplicateSelection: {
 			int voteid = receivedValue["voteid"].asInt();
 			sendValue["success"] = this->getDuplicateNameList(voteid,
 					sendValue);
 			break;
 		}
-
+		case CancelSelection: {
+			int voteid = receivedValue["voteid"].asInt();
+			string email = receivedValue["email"].asString();
+			sendValue["success"] = this->cancelUserSelection(voteid, email);
+			break;
+		}
+		case AdminResolveVote: {
+			int voteid = receivedValue["voteid"].asInt();
+			sendValue["success"] = this->adminResolveVote(voteid);
+			break;
+		}
 		default: {
 			return "{\"msg\":\"Invalid request type\",\"success\":false}";
 			break;
@@ -120,6 +130,41 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 	}
 
 	return writer.write(sendValue);
+}
+
+//auto scan finished vote
+//static method, can't control
+void *LLLogicVote::autoScanFinishedVote(void *msg) {
+	//分离此线程，保证线程结束后系统能回收线程资源
+	pthread_detach(pthread_self());
+
+	DLDatabase *database = PLDataLayer::Instance()->getDatabaseByName("Vote");
+
+	//Execute this every 600 seconds
+	while (1) {
+		Vote tmpVote(database);
+		vector<Vote*> unfinishedVoteList = tmpVote.getAllUnfinishedVote();
+
+		for (unsigned int i = 0; i < unfinishedVoteList.size(); i++) {
+			Vote* vote = unfinishedVoteList[i];
+
+			//check if the vote has pass the end time
+			time_t timeTmp = time(NULL);
+			double timeSpan = difftime(timeTmp, tmpVote.endTime);
+			if (timeSpan > 0){
+				//check there if there is no pending selection
+				if(vote->getPendingSelectionNumber() == 0){
+					vote->setVoteFinish();
+				}
+			}
+
+			delete vote;
+		}
+
+		sleep(600);
+	}
+
+	return NULL;
 }
 
 //注册
@@ -397,14 +442,33 @@ bool LLLogicVote::getDuplicateNameList(int voteid, Json::Value &sendValue) {
 	return true;
 }
 
-bool LLLogicVote::cancelUserSelection(int voteid,string userEmail,Json::Value &sendValue)
-{
-	if(userEmail.empty()){
+bool LLLogicVote::cancelUserSelection(int voteid, string userEmail) {
+	if (userEmail.empty()) {
 		this->errorString = "Email can't be null.";
 		return false;
 	}
 
 	VoteSelection tmpSelection(this->database);
 
-	return tmpSelection.cancelSelection(voteid,userEmail);
+	return tmpSelection.cancelSelection(voteid, userEmail);
+}
+
+bool LLLogicVote::adminResolveVote(int voteid) {
+	//get the vote
+	Vote tmpVote(this->database);
+	tmpVote.voteid = voteid;
+	tmpVote.getVoteByID();
+
+	time_t timeTmp = time(NULL);
+	double timeSpan = difftime(timeTmp, tmpVote.endTime);
+	if (timeSpan > 0 || tmpVote.hasReachMaxValidNumber()) {
+		//if the vote end time has passed,set this vote finished
+		if (tmpVote.setVoteFinish()) {
+			return true;
+		} else {
+			this->errorString = tmpVote.errorMessage;
+			return false;
+		}
+	}
+	return true;
 }

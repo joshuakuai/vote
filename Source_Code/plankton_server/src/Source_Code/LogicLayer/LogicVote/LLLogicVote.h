@@ -35,13 +35,24 @@ public:
 		UploadToken,
 		SearchVote,
 		GetDuplicateSelection,
-		CancelSelection
+		CancelSelection,
+		AdminResolveVote
 	}VoteRequestType;
 
 	LLLogicVote(){
 		mailManager = MailManager::Instance();
 		codeManager = CodeManager::Instance();
     	database = PLDataLayer::Instance()->getDatabaseByName("Vote");
+
+    	if(!doesAutoScanOpened){
+    		pthread_t sessionThread = NULL;
+
+    		if(pthread_create(&sessionThread,NULL,&autoScanFinishedVote,NULL) != 0){
+    			PLog::logFatal("Can initial auto-scan");
+    		}else{
+    			doesAutoScanOpened = true;
+    		}
+    	}
     }
 
 	virtual ~LLLogicVote(){}
@@ -49,6 +60,9 @@ public:
 	string excuteRequest(string requestString,short version,unsigned int sessionID);
 
 private:
+	//Indicator of auto-scan
+	static bool doesAutoScanOpened;
+
 	//数据库
 	DLDatabase *database;
 
@@ -57,6 +71,9 @@ private:
 
 	//Mail Manager
 	MailManager *mailManager;
+
+	//auto scan finished vote
+	static void *autoScanFinishedVote(void *msg);
 
 	//注册
 	bool signUp(string firstName,string lastName,string email);
@@ -87,7 +104,10 @@ private:
 	bool getDuplicateNameList(int voteid,Json::Value &sendValue);
 
 	//cancel the user's selection
-	bool cancelUserSelection(int voteid,string userEmail,Json::Value &sendValue);
+	bool cancelUserSelection(int voteid,string userEmail);
+
+	//Call this after the admin finish resolve duplicate name
+	bool adminResolveVote(int voteid);
 
 	//登录
 	//bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);
