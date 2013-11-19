@@ -28,6 +28,7 @@ public:
 	string errorMessage;
 
 	vector<VoteSelection*> getSelectionByVoteOptionID();
+	bool cancelSelection(int voteid,string userEmail);
 
 private:
 	//数据库

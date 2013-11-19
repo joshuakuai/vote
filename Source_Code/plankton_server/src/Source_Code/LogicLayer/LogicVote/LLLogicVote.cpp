@@ -399,5 +399,12 @@ bool LLLogicVote::getDuplicateNameList(int voteid, Json::Value &sendValue) {
 
 bool LLLogicVote::cancelUserSelection(int voteid,string userEmail,Json::Value &sendValue)
 {
+	if(userEmail.empty()){
+		this->errorString = "Email can't be null.";
+		return false;
+	}
 
+	VoteSelection tmpSelection(this->database);
+
+	return tmpSelection.cancelSelection(voteid,userEmail);
 }

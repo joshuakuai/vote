@@ -36,12 +36,22 @@ vector<VoteSelection*> VoteSelection::getSelectionByVoteOptionID() {
 	for (unsigned int i = 0; i < voteSelectionList.size(); i++) {
 		VoteSelection *tmpSelection = new VoteSelection(this->database);
 
-		tmpSelection->idvoteOption = Converter::string_to_int(voteSelectionList[i][0]);
-		tmpSelection->iduser = Converter::string_to_int(voteSelectionList[i][1]);
+		tmpSelection->idvoteOption = Converter::string_to_int(
+				voteSelectionList[i][0]);
+		tmpSelection->iduser = Converter::string_to_int(
+				voteSelectionList[i][1]);
 		tmpSelection->state = Converter::string_to_int(voteSelectionList[i][2]);
 
 		result.push_back(tmpSelection);
 	}
 
 	return result;
+}
+
+bool VoteSelection::cancelSelection(int voteid, string userEmail) {
+	string queryString =
+			"UPDATE voteOption,user,vote,voteSelection SET voteSelection.state=-1 WHERE vote.idVote="
+					+ Converter::int_to_string(voteid) + " AND user.email='" + userEmail + "';";
+
+	return this->database->executeSQL(queryString);
 }
