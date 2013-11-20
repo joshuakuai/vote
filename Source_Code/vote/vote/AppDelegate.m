@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "PLServer.h"
+#import "TestFlight.h"
 
 @implementation AppDelegate
 
@@ -15,6 +16,9 @@
 {    
     //Hide the status bar
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    
+    //set the test flight
+    [TestFlight takeOff:@"773a0aab-1730-4c9d-ae56-9b25276f6b94"];
     
     //set up the plankton server sdk
     [PLServer setServerIP:RelServerAdd port:13145];
