@@ -10,5 +10,7 @@
    "EmailPassword" : "199143aA",
    "DatabaseUserName" : "root",
    "DatabasePassword" : "123456",
-   "DatabaseAddress" : "localhost"
+   "DatabaseAddress" : "localhost",
+   "PushCertificateFileName" : "pushCertificate.pem",
+   "isPushSandbox" : true
 }

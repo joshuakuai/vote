@@ -13,16 +13,23 @@
 #include <string.h>
 #include <unistd.h>
 #include "Pusher.h"
+#include "PLog.h"
 
 Pusher* Pusher::_instance = NULL;
 
 Pusher::Pusher(string cerFileName) {
 	_cerFileName = cerFileName;
 	this->isSandbox = true;
+	this->isAutoPush = false;
+	if (pthread_mutex_init(&vectormutex, NULL) != 0) {
+		PLog::logWarning(
+				string("======Failed to initialize the Pusher Mutex!======"));
+	}
 }
 
 Pusher::~Pusher() {
-	tokenStringVector.clear();
+	pushItemList.clear();
+	pthread_mutex_destroy(&vectormutex);
 }
 
 int Pusher::charToHex(char value) {
@@ -68,36 +75,51 @@ string Pusher::binaryToken(const std::string& input) {
 	return output.append(buffer, 32);
 }
 
+void Pusher::beginAutoPush() {
+	pthread_t autoPush = NULL;
+
+	//初始化会话线程
+	if(pthread_create(&autoPush,NULL,&autoPushThread,NULL) != 0){
+		PLog::logWarning("Failed to begin the autoPush thread");
+	}else{
+		this->isAutoPush = true;
+	}
+}
+
+void *Pusher::autoPushThread(void *msg) {
+
+	//try to push every 2 mins
+	while(1){
+		Pusher::Instance()->prepareConnect();
+
+		sleep(120);
+	}
+
+	return NULL;
+}
+
 void Pusher::pushNotification(string pushContent,
 		vector<string> tokenStringVector) {
 	if (tokenStringVector.size() == 0) {
 		return;
 	}
 
-	tokenStringVector.clear();
-	this->tokenStringVector = tokenStringVector;
+	//add the request to the pending list
+	PusherItem newItem;
+	newItem.content = pushContent;
+	newItem.tokenList = tokenStringVector;
 
-	/*
-	 //根据程序名称查找token列表
-	 string queryString = "SELECT token_string FROM Token";
-	 vector<vector<string> > result = database->querySQL(queryString);
+	pthread_mutex_lock(&vectormutex);
+	this->pushItemList.push_back(newItem);
+	pthread_mutex_unlock(&vectormutex);
 
-	 if(result.size() != 0){
-	 for(unsigned int i =0;i<result.size();i++){
-	 //获得tokenString
-	 string cacheTokenString = result[i][0];
-	 tokenStringVector.push_back(cacheTokenString);
-	 //cout<<cacheTokenString<<endl;
-	 }
-	 }else{
-	 return;
-	 }
-	 */
-
-	this->prepareConnect(pushContent);
+	if(!this->isAutoPush){
+		//if you don't use auto push, it's your responsibility to make sure the thread is safe
+		this->prepareConnect();
+	}
 }
 
-void Pusher::prepareConnect(string pushContent) {
+void Pusher::prepareConnect() {
 	SSL_CTX *ctx;
 	SSL *ssl;
 	int sockfd;
@@ -143,9 +165,9 @@ void Pusher::prepareConnect(string pushContent) {
 	}
 
 	sa.sin_family = AF_INET;
-	if(this->isSandbox){
+	if (this->isSandbox) {
 		he = gethostbyname(APNS_SANDBOX_HOST);
-	}else{
+	} else {
 		he = gethostbyname(APNS_HOST);
 	}
 
@@ -156,12 +178,11 @@ void Pusher::prepareConnect(string pushContent) {
 	sa.sin_addr.s_addr = inet_addr(
 			inet_ntoa(*((struct in_addr *) he->h_addr_list[0])));
 
-	if(this->isSandbox){
+	if (this->isSandbox) {
 		sa.sin_port = htons(APNS_SANDBOX_PORT);
-	}else{
+	} else {
 		sa.sin_port = htons(APNS_PORT);
 	}
-
 
 	if (connect(sockfd, (struct sockaddr *) &sa, sizeof(sa)) == -1) {
 		close(sockfd);
@@ -214,21 +235,33 @@ void Pusher::prepareConnect(string pushContent) {
 	 cout<<string(token)<<endl;
 	 */
 
-	int successNumber = 0;
-	int failedNumber = 0;
-	unsigned int i = 0;
-	for (; i < tokenStringVector.size(); i++) {
-		if (!this->sendPayload(ssl,
-				(char*) this->binaryToken(tokenStringVector[i]).c_str(),
-				(char*) pushContent.c_str(), pushContent.length())) {
-			failedNumber++;
-		} else {
-			successNumber++;
-		}
-	}
+	while (pushItemList.size() != 0) {
+		int successNumber = 0;
+		int failedNumber = 0;
+		unsigned int i = 0;
 
-	cout << "Finish push notification, total" << i << ", Successful"
-			<< successNumber << ", Failed" << failedNumber << "." << endl;
+		//get the first item of the list
+		PusherItem tmpItem = pushItemList.front();
+
+		for (; i < tmpItem.tokenList.size(); i++) {
+			if (!this->sendPayload(ssl,
+					(char*) this->binaryToken(tmpItem.tokenList[i]).c_str(),
+					(char*) tmpItem.content.c_str(),
+					tmpItem.content.length())) {
+				failedNumber++;
+			} else {
+				successNumber++;
+			}
+		}
+
+		cout << "Finish push notification, total" << i << ", Successful"
+				<< successNumber << ", Failed" << failedNumber << "." << endl;
+
+		//remove the pending request from the list
+		pthread_mutex_lock(&vectormutex);
+		this->pushItemList.pop_front();
+		pthread_mutex_unlock(&vectormutex);
+	}
 
 	SSL_shutdown(ssl);
 	SSL_free(ssl);

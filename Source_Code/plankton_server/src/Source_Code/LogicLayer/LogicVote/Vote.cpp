@@ -8,6 +8,7 @@
 #include "Vote.h"
 #include "../../Common/Converter.h"
 #include "../../Common/LocationCalculator.h"
+#include "../../Common/Pusher.h"
 #include "VoteOption.h"
 #include "VoteSelection.h"
 #include "User.h"
@@ -209,10 +210,40 @@ bool Vote::setVoteFinish() {
 		this->errorMessage = "Invalid vote id.";
 		return false;
 	}
-	string queryString = "UPDATE vote SET is_finish=true WHERE idvote="
-			+ Converter::int_to_string(this->voteid) + ";";
 
-	return this->database->executeSQL(queryString);
+	string voteString = Converter::int_to_string(this->voteid);
+
+	string queryString = "UPDATE vote SET is_finish=true WHERE idvote="
+			+ voteString + ";";
+
+	if (this->database->executeSQL(queryString)) {
+		//get all user's token
+		queryString =
+				"SELECT user.token FROM vote,voteOption,voteSelection,user WHERE vote.idvote="
+						+ voteString
+						+ " AND vote.idvote=voteOption.idvote AND voteOption.idvoteOption=voteSelection.idvoteOption AND voteSelection.iduser=user.iduser";
+		vector<vector<string> > result = this->database->querySQL(queryString);
+
+		if (result.size() != 0) {
+			//form the token list vector
+			vector<string> tokenStringList;
+
+			for (unsigned int i = 0; i < result.size(); i++) {
+				tokenStringList.push_back(result[i][0]);
+			}
+
+			char log[100];
+			sprintf(log,"Vote(%d) has a final result, check it out!",this->voteid);
+			string pushContent(log);
+
+			Pusher::Instance()->pushNotification(pushContent,tokenStringList);
+		}
+
+		return true;
+	} else {
+		this->errorMessage = "Failed to close vote.";
+		return false;
+	}
 }
 
 //MUST GET THE VOTE'S INFO BEFORE CALL THIS METHOD
@@ -227,7 +258,7 @@ bool Vote::hasReachMaxValidNumber() {
 
 	vector<vector<string> > result = this->database->querySQL(queryString);
 
-	if ((int)result.size() == this->maxValidUser) {
+	if ((int) result.size() == this->maxValidUser) {
 		return true;
 	} else {
 		return false;
@@ -264,7 +295,8 @@ vector<Vote*> Vote::getAllUnfinishedVote() {
 }
 
 int Vote::getPendingSelectionNumber() {
-	string queryString = "SELECT * FROM vote,voteOption,voteSelection WHERE vote.idvote=voteOption.idvote AND voteOption.idvoteOption = voteSelection.idvoteOption AND voteSelection.state=0";
+	string queryString =
+			"SELECT * FROM vote,voteOption,voteSelection WHERE vote.idvote=voteOption.idvote AND voteOption.idvoteOption = voteSelection.idvoteOption AND voteSelection.state=0";
 
 	vector<vector<string> > result = this->database->querySQL(queryString);
 

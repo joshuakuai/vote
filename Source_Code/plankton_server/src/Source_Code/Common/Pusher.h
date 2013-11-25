@@ -10,6 +10,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 #include <stdio.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -33,6 +34,11 @@
 
 using namespace std;
 
+typedef struct _PusherItem{
+	string content;
+	vector<string> tokenList;
+}PusherItem;
+
 class Pusher {
 public:
 	static Pusher * Instance() {
@@ -54,21 +60,27 @@ public:
 
 	string _cerFileName;
 	bool isSandbox;
+	bool isAutoPush;
 
 	void pushNotification(string pushContent,vector<string> tokenStringVector);
+	void beginAutoPush();
+
+	//don't call this if you use an auto push
+	void prepareConnect();
 
 private:
 	static Pusher* _instance;
+
+	list<PusherItem> pushItemList;
 	pthread_mutex_t vectormutex;
 
 	Pusher(string cerFileName);
 	virtual ~Pusher();
 
-	vector<string> tokenStringVector;
+	static void *autoPushThread(void *msg);
 
 	string binaryToken(const std::string& input);
 	int charToHex(char value);
-	void prepareConnect(string pushContent);
 	bool sendPayload(SSL *sslPtr, char *deviceTokenBinary, char *payloadBuff, size_t payloadLength);
 };
 

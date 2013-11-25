@@ -22,6 +22,9 @@ int main(){
 	//Initial Email Manager
 	MailManager::Instance()->setMailInfoFromConfigureManager();
 
+	//Initial Pusher and begin auto push
+	Pusher::Instance()->beginAutoPush();
+
 	//开启通讯层
 	PLCommunicationLayer *communicationLayer = new PLCommunicationLayer();
 	communicationLayer->start();
