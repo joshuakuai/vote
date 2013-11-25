@@ -9,6 +9,7 @@ CPP_SRCS += \
 ../Source_Code/Common/MailManager.cpp \
 ../Source_Code/Common/NotificationCenter.cpp \
 ../Source_Code/Common/PLog.cpp \
+../Source_Code/Common/Pusher.cpp \
 ../Source_Code/Common/md5.cpp 
 
 OBJS += \
@@ -17,6 +18,7 @@ OBJS += \
 ./Source_Code/Common/MailManager.o \
 ./Source_Code/Common/NotificationCenter.o \
 ./Source_Code/Common/PLog.o \
+./Source_Code/Common/Pusher.o \
 ./Source_Code/Common/md5.o 
 
 CPP_DEPS += \
@@ -25,6 +27,7 @@ CPP_DEPS += \
 ./Source_Code/Common/MailManager.d \
 ./Source_Code/Common/NotificationCenter.d \
 ./Source_Code/Common/PLog.d \
+./Source_Code/Common/Pusher.d \
 ./Source_Code/Common/md5.d 
 
 

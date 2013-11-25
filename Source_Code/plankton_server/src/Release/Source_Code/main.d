@@ -33,7 +33,8 @@ Source_Code/main.d Source_Code/main.o: ../Source_Code/main.cpp \
  ../Source_Code/Common/ConfigureManager.h \
  ../Source_Code/Common/../Lib/json.h ../Source_Code/Common/PLog.h \
  ../Source_Code/Common/NotificationCenter.h \
- ../Source_Code/Common/MailManager.h \
+ ../Source_Code/Common/MailManager.h ../Source_Code/Common/Pusher.h \
+ ../Source_Code/Common/ConfigureManager.h \
  ../Source_Code/DataLayer/PLDataLayer.h
 
 ../Source_Code/CommunicationLayer/PLCommunicationLayer.h:
@@ -107,5 +108,9 @@ Source_Code/main.d Source_Code/main.o: ../Source_Code/main.cpp \
 ../Source_Code/Common/NotificationCenter.h:
 
 ../Source_Code/Common/MailManager.h:
+
+../Source_Code/Common/Pusher.h:
+
+../Source_Code/Common/ConfigureManager.h:
 
 ../Source_Code/DataLayer/PLDataLayer.h:

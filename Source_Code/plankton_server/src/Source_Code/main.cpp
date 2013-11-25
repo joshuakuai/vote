@@ -5,6 +5,7 @@
 #include "Common/ConfigureManager.h"
 #include "Common/NotificationCenter.h"
 #include "Common/MailManager.h"
+#include "Common/Pusher.h"
 #include "DataLayer/PLDataLayer.h"
 
 int main(){
@@ -30,6 +31,7 @@ int main(){
 	NotificationCenter::Release();
 	ConfigureManager::Release();
 	PLDataLayer::Release();
+	Pusher::Release();
 	return 0;
 }
 

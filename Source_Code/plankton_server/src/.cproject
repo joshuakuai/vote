@@ -122,15 +122,17 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.773365114" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.release.707160067" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.release"/>
-							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.393180662" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
+							<tool command="g++" id="cdt.managedbuild.tool.gnu.cpp.linker.exe.release.393180662" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.release">
 								<option id="gnu.cpp.link.option.libs.2134891465" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="pthread"/>
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="mysqlclient"/>
+									<listOptionValue builtIn="false" value="ssl"/>
+									<listOptionValue builtIn="false" value="crypto"/>
+									<listOptionValue builtIn="false" value="mysqlclient"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.1605229473" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="/usr/lib64/mysql"/>
 								</option>
-								<option id="gnu.cpp.link.option.flags.1192224253" superClass="gnu.cpp.link.option.flags" value="-ldl -lrt" valueType="string"/>
+								<option id="gnu.cpp.link.option.flags.1192224253" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="-ldl -lrt" valueType="string"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1799827332" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
