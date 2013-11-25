@@ -67,6 +67,11 @@
 		AAAB414E183065B000A968EA /* searchVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB414D183065B000A968EA /* searchVoteViewController.m */; };
 		AAAB4151183079BC00A968EA /* NSDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */; };
 		AAAB415318307B5B00A968EA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAAB415218307B5B00A968EA /* CoreLocation.framework */; };
+		AACD9FF0183D691900BF40AA /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AACD9FEA183D691900BF40AA /* libTestFlight.a */; };
+		AACD9FF1183D691900BF40AA /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AACD9FEB183D691900BF40AA /* README.md */; };
+		AACD9FF2183D691900BF40AA /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = AACD9FEC183D691900BF40AA /* release_notes.md */; };
+		AACD9FF4183D693200BF40AA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACD9FF3183D693200BF40AA /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		AACD9FF6183D694600BF40AA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AACD9FF5183D694600BF40AA /* libz.dylib */; };
 		E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E909B0A51829E8FE00360DB2 /* CodeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -163,6 +168,14 @@
 		AAAB414F183079BC00A968EA /* NSDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+PLPackage.h"; sourceTree = "<group>"; };
 		AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+PLPackage.m"; sourceTree = "<group>"; };
 		AAAB415218307B5B00A968EA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		AACD9FEA183D691900BF40AA /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		AACD9FEB183D691900BF40AA /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		AACD9FEC183D691900BF40AA /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		AACD9FED183D691900BF40AA /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		AACD9FEE183D691900BF40AA /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		AACD9FEF183D691900BF40AA /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		AACD9FF3183D693200BF40AA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		AACD9FF5183D694600BF40AA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E909B0A41829E8FE00360DB2 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
 		E909B0A51829E8FE00360DB2 /* CodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -172,9 +185,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AACD9FF6183D694600BF40AA /* libz.dylib in Frameworks */,
+				AACD9FF4183D693200BF40AA /* AdSupport.framework in Frameworks */,
 				AA3A287B1831425F004B8791 /* QuartzCore.framework in Frameworks */,
 				AAAB415318307B5B00A968EA /* CoreLocation.framework in Frameworks */,
 				AA3F8FD81826B00C007ABF9B /* CoreGraphics.framework in Frameworks */,
+				AACD9FF0183D691900BF40AA /* libTestFlight.a in Frameworks */,
 				AA3F8FDA1826B00C007ABF9B /* UIKit.framework in Frameworks */,
 				AA3F8FD61826B00C007ABF9B /* Foundation.framework in Frameworks */,
 			);
@@ -278,6 +294,8 @@
 		AA3F8FD41826B00C007ABF9B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AACD9FF5183D694600BF40AA /* libz.dylib */,
+				AACD9FF3183D693200BF40AA /* AdSupport.framework */,
 				AA3A287A1831425F004B8791 /* QuartzCore.framework */,
 				AAAB415218307B5B00A968EA /* CoreLocation.framework */,
 				AA3F8FD51826B00C007ABF9B /* Foundation.framework */,
@@ -352,6 +370,7 @@
 		AA3F90171826EE61007ABF9B /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				AACD9FE9183D691900BF40AA /* TestFlightSDK2 */,
 				AA3A287C18314641004B8791 /* EGO */,
 				AA3F90181826EE61007ABF9B /* PlanktonServerSDK */,
 			);
@@ -420,6 +439,19 @@
 			name = UserManagementControllers;
 			sourceTree = "<group>";
 		};
+		AACD9FE9183D691900BF40AA /* TestFlightSDK2 */ = {
+			isa = PBXGroup;
+			children = (
+				AACD9FEA183D691900BF40AA /* libTestFlight.a */,
+				AACD9FEB183D691900BF40AA /* README.md */,
+				AACD9FEC183D691900BF40AA /* release_notes.md */,
+				AACD9FED183D691900BF40AA /* TestFlight+AsyncLogging.h */,
+				AACD9FEE183D691900BF40AA /* TestFlight+ManualSessions.h */,
+				AACD9FEF183D691900BF40AA /* TestFlight.h */,
+			);
+			path = TestFlightSDK2;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -467,6 +499,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = rampageworks;
 				TargetAttributes = {
+					AA3F8FD11826B00C007ABF9B = {
+						DevelopmentTeam = 6S9Y2D6TVX;
+					};
 					AA3F8FEC1826B00C007ABF9B = {
 						TestTargetID = AA3F8FD11826B00C007ABF9B;
 					};
@@ -503,7 +538,9 @@
 				AA3A286C1831314B004B8791 /* 红色禁止.png in Resources */,
 				AA3A28751831314B004B8791 /* 黑底勾.png in Resources */,
 				AA3A28761831314B004B8791 /* 黑播放.png in Resources */,
+				AACD9FF2183D691900BF40AA /* release_notes.md in Resources */,
 				AA3A289318315602004B8791 /* whiteArrow.png in Resources */,
+				AACD9FF1183D691900BF40AA /* README.md in Resources */,
 				AA3A288D18315602004B8791 /* blackArrow.png in Resources */,
 				AA3A28651831314B004B8791 /* 灰空箭头.png in Resources */,
 				AA3A28741831314B004B8791 /* 黄色箭头.png in Resources */,
@@ -682,10 +719,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "vote/vote-Prefix.pch";
 				INFOPLIST_FILE = "vote/vote-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/kuaiehana/Documents/编程项目/vote/Source_Code/vote/vote/libs/TestFlightSDK2",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -696,10 +738,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "vote/vote-Prefix.pch";
 				INFOPLIST_FILE = "vote/vote-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/kuaiehana/Documents/编程项目/vote/Source_Code/vote/vote/libs/TestFlightSDK2",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
