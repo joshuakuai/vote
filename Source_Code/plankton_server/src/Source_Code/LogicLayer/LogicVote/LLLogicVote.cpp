@@ -116,6 +116,12 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			sendValue["success"] = this->adminResolveVote(voteid);
 			break;
 		}
+		case UploadToken: {
+			int userid = receivedValue["userid"].asInt();
+			string tokenString = receivedValue["tokenid"].asString();
+			sendValue["success"] = this->uploadToken(userid,tokenString);
+			break;
+		}
 		default: {
 			return "{\"msg\":\"Invalid request type\",\"success\":false}";
 			break;
@@ -151,9 +157,9 @@ void *LLLogicVote::autoScanFinishedVote(void *msg) {
 			//check if the vote has pass the end time
 			time_t timeTmp = time(NULL);
 			double timeSpan = difftime(timeTmp, tmpVote.endTime);
-			if (timeSpan > 0){
+			if (timeSpan > 0) {
 				//check there if there is no pending selection
-				if(vote->getPendingSelectionNumber() == 0){
+				if (vote->getPendingSelectionNumber() == 0) {
 					vote->setVoteFinish();
 				}
 			}

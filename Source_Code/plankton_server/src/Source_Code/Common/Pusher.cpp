@@ -79,17 +79,18 @@ void Pusher::beginAutoPush() {
 	pthread_t autoPush = NULL;
 
 	//初始化会话线程
-	if(pthread_create(&autoPush,NULL,&autoPushThread,NULL) != 0){
+	if (pthread_create(&autoPush, NULL, &autoPushThread, NULL) != 0) {
 		PLog::logWarning("Failed to begin the autoPush thread");
-	}else{
+	} else {
 		this->isAutoPush = true;
 	}
 }
 
 void *Pusher::autoPushThread(void *msg) {
+	pthread_detach(pthread_self());
 
 	//try to push every 2 mins
-	while(1){
+	while (1) {
 		Pusher::Instance()->prepareConnect();
 
 		sleep(120);
@@ -113,7 +114,7 @@ void Pusher::pushNotification(string pushContent,
 	this->pushItemList.push_back(newItem);
 	pthread_mutex_unlock(&vectormutex);
 
-	if(!this->isAutoPush){
+	if (!this->isAutoPush) {
 		//if you don't use auto push, it's your responsibility to make sure the thread is safe
 		this->prepareConnect();
 	}
