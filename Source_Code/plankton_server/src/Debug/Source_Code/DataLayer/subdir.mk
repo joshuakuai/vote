@@ -4,13 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../Source_Code/DataLayer/DLDatabase.cpp 
+../Source_Code/DataLayer/DLDatabase.cpp \
+../Source_Code/DataLayer/PLDataLayer.cpp 
 
 OBJS += \
-./Source_Code/DataLayer/DLDatabase.o 
+./Source_Code/DataLayer/DLDatabase.o \
+./Source_Code/DataLayer/PLDataLayer.o 
 
 CPP_DEPS += \
-./Source_Code/DataLayer/DLDatabase.d 
+./Source_Code/DataLayer/DLDatabase.d \
+./Source_Code/DataLayer/PLDataLayer.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
