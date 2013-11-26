@@ -152,6 +152,9 @@
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasPassword"];
         }
         
+        //get the token
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert)];
+        
         [self performSegueWithIdentifier:@"codeViewShowMainViewSegue" sender:self];
     }else{
         [self showErrorMessage:[cacheDic valueForKey:@"msg"]];

@@ -107,6 +107,9 @@
         if ([cacheDic getRequestType] == SignInWithPassword) {
             [[NSUserDefaults standardUserDefaults] setObject:[cacheDic valueForKey:@"userid"] forKey:@"userid"];
             
+            //get the token
+            [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert)];
+
             [self performSegueWithIdentifier:@"signInShowMainViewSegue" sender:self];
         }else{
             [self performSegueWithIdentifier:@"signInShowCodeViewSegue" sender:self];

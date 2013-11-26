@@ -378,7 +378,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="search" id="ubs-C4-DQc"/>
+                    <tabBarItem key="tabBarItem" id="ubs-C4-DQc"/>
                     <connections>
                         <outlet property="voteSearchBar" destination="NOK-el-0hu" id="spL-hl-wnT"/>
                     </connections>
@@ -400,7 +400,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="history" id="yaO-g8-8uu"/>
+                    <tabBarItem key="tabBarItem" id="yaO-g8-8uu"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rlX-q7-3zq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
