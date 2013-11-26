@@ -22,6 +22,9 @@
     
     //check if the user has already logined in
     if ([[NSUserDefaults standardUserDefaults] integerForKey:@"userid"]) {
+        //get the token
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert)];
+        
         [self performSegueWithIdentifier:@"rootViewShowMainViewSegue" sender:self];
     }
 }

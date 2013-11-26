@@ -21,6 +21,20 @@
 
 @implementation searchVoteViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if (self) {
+        //set the tab bar item background
+        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"AttendTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"AttendTabBarNormal"]];
+        
+        self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    }
+    
+    return self;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];

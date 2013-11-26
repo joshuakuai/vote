@@ -24,10 +24,43 @@
     [PLServer setServerIP:RelServerAdd port:13145];
     [PLServer setLogicType:CML_PACKAGE_VOTE logicVersion:1];
     
-    [[UITabBar appearance] setTintColor:[UIColor colorWithRed:209 green:211 blue:212 alpha:1]];
-        
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert)];
+    
+    
     return YES;
 }
+
+
+#pragma - mark Push Notification
+//Push relate
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"%@", error);
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *hexString = [[[[deviceToken description] stringByReplacingOccurrencesOfString:@"<" withString:@""]stringByReplacingOccurrencesOfString:@">" withString:@""]stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    NSLog(@"DeviceToken:%@", hexString);
+    
+    /*
+    //all pass, prepare the data
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:UploadToken];
+    [dic setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"] forKey:@"userid"];
+    [dic setObject:hexString forKey:@"tokenid"];
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
+     */
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"Received a push from server...");
+}
+
+#pragma - mark Program Lifecycle
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

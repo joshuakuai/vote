@@ -124,7 +124,7 @@
 - (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
 {
     [self dismissLoadingView];
-    if (error) {
+    if (![[error description] isEqual:[NSNull null]]) {
         [self showErrorMessage:[error description]];
     }else{
         [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
