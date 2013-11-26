@@ -121,6 +121,10 @@ void Pusher::pushNotification(string pushContent,
 }
 
 void Pusher::prepareConnect() {
+	if(this->pushItemList.size() == 0){
+		return;
+	}
+
 	SSL_CTX *ctx;
 	SSL *ssl;
 	int sockfd;
