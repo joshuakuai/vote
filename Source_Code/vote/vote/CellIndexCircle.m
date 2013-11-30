@@ -12,13 +12,13 @@
 
 - (id)initWithNumber:(int)number location:(CGPoint)location
 {
-    self = [super initWithFrame:CGRectMake(location.x, location.y, 20, 20)];
+    self = [super initWithFrame:CGRectMake(location.x, location.y, 30, 30)];
     
     if (self) {
         self.image = [UIImage imageNamed:@"CellIndexCircle"];
         
         //add this label to the circle
-        _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(1, 1, 18, 18)];
+        _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(2, 2, 26, 26)];
         _indexLabel.font = [UIFont systemFontOfSize:12];
         _indexLabel.textAlignment = NSTextAlignmentCenter;
         _indexLabel.text = [NSString stringWithFormat:@"%d",number];

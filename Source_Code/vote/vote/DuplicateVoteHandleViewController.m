@@ -26,13 +26,6 @@
         _duplicateListViewArray = [NSMutableArray arrayWithCapacity:3];
         _currentOperationViewTag = -1;
         self.voteid = -1;
-        
-        NSArray *textEmailListArray = [[NSArray alloc] initWithObjects:@"1123@qq.com",@"12312412@qq.com",@"kuaijianghua@yaoho.com.cn",nil];
-        NSArray *textEmailListArray2 = [[NSArray alloc] initWithObjects:@"asdasdas@qq.com",@"woceshi@qq.com",@"kuaijianghua@yaoho.com.cn",nil];
-        
-        NSDictionary *textDuplicateDictionary = [NSDictionary dictionaryWithObjectsAndKeys:textEmailListArray,@"jianghua kuai",textEmailListArray2,@"shuai zhao",nil];
-        
-        self.duplicateDictionary = textDuplicateDictionary;
     }
     
     return self;
@@ -104,7 +97,17 @@
 - (void)finishDuplicateOperation
 {
     //send the request to server to try to end this vote
+    self.view.userInteractionEnabled = NO;
     
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:AdminResolveVote];
+    [dic setObject:[NSNumber numberWithInt:self.voteid] forKey:@"voteid"];
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
+    
+    //prevent the use to touch the screen again
+    self.view.userInteractionEnabled = NO;
 }
 
 #pragma mark - Duplicate List View delegate
@@ -113,10 +116,6 @@
     //get the tag of this duplicate list view
     _currentOperationViewTag = duplicateListView.tag;
     
-    //test
-    [self beginDeleteRecordLocal];
-    
-    /*
      //prepare the data
      NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:CancelSelection];
      [dic setObject:[NSNumber numberWithInt:self.voteid] forKey:@"voteid"];
@@ -128,55 +127,65 @@
      
      //prevent the use to touch the screen again
      self.view.userInteractionEnabled = NO;
-     */
+}
+
+- (void)doneButtonTouched:(DuplicateListView*)duplicateListView
+{
+    CGFloat tmpViewHeight;
+    
+    if (_currentOperationViewTag == -1) {
+        _currentOperationViewTag = duplicateListView.tag;
+        tmpViewHeight = duplicateListView.frame.size.height;
+    }else{
+        tmpViewHeight = duplicateListView.frame.size.height+40;
+    }
+    
+    //if there are only one duplicate view, the operation automatically end
+    if (_duplicateListViewArray.count == 1) {
+        [self finishDuplicateOperation];
+        return;
+    }
+    
+    //or we should move up all other view
+    [UIView animateWithDuration:0.2 animations:^(void){
+        [duplicateListView setAlpha:0.0];
+        
+        for (int i = _currentOperationViewTag+1; i<_duplicateListViewArray.count; i++) {
+            DuplicateListView *tmpMovingView = [_duplicateListViewArray objectAtIndex:i];
+            
+            CGRect tmpFrame = tmpMovingView.frame;
+            tmpMovingView.frame = CGRectMake(tmpFrame.origin.x, tmpFrame.origin.y-tmpViewHeight, tmpFrame.size.width, tmpFrame.size.height);
+        }
+    }completion:^(BOOL isFinished){
+        if (isFinished) {
+            //change the tag of all duplicate view
+            for (int i =_currentOperationViewTag+1; i<_duplicateListViewArray.count; i++) {
+                DuplicateListView *tmpDuplicateView = [_duplicateListViewArray objectAtIndex:i];
+                tmpDuplicateView.tag -= 1;
+            }
+            
+            //remove the view from array and super view
+            [duplicateListView removeFromSuperview];
+            [_duplicateListViewArray removeObjectAtIndex:_currentOperationViewTag];
+            
+            _currentOperationViewTag = -1;
+            self.view.userInteractionEnabled = YES;
+        }
+    }];
 }
 
 - (void)finishDeleteItem:(DuplicateListView*)duplicateListView leftEmailRecord:(int)leftNumber
 {
     //if this view only have one record now, delete this view from the scroll view, reset the content size
     if (leftNumber == 1) {
-        
-        //if there are only one duplicate view, the operation automatically end
-        if (_duplicateListViewArray.count == 1) {
-            [self finishDuplicateOperation];
-        }
-        
-        DuplicateListView *tmpView = [_duplicateListViewArray objectAtIndex:_currentOperationViewTag];
-        CGFloat tmpViewHeight = tmpView.frame.size.height+30;
-        
-        //or we should move up all other view
-        [UIView animateWithDuration:0.2 animations:^(void){
-            [tmpView setAlpha:0.0];
-            
-            for (int i = _currentOperationViewTag+1; i<_duplicateListViewArray.count; i++) {
-                DuplicateListView *tmpMovingView = [_duplicateListViewArray objectAtIndex:i];
-                
-                CGRect tmpFrame = tmpMovingView.frame;
-                tmpMovingView.frame = CGRectMake(tmpFrame.origin.x, tmpFrame.origin.y-tmpViewHeight, tmpFrame.size.width, tmpFrame.size.height);
-            }
-        }completion:^(BOOL isFinished){
-            if (isFinished) {
-                //change the tag of all duplicate view
-                for (int i =_currentOperationViewTag+1; i<_duplicateListViewArray.count; i++) {
-                    DuplicateListView *tmpDuplicateView = [_duplicateListViewArray objectAtIndex:i];
-                    tmpDuplicateView.tag -= 1;
-                }
-                
-                //remove the view from array and super view
-                [tmpView removeFromSuperview];
-                [_duplicateListViewArray removeObjectAtIndex:_currentOperationViewTag];
-                
-                _currentOperationViewTag = -1;
-                self.view.userInteractionEnabled = YES;
-            }
-        }];
+        [self doneButtonTouched:duplicateListView];
     }else{
         [UIView animateWithDuration:0.2 animations:^(void){
             for (int i = _currentOperationViewTag+1; i<_duplicateListViewArray.count; i++) {
                 DuplicateListView *tmpMovingView = [_duplicateListViewArray objectAtIndex:i];
                 
                 CGRect tmpFrame = tmpMovingView.frame;
-                tmpMovingView.frame = CGRectMake(tmpFrame.origin.x, tmpFrame.origin.y-30, tmpFrame.size.width, tmpFrame.size.height);
+                tmpMovingView.frame = CGRectMake(tmpFrame.origin.x, tmpFrame.origin.y-40, tmpFrame.size.width, tmpFrame.size.height);
             }
         }completion:^(BOOL isFinished){
             if (isFinished) {

@@ -7,7 +7,7 @@
 //
 
 #import "DuplicateListView.h"
-#import "RedTitleView.h"
+#import "TitleView.h"
 #import "CellIndexCircle.h"
 #import "UILabel+SizeCalculate.h"
 
@@ -32,29 +32,34 @@
         _emailRecordViewArray = [NSMutableArray arrayWithCapacity:3];
         
         //calculate the height of the view
-        self.frame = CGRectMake(0, 0, 320, 30*(emailList.count+1));
+        self.frame = CGRectMake(0, 0, 320, 40*(emailList.count+1));
         
         //Add the Name title and Name
-        RedTitleView *nameTitleRedView = [[RedTitleView alloc] initWithTittle:@"Name" location:CGPointMake(10, 5)];
+        TitleView *nameTitleRedView = [[TitleView alloc] initWithTittle:@"Name" color:Red location:CGPointMake(10, 5)];
         [self addSubview:nameTitleRedView];
         
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(57, 0, 295, 30)];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(77, 0, 295, 30)];
         nameLabel.text = name;
         nameLabel.font = [UIFont boldSystemFontOfSize:16];
         [self addSubview:nameLabel];
         
         //TODO:add done button
-        
+        UIButton *doneButton = [[UIButton alloc] initWithFrame:CGRectMake(258, 5,57, 30)];
+        [doneButton setBackgroundImage:[UIImage imageNamed:@"BlueTitleBackground"] forState:UIControlStateNormal];
+        [doneButton setTitle:@"Done" forState:UIControlStateNormal];
+        [doneButton addTarget:self action:@selector(duplicateDone) forControlEvents:UIControlEventTouchUpInside];
+        [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self addSubview:doneButton];
         
         //add the email title
-        RedTitleView *emailTitleRedView = [[RedTitleView alloc] initWithTittle:@"Email" location:CGPointMake(10, 35)];
+        TitleView *emailTitleRedView = [[TitleView alloc] initWithTittle:@"Email" color:Red location:CGPointMake(10, 45)];
         [self addSubview:emailTitleRedView];
         
         //add list of email
         for (int i = 0; i<emailList.count; i++) {
-            CGFloat heightForEmailRecord = 30*(i+1);
+            CGFloat heightForEmailRecord = 40*(i+1);
             
-            UIView *recordView = [[UIView alloc] initWithFrame:CGRectMake(53, heightForEmailRecord, 267, 30)];
+            UIView *recordView = [[UIView alloc] initWithFrame:CGRectMake(72, heightForEmailRecord, 243, 40)];
             
             //set the index number
             CellIndexCircle *indexCircle = [[CellIndexCircle alloc] initWithNumber:i+1 location:CGPointMake(0, 5)];
@@ -62,20 +67,20 @@
             [recordView addSubview:indexCircle];
             
             //set email
-            UILabel *emailLabel = [[UILabel alloc] initWithFrame:CGRectMake(22, 0, 214, 30)];
+            UILabel *emailLabel = [[UILabel alloc] initWithFrame:CGRectMake(32, 0, 214, 40)];
             emailLabel.textAlignment = NSTextAlignmentNatural;
             emailLabel.text = [emailList objectAtIndex:i];
             
             //reset the size of label
-            CGSize expectSize = [emailLabel perfectLabelSizeWithMaxSize:CGSizeMake(200, 30)];
-            emailLabel.frame = CGRectMake(emailLabel.frame.origin.x, 0, expectSize.width, 30);
+            CGSize expectSize = [emailLabel perfectLabelSizeWithMaxSize:CGSizeMake(200, 40)];
+            emailLabel.frame = CGRectMake(emailLabel.frame.origin.x, 0, expectSize.width, 40);
             
             emailLabel.numberOfLines = 1;
             emailLabel.adjustsFontSizeToFitWidth = YES;
             [recordView addSubview:emailLabel];
             
             //add delete button
-            UIButton *deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(expectSize.width+emailLabel.frame.origin.x + 3, 3, 22, 25)];
+            UIButton *deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(220, 8, 22, 25)];
             deleteButton.tag = i;
             [deleteButton setBackgroundImage:[UIImage imageNamed:@"DeleteButton"] forState:UIControlStateNormal];
             [deleteButton addTarget:self action:@selector(deleteEmail:) forControlEvents:UIControlEventTouchUpInside];
@@ -99,6 +104,13 @@
     _emailRecordViewArray = nil;
 }
 
+- (void)duplicateDone
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(doneButtonTouched:)]) {
+        [_delegate doneButtonTouched:self];
+    }
+}
+
 - (void)deleteEmail:(UIButton*)sender
 {
     //delete button taped
@@ -120,7 +132,7 @@
             
             CGRect tmpFrame = duplicateView.frame;
             
-            duplicateView.frame = CGRectMake(tmpFrame.origin.x, tmpFrame.origin.y-30, tmpFrame.size.width, tmpFrame.size.height);
+            duplicateView.frame = CGRectMake(tmpFrame.origin.x, tmpFrame.origin.y-40, tmpFrame.size.width, tmpFrame.size.height);
         }
     }completion:^(BOOL isfinished){
         if (isfinished) {
@@ -146,7 +158,7 @@
             [_emailRecordViewArray removeObjectAtIndex:_currentDeletingEmailIndex];
             
             //resize the view's frame
-            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, 320, self.frame.size.height-30);
+            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, 320, self.frame.size.height-40);
             
             _currentDeletingEmailIndex = -1;
             if (_delegate && [_delegate respondsToSelector:@selector(finishDeleteItem:leftEmailRecord:)]) {

@@ -14,6 +14,7 @@
 
 - (void)deleteButtonTouched:(DuplicateListView*)duplicateListView deleteEmail:(NSString*)emailString;
 - (void)finishDeleteItem:(DuplicateListView*)duplicateListView leftEmailRecord:(int)leftNumber;
+- (void)doneButtonTouched:(DuplicateListView*)duplicateListView;
 
 @end
 
