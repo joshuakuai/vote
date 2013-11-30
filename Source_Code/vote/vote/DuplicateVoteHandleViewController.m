@@ -73,7 +73,7 @@
         duplicateView.frame = CGRectMake(0, yLocationForNextDuplicateView, 320, duplicateView.frame.size.height);
         duplicateView.delegate = self;
         duplicateView.tag = i;
-        [self.DuplicateListScrollView addSubview:duplicateView];
+        [self.duplicateListScrollView addSubview:duplicateView];
         [_duplicateListViewArray addObject:duplicateView];
         
         //re-calculate the ylocation
@@ -81,7 +81,7 @@
     }
     
     //set the scrollview's content size
-    [self.DuplicateListScrollView setContentSize:CGSizeMake(320, yLocationForNextDuplicateView)];
+    [self.duplicateListScrollView setContentSize:CGSizeMake(320, yLocationForNextDuplicateView)];
 }
 
 - (void)dealloc
@@ -104,7 +104,7 @@
 - (void)finishDuplicateOperation
 {
     //send the request to server to try to end this vote
-    //[self dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 #pragma mark - Duplicate List View delegate
@@ -156,10 +156,18 @@
             }
         }completion:^(BOOL isFinished){
             if (isFinished) {
+                //change the tag of all duplicate view
+                for (int i =_currentOperationViewTag+1; i<_duplicateListViewArray.count; i++) {
+                    DuplicateListView *tmpDuplicateView = [_duplicateListViewArray objectAtIndex:i];
+                    tmpDuplicateView.tag -= 1;
+                }
+                
                 //remove the view from array and super view
                 [tmpView removeFromSuperview];
                 [_duplicateListViewArray removeObjectAtIndex:_currentOperationViewTag];
+                
                 _currentOperationViewTag = -1;
+                self.view.userInteractionEnabled = YES;
             }
         }];
     }else{
@@ -173,6 +181,7 @@
         }completion:^(BOOL isFinished){
             if (isFinished) {
                 _currentOperationViewTag = -1;
+                self.view.userInteractionEnabled = YES;
             }
         }];
     }
@@ -185,13 +194,18 @@
     
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
+    
+    VoteRequestType requetType = [cacheDic getRequestType];
     if (result) {
-        //check if is the refresh by location
-        VoteRequestType requetType = [cacheDic getRequestType];
-        
+
         switch (requetType) {
             case CancelSelection:{
                 [self beginDeleteRecordLocal];
+                break;
+            }
+                
+            case AdminResolveVote:{
+                [self dismissViewControllerAnimated:YES completion:nil];
                 break;
             }
                 
@@ -201,9 +215,10 @@
         
     }else{
         [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
+        if (requetType == AdminResolveVote) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }
-    
-    self.view.userInteractionEnabled = YES;
 }
 
 - (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error

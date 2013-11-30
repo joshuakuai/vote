@@ -12,7 +12,8 @@
 @interface DuplicateVoteHandleViewController : RootViewController<DuplicateListViewDelegate>
 
 //UI
-@property (weak, nonatomic) IBOutlet UIScrollView *DuplicateListScrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *duplicateListScrollView;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 //Data
 @property (nonatomic,strong) NSDictionary *duplicateDictionary;
