@@ -123,33 +123,35 @@
             duplicateView.frame = CGRectMake(tmpFrame.origin.x, tmpFrame.origin.y-30, tmpFrame.size.width, tmpFrame.size.height);
         }
     }completion:^(BOOL isfinished){
-        //reset all circle number and the delete button tag after the deleted item
-        for (int i = _currentDeletingEmailIndex+1; i<_emailList.count; i++) {
-            UIView *duplicateView = [_emailRecordViewArray objectAtIndex:i];
+        if (isfinished) {
+            //reset all circle number and the delete button tag after the deleted item
+            for (int i = _currentDeletingEmailIndex+1; i<_emailList.count; i++) {
+                UIView *duplicateView = [_emailRecordViewArray objectAtIndex:i];
+                
+                //change the circle number
+                CellIndexCircle *cellIndexCircle = (CellIndexCircle*)[duplicateView viewWithTag:10086];
+                [cellIndexCircle setNumber:i];
+                
+                //change the delete button tag
+                UIButton *deleteButton = (UIButton*)[duplicateView viewWithTag:i];
+                deleteButton.tag -= 1;
+            }
             
-            //change the circle number
-            CellIndexCircle *cellIndexCircle = (CellIndexCircle*)[duplicateView viewWithTag:10086];
-            [cellIndexCircle setNumber:i];
+            //delete the email record from the email list and remove the view
+            [_emailList removeObjectAtIndex:_currentDeletingEmailIndex];
             
-            //change the delete button tag
-            UIButton *deleteButton = (UIButton*)[duplicateView viewWithTag:i];
-            deleteButton.tag -= 1;
-        }
-        
-        //delete the email record from the email list and remove the view
-        [_emailList removeObjectAtIndex:_currentDeletingEmailIndex];
-        
-        //remove the deleted view from super view
-        UIView *duplicateView = [_emailRecordViewArray objectAtIndex:_currentDeletingEmailIndex];
-        [duplicateView removeFromSuperview];
-        [_emailRecordViewArray removeObjectAtIndex:_currentDeletingEmailIndex];
-        
-        //resize the view's frame
-        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, 320, self.frame.size.height-30);
-        
-        _currentDeletingEmailIndex = -1;
-        if (_delegate && [_delegate respondsToSelector:@selector(finishDeleteItem:leftEmailRecord:)]) {
-            [_delegate finishDeleteItem:self leftEmailRecord:_emailList.count];
+            //remove the deleted view from super view
+            UIView *duplicateView = [_emailRecordViewArray objectAtIndex:_currentDeletingEmailIndex];
+            [duplicateView removeFromSuperview];
+            [_emailRecordViewArray removeObjectAtIndex:_currentDeletingEmailIndex];
+            
+            //resize the view's frame
+            self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, 320, self.frame.size.height-30);
+            
+            _currentDeletingEmailIndex = -1;
+            if (_delegate && [_delegate respondsToSelector:@selector(finishDeleteItem:leftEmailRecord:)]) {
+                [_delegate finishDeleteItem:self leftEmailRecord:_emailList.count];
+            }
         }
     }];
 }

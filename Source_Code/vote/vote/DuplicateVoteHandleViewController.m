@@ -155,10 +155,12 @@
                 tmpMovingView.frame = CGRectMake(tmpFrame.origin.x, tmpFrame.origin.y-tmpViewHeight, tmpFrame.size.width, tmpFrame.size.height);
             }
         }completion:^(BOOL isFinished){
-            //remove the view from array and super view
-            [tmpView removeFromSuperview];
-            [_duplicateListViewArray removeObjectAtIndex:_currentOperationViewTag];
-            _currentOperationViewTag = -1;
+            if (isFinished) {
+                //remove the view from array and super view
+                [tmpView removeFromSuperview];
+                [_duplicateListViewArray removeObjectAtIndex:_currentOperationViewTag];
+                _currentOperationViewTag = -1;
+            }
         }];
     }else{
         [UIView animateWithDuration:0.2 animations:^(void){
@@ -169,7 +171,9 @@
                 tmpMovingView.frame = CGRectMake(tmpFrame.origin.x, tmpFrame.origin.y-30, tmpFrame.size.width, tmpFrame.size.height);
             }
         }completion:^(BOOL isFinished){
-            _currentOperationViewTag = -1;
+            if (isFinished) {
+                _currentOperationViewTag = -1;
+            }
         }];
     }
 }
