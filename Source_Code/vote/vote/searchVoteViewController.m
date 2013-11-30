@@ -103,7 +103,7 @@
     [self.view addSubview:_voteByIDResultView];
     
     //hide the index label
-    _voteByIDResultView.indexCircleImageView.hidden = YES;
+    _voteByIDResultView.indexCell.hidden = YES;
     
     //init the vote object which will store the result of searching by id
     self.voteByIDInfo = [[Vote alloc] init];

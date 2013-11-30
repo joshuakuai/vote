@@ -8,15 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "Vote.h"
+#import "CellIndexCircle.h"
 
 @interface VoteSearchResultCell : UIView{
-    UILabel *_indexLabel;
     UIImageView *_arrowImageView;
 }
 
 @property(nonatomic, assign)NSInteger indexNumber;
 @property(nonatomic, assign)VoteArrowColor arrowCorlor;
 @property(nonatomic, strong)UILabel *initiatorLabel;
-@property(nonatomic, strong)UIImageView *indexCircleImageView;
+@property(nonatomic, strong)CellIndexCircle *indexCell;
+
 
 @end

@@ -19,17 +19,10 @@
         self.frame = CGRectMake(0, 0, 320, 60);
         
         //index circle
-        self.indexCircleImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 40, 40)];
-        self.indexCircleImageView.image = [UIImage imageNamed:@"CellIndexCircle"];
-        
-        //add this label to the circle
-        _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-        _indexLabel.font = [UIFont systemFontOfSize:12];
+        self.indexCell = [[CellIndexCircle alloc] initWithNumber:1 location:CGPointMake(10, 10)];
         self.indexNumber = 1;
         
-        [self.indexCircleImageView addSubview:_indexLabel];
-        
-        [self addSubview:self.indexCircleImageView];
+        [self addSubview:self.indexCell];
         
         //add arrow
         _arrowImageView = [[UIImageView alloc] initWithFrame:CGRectMake(70, 10, 209, 40)];
@@ -48,10 +41,9 @@
 
 - (void)dealloc
 {
-    _indexLabel = nil;
     _arrowImageView = nil;
     self.initiatorLabel = nil;
-    self.indexCircleImageView = nil;
+    self.indexCell = nil;
 }
 
 - (void)setIndexNumber:(NSInteger)indexNumber
@@ -59,7 +51,7 @@
     _indexNumber = indexNumber;
     
     //set the lable text
-    _indexLabel.text = [NSString stringWithFormat:@"%ld",(long)_indexNumber];
+    [self.indexCell setNumber:_indexNumber];
 }
 
 - (void)setArrowCorlor:(VoteArrowColor)arrowCorlor
