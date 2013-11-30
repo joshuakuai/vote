@@ -79,7 +79,7 @@
     }
     
     //all pass, prepare the data
-    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:Register];
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:SignUp];
     [dic setObject:_firstNameTextField.text forKey:@"firstName"];
     [dic setObject:_emailTextField.text forKey:@"email"];
     [dic setObject:_lastNameTextField.text forKey:@"lastName"];

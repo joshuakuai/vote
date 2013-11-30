@@ -40,6 +40,7 @@
 		AA4609D5184A2D8F002D398B /* DuplicateListView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4609D4184A2D8F002D398B /* DuplicateListView.m */; };
 		AA4609D8184A3486002D398B /* RedTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4609D7184A3486002D398B /* RedTitleView.m */; };
 		AA4609DB184A3715002D398B /* CellIndexCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4609DA184A3715002D398B /* CellIndexCircle.m */; };
+		AA4609DE184A40C4002D398B /* UILabel+SizeCalculate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4609DD184A40C4002D398B /* UILabel+SizeCalculate.m */; };
 		AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */; };
 		AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */; };
 		AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */; };
@@ -119,6 +120,8 @@
 		AA4609D7184A3486002D398B /* RedTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedTitleView.m; sourceTree = "<group>"; };
 		AA4609D9184A3715002D398B /* CellIndexCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellIndexCircle.h; sourceTree = "<group>"; };
 		AA4609DA184A3715002D398B /* CellIndexCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellIndexCircle.m; sourceTree = "<group>"; };
+		AA4609DC184A40C4002D398B /* UILabel+SizeCalculate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SizeCalculate.h"; sourceTree = "<group>"; };
+		AA4609DD184A40C4002D398B /* UILabel+SizeCalculate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SizeCalculate.m"; sourceTree = "<group>"; };
 		AA58D3BC182EB94900D9B9A5 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		AA58D3EF182EBE5E00D9B9A5 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -306,6 +309,8 @@
 			children = (
 				AA3F90131826E962007ABF9B /* NSString+ValidCheck.h */,
 				AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */,
+				AA4609DC184A40C4002D398B /* UILabel+SizeCalculate.h */,
+				AA4609DD184A40C4002D398B /* UILabel+SizeCalculate.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -530,6 +535,7 @@
 				AA4609D8184A3486002D398B /* RedTitleView.m in Sources */,
 				AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */,
 				AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */,
+				AA4609DE184A40C4002D398B /* UILabel+SizeCalculate.m in Sources */,
 				AA3F8FE61826B00C007ABF9B /* AppDelegate.m in Sources */,
 				AA846832183839AC00C9B632 /* VoteSearchResultCell.m in Sources */,
 				AA3F90081826D1A9007ABF9B /* RootViewController.m in Sources */,
@@ -672,7 +678,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "vote/vote-Prefix.pch";
 				INFOPLIST_FILE = "vote/vote-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/kuaiehana/Documents/编程项目/vote/Source_Code/vote/vote/libs/TestFlightSDK2",
@@ -692,7 +698,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "vote/vote-Prefix.pch";
 				INFOPLIST_FILE = "vote/vote-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/kuaiehana/Documents/编程项目/vote/Source_Code/vote/vote/libs/TestFlightSDK2",

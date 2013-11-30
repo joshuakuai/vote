@@ -21,7 +21,9 @@
         //add tittle
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 38, 20)];
         titleLabel.text = title;
+        titleLabel.textAlignment = NSTextAlignmentCenter;
         titleLabel.textColor = [UIColor whiteColor];
+        titleLabel.font = [UIFont systemFontOfSize:9];
         [self addSubview:titleLabel];
     }
     
