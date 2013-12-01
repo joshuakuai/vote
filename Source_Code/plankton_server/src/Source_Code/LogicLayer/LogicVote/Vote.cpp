@@ -85,18 +85,9 @@ bool Vote::getVoteByID() {
 	if (result.size() == 0) {
 		this->errorMessage == "Can't find Vote.";
 		return false;
+	} else {
+		this->setVoteByDatabaseResult(result);
 	}
-
-	this->initiatorid = Converter::string_to_int(result[0][1]);
-	this->title = result[0][2];
-	this->maxValidUser = Converter::string_to_int(result[0][3]);
-	this->password = result[0][4];
-	this->longitude = Converter::string_to_double(result[0][5]);
-	this->latitude = Converter::string_to_double(result[0][6]);
-	this->createTime = Converter::mysql_datetime_string_to_time_t(result[0][7]);
-	this->endTime = Converter::mysql_datetime_string_to_time_t(result[0][8]);
-	this->isFnished = Converter::string_to_int(result[0][9]);
-	this->colorIndex = Converter::string_to_int(result[0][10]);
 
 	//get initiator name
 	queryString = "SELECT first_name,last_name FROM user WHERE iduser="
@@ -112,6 +103,58 @@ bool Vote::getVoteByID() {
 	this->initiator = result[0][0] + result[0][1];
 
 	return true;
+}
+
+bool Vote::getVoteByInitiatorID() {
+	string queryString = "SELECT * FROM vote WHERE idinitiator="
+			+ Converter::int_to_string(this->initiatorid);
+
+	vector<vector<string> > result = this->database->querySQL(queryString);
+
+	if (result.size() == 0) {
+		this->errorMessage == "Can't find Vote.";
+		return false;
+	} else {
+		this->setVoteByDatabaseResult(result);
+		return true;
+	}
+}
+
+void Vote::setVoteByDatabaseResult(vector<vector<string> > result) {
+	if (result.size() == 0) {
+		return;
+	}
+
+	this->voteid = Converter::string_to_int(result[0][0]);
+	this->initiatorid = Converter::string_to_int(result[0][1]);
+	this->title = result[0][2];
+	this->maxValidUser = Converter::string_to_int(result[0][3]);
+	this->password = result[0][4];
+	this->longitude = Converter::string_to_double(result[0][5]);
+	this->latitude = Converter::string_to_double(result[0][6]);
+	this->createTime = Converter::mysql_datetime_string_to_time_t(result[0][7]);
+	this->endTime = Converter::mysql_datetime_string_to_time_t(result[0][8]);
+	this->isFnished = Converter::string_to_int(result[0][9]);
+	this->colorIndex = Converter::string_to_int(result[0][10]);
+}
+
+bool Vote::newVote() {
+	std::ostringstream stringStream;
+	stringStream
+			<< "INSERT INTO vote(idinitiator,title,max_valid_user,password,longitude,latitude,create_time,end_time,color_index) VALUES("
+			<< initiatorid << ",'" << title << "'," << maxValidUser << ",'"
+			<< password << "','" << longitude << "','" << latitude << "',"
+			<< Converter::time_t_to_mysql_datetime_string(createTime) << ","
+			<< Converter::time_t_to_mysql_datetime_string(endTime) << ","
+			<< colorIndex << ");";
+	string queryString = stringStream.str();
+
+	if (this->database->executeSQL(queryString)) {
+		return true;
+	} else {
+		this->errorMessage = "Failed to save Vote.";
+		return false;
+	}
 }
 
 vector<vector<string> > Vote::getDuplicateNameList() {
@@ -233,10 +276,11 @@ bool Vote::setVoteFinish() {
 			}
 
 			char log[100];
-			sprintf(log,"Vote(%d) has a final result, check it out!",this->voteid);
+			sprintf(log, "Vote(%d) has a final result, check it out!",
+					this->voteid);
 			string pushContent(log);
 
-			Pusher::Instance()->pushNotification(pushContent,tokenStringList);
+			Pusher::Instance()->pushNotification(pushContent, tokenStringList);
 		}
 
 		return true;

@@ -36,7 +36,9 @@ public:
 	vector<vector<string> > getDuplicateNameList();
 	bool setVoteFinish();
 	bool getVoteByID();
+	bool getVoteByInitiatorID();
 	bool hasReachMaxValidNumber();
+	bool newVote();
 	int getPendingSelectionNumber();
 
 	vector<Vote*> getAllUnfinishedVote();
@@ -44,6 +46,8 @@ public:
 private:
 	//数据库
 	DLDatabase *database;
+
+	void setVoteByDatabaseResult(vector<vector<string> > result);
 };
 
 #endif /* VOTE_H_ */

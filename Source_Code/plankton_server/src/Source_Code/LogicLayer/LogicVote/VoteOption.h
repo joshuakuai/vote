@@ -25,6 +25,7 @@ public:
 	int idvote;
 
 	vector<VoteOption*> getVoteOptionsByVoteid();
+	bool newVoteOption();
 
 private:
 	//数据库

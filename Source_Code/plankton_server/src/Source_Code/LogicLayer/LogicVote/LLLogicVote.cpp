@@ -6,6 +6,7 @@
  */
 
 #include "LLLogicVote.h"
+#include "../../Common/Converter.h"
 
 bool LLLogicVote::doesAutoScanOpened = false;
 
@@ -119,7 +120,36 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 		case UploadToken: {
 			int userid = receivedValue["userid"].asInt();
 			string tokenString = receivedValue["tokenid"].asString();
-			sendValue["success"] = this->uploadToken(userid,tokenString);
+			sendValue["success"] = this->uploadToken(userid, tokenString);
+			break;
+		}
+		case InitialVote: {
+			//get content
+			Json::Value contentValue = receivedValue["contents"];
+
+			if (!contentValue.isArray()) {
+				sendValue["success"] = false;
+				this->errorString = "Content is not an array!";
+				break;
+			}
+
+			vector<string> contentVector;
+			for (unsigned int i = 0; i< contentValue.size(); i++) {
+				contentVector.push_back(contentValue[i].asString());
+			}
+
+			string title = receivedValue["title"].asString();
+			int maxValidUser = receivedValue["maxvaliduser"].asInt();
+			string passsword = receivedValue["password"].asString();
+			double longitude = receivedValue["longitude"].asDouble();
+			double latitude = receivedValue["latitude"].asDouble();
+			int endTime = receivedValue["endTime"].asInt();
+			int userid = receivedValue["userid"].asInt();
+			int colorIndex = receivedValue["color"].asInt();
+
+			sendValue["success"] = initializeVote(title, maxValidUser,
+					passsword, longitude, latitude, endTime, userid,
+					contentVector, colorIndex);
 			break;
 		}
 		default: {
@@ -478,4 +508,50 @@ bool LLLogicVote::adminResolveVote(int voteid) {
 		}
 	}
 	return true;
+}
+
+bool LLLogicVote::initializeVote(string title, int maxValidN, string passwd,
+		double longitude, double latitude, int endTime, int userid,
+		vector<string> contentVector, int color) {
+	if (contentVector.size() == 0) {
+		this->errorString = "Option can't be nil!";
+		return false;
+	}
+
+	//form the Vote
+	Vote newVote(this->database);
+
+	newVote.title = title;
+	newVote.password = passwd;
+	newVote.maxValidUser = maxValidN;
+	newVote.longitude = longitude;
+	newVote.latitude = longitude;
+	newVote.initiatorid = userid;
+	newVote.colorIndex = color;
+	newVote.endTime = time(NULL) + endTime * 60;
+
+	//save the Vote
+	if (newVote.newVote()) {
+		//get the voteid
+		newVote.getVoteByInitiatorID();
+
+		//save the options
+		vector<string>::iterator it = contentVector.begin();
+
+		for (; it != contentVector.end(); it++) {
+			VoteOption newOption(this->database);
+
+			newOption.idvote = newVote.voteid;
+			newOption.content = *it;
+			if (!newOption.newVoteOption()) {
+				this->errorString = newOption.errorMessage;
+				return false;
+			}
+		}
+
+		return true;
+	} else {
+		this->errorString = newVote.errorMessage;
+		return false;
+	}
 }

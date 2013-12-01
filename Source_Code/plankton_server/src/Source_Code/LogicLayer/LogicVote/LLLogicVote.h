@@ -23,9 +23,9 @@
 
 using namespace std;
 
-class LLLogicVote:public LLLogicBase {
+class LLLogicVote: public LLLogicBase {
 public:
-	typedef enum _VoteRequestType{
+	typedef enum _VoteRequestType {
 		Unknow = -1,
 		SignUp = 0,
 		CheckCode,
@@ -36,28 +36,32 @@ public:
 		SearchVote,
 		GetDuplicateSelection,
 		CancelSelection,
-		AdminResolveVote
-	}VoteRequestType;
+		AdminResolveVote,
+		InitialVote
+	} VoteRequestType;
 
-	LLLogicVote(){
+	LLLogicVote() {
 		mailManager = MailManager::Instance();
 		codeManager = CodeManager::Instance();
-    	database = PLDataLayer::Instance()->getDatabaseByName("Vote");
+		database = PLDataLayer::Instance()->getDatabaseByName("Vote");
 
-    	if(!doesAutoScanOpened){
-    		pthread_t sessionThread = NULL;
+		if (!doesAutoScanOpened) {
+			pthread_t sessionThread = NULL;
 
-    		if(pthread_create(&sessionThread,NULL,&autoScanFinishedVote,NULL) != 0){
-    			PLog::logFatal("Can initial auto-scan");
-    		}else{
-    			doesAutoScanOpened = true;
-    		}
-    	}
-    }
+			if (pthread_create(&sessionThread, NULL, &autoScanFinishedVote,
+					NULL) != 0) {
+				PLog::logFatal("Can initial auto-scan");
+			} else {
+				doesAutoScanOpened = true;
+			}
+		}
+	}
 
-	virtual ~LLLogicVote(){}
+	virtual ~LLLogicVote() {
+	}
 
-	string excuteRequest(string requestString,short version,unsigned int sessionID);
+	string excuteRequest(string requestString, short version,
+			unsigned int sessionID);
 
 private:
 	//Indicator of auto-scan
@@ -76,38 +80,46 @@ private:
 	static void *autoScanFinishedVote(void *msg);
 
 	//注册
-	bool signUp(string firstName,string lastName,string email);
+	bool signUp(string firstName, string lastName, string email);
 
 	//check code,checkType 0:signUp 1:signIn
-	bool checkCode(string email,string code,int checkType,int &userID,bool &hasPassword);
+	bool checkCode(string email, string code, int checkType, int &userID,
+			bool &hasPassword);
 
 	//resend the code
-	bool resendCode(string email,string firstName,string lastName,int resendType);
+	bool resendCode(string email, string firstName, string lastName,
+			int resendType);
 
 	//login with password
-	bool signInWithPassword(string email,string password,int &userID);
+	bool signInWithPassword(string email, string password, int &userID);
 
 	//login with email
 	bool signInWithEmail(string email);
 
 	//upload Token
-	bool uploadToken(int userID,string token);
+	bool uploadToken(int userID, string token);
 
 	//search vote by location
-	bool searchVoteByLocation(double longitude,double latitude,Json::Value &sendValue);
+	bool searchVoteByLocation(double longitude, double latitude,
+			Json::Value &sendValue);
 
 	//search vote by id
-	bool searchVoteByID(int voteid,Json::Value &sendValue);
+	bool searchVoteByID(int voteid, Json::Value &sendValue);
 
 	//get vote duplicate selection
 	//return the name list that have different choice
-	bool getDuplicateNameList(int voteid,Json::Value &sendValue);
+	bool getDuplicateNameList(int voteid, Json::Value &sendValue);
 
 	//cancel the user's selection
-	bool cancelUserSelection(int voteid,string userEmail);
+	bool cancelUserSelection(int voteid, string userEmail);
 
 	//Call this after the admin finish resolve duplicate name
 	bool adminResolveVote(int voteid);
+
+	//Initialize a vote, endTime's scale is minutes
+	bool initializeVote(string title, int maxValidN, string passwd,
+			double longitude, double latitude, int endTime, int userid,
+			vector<string> contentVector, int color);
 
 	//登录
 	//bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);

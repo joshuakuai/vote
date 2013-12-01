@@ -31,14 +31,14 @@ vector<VoteOption*> VoteOption::getVoteOptionsByVoteid() {
 	string queryString = "SELECT * FROM voteOption WHERE idvoteOption="
 			+ Converter::int_to_string(this->idvote);
 
-	vector<vector<string> > voteOptionResult = this->database->querySQL(queryString);
+	vector<vector<string> > voteOptionResult = this->database->querySQL(
+			queryString);
 
-
-
-	for(unsigned int i =0; i<voteOptionResult.size() ;i++){
+	for (unsigned int i = 0; i < voteOptionResult.size(); i++) {
 		VoteOption *tmpOption = new VoteOption(this->database);
 
-		tmpOption->idvoteOption = Converter::string_to_int(voteOptionResult[i][0]);
+		tmpOption->idvoteOption = Converter::string_to_int(
+				voteOptionResult[i][0]);
 		tmpOption->content = voteOptionResult[i][1];
 		tmpOption->idvote = Converter::string_to_int(voteOptionResult[i][2]);
 
@@ -46,5 +46,19 @@ vector<VoteOption*> VoteOption::getVoteOptionsByVoteid() {
 	}
 
 	return result;
+}
+
+bool VoteOption::newVoteOption() {
+	std::ostringstream stringStream;
+	stringStream << "INSERT INTO voteOption(content,idvote) VALUES(" << content
+			<< "," << idvote << ");";
+	string queryString = stringStream.str();
+
+	if (this->database->executeSQL(queryString)) {
+		return true;
+	} else {
+		this->errorMessage = "Failed to save Vote Option.";
+		return false;
+	}
 }
 
