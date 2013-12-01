@@ -36,6 +36,11 @@
 		AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */; };
 		AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901A1826EE61007ABF9B /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		AA3F90241826EE61007ABF9B /* PLServer.m in Sources */ = {isa = PBXBuildFile; fileRef = AA3F901E1826EE61007ABF9B /* PLServer.m */; };
+		AA4609D2184A2C49002D398B /* DuplicateVoteHandleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4609D1184A2C49002D398B /* DuplicateVoteHandleViewController.m */; };
+		AA4609D5184A2D8F002D398B /* DuplicateListView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4609D4184A2D8F002D398B /* DuplicateListView.m */; };
+		AA4609D8184A3486002D398B /* TitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4609D7184A3486002D398B /* TitleView.m */; };
+		AA4609DB184A3715002D398B /* CellIndexCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4609DA184A3715002D398B /* CellIndexCircle.m */; };
+		AA4609DE184A40C4002D398B /* UILabel+SizeCalculate.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4609DD184A40C4002D398B /* UILabel+SizeCalculate.m */; };
 		AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */; };
 		AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */; };
 		AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */; };
@@ -107,6 +112,16 @@
 		AA3F901D1826EE61007ABF9B /* PLServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLServer.h; sourceTree = "<group>"; };
 		AA3F901E1826EE61007ABF9B /* PLServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLServer.m; sourceTree = "<group>"; };
 		AA3F901F1826EE61007ABF9B /* Protocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protocal.h; sourceTree = "<group>"; };
+		AA4609D0184A2C49002D398B /* DuplicateVoteHandleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuplicateVoteHandleViewController.h; sourceTree = "<group>"; };
+		AA4609D1184A2C49002D398B /* DuplicateVoteHandleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuplicateVoteHandleViewController.m; sourceTree = "<group>"; };
+		AA4609D3184A2D8F002D398B /* DuplicateListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuplicateListView.h; sourceTree = "<group>"; };
+		AA4609D4184A2D8F002D398B /* DuplicateListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuplicateListView.m; sourceTree = "<group>"; };
+		AA4609D6184A3486002D398B /* TitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleView.h; sourceTree = "<group>"; };
+		AA4609D7184A3486002D398B /* TitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleView.m; sourceTree = "<group>"; };
+		AA4609D9184A3715002D398B /* CellIndexCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellIndexCircle.h; sourceTree = "<group>"; };
+		AA4609DA184A3715002D398B /* CellIndexCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellIndexCircle.m; sourceTree = "<group>"; };
+		AA4609DC184A40C4002D398B /* UILabel+SizeCalculate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+SizeCalculate.h"; sourceTree = "<group>"; };
+		AA4609DD184A40C4002D398B /* UILabel+SizeCalculate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+SizeCalculate.m"; sourceTree = "<group>"; };
 		AA58D3BC182EB94900D9B9A5 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
 		AA58D3BD182EB94900D9B9A5 /* AsyncSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncSocket.m; sourceTree = "<group>"; };
 		AA58D3EF182EBE5E00D9B9A5 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
@@ -238,7 +253,7 @@
 		AA3F8FDB1826B00C007ABF9B /* vote */ = {
 			isa = PBXGroup;
 			children = (
-				AADAE9181842B7C200DF1BD0 /* New Group */,
+				AADAE9181842B7C200DF1BD0 /* VoteHistoryControllers */,
 				AADAE9171842B7B400DF1BD0 /* InitializeVoteControllers */,
 				AA846833183849E500C9B632 /* Model */,
 				AA84682F1838393300C9B632 /* VoteSearchControllers */,
@@ -294,6 +309,8 @@
 			children = (
 				AA3F90131826E962007ABF9B /* NSString+ValidCheck.h */,
 				AA3F90141826E962007ABF9B /* NSString+ValidCheck.m */,
+				AA4609DC184A40C4002D398B /* UILabel+SizeCalculate.h */,
+				AA4609DD184A40C4002D398B /* UILabel+SizeCalculate.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -333,6 +350,10 @@
 				AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */,
 				AA58D3EF182EBE5E00D9B9A5 /* BaseViewController.h */,
 				AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */,
+				AA4609D6184A3486002D398B /* TitleView.h */,
+				AA4609D7184A3486002D398B /* TitleView.m */,
+				AA4609D9184A3715002D398B /* CellIndexCircle.h */,
+				AA4609DA184A3715002D398B /* CellIndexCircle.m */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -384,6 +405,7 @@
 			name = "New Group";
 			sourceTree = "<group>";
 		};
+<<<<<<< HEAD
 		E9D78D5918444B4600629A4C /* TestFlightSDK2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +417,17 @@
 				E9D78D5F18444B4600629A4C /* TestFlight.h */,
 			);
 			path = TestFlightSDK2;
+=======
+		AADAE9181842B7C200DF1BD0 /* VoteHistoryControllers */ = {
+			isa = PBXGroup;
+			children = (
+				AA4609D0184A2C49002D398B /* DuplicateVoteHandleViewController.h */,
+				AA4609D1184A2C49002D398B /* DuplicateVoteHandleViewController.m */,
+				AA4609D3184A2D8F002D398B /* DuplicateListView.h */,
+				AA4609D4184A2D8F002D398B /* DuplicateListView.m */,
+			);
+			name = VoteHistoryControllers;
+>>>>>>> 403640f42a36bc262c8de2e2198b623dfb49b811
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -507,23 +540,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA3A288318314641004B8791 /* EGORefreshTableHeaderView.m in Sources */,
+				AA4609D8184A3486002D398B /* TitleView.m in Sources */,
 				AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */,
 				AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */,
+				AA4609DE184A40C4002D398B /* UILabel+SizeCalculate.m in Sources */,
 				AA3F8FE61826B00C007ABF9B /* AppDelegate.m in Sources */,
 				AA846832183839AC00C9B632 /* VoteSearchResultCell.m in Sources */,
 				AA3F90081826D1A9007ABF9B /* RootViewController.m in Sources */,
 				AAAB414E183065B000A968EA /* searchVoteViewController.m in Sources */,
 				AA84683618384A5600C9B632 /* Vote.m in Sources */,
 				AA58D3F818301A0B00D9B9A5 /* SignInViewController.m in Sources */,
+				AA4609DB184A3715002D398B /* CellIndexCircle.m in Sources */,
 				AA3F900B1826D7F7007ABF9B /* SignUpViewController.m in Sources */,
 				AA3F90241826EE61007ABF9B /* PLServer.m in Sources */,
 				E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */,
+				AA4609D5184A2D8F002D398B /* DuplicateListView.m in Sources */,
 				AA3F90151826E962007ABF9B /* NSString+ValidCheck.m in Sources */,
 				AA3F8FE21826B00C007ABF9B /* main.m in Sources */,
 				AAAB4151183079BC00A968EA /* NSDictionary+PLPackage.m in Sources */,
 				AA3A288218314641004B8791 /* EGORefreshTableFooterView.m in Sources */,
 				AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */,
 				AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */,
+				AA4609D2184A2C49002D398B /* DuplicateVoteHandleViewController.m in Sources */,
 				AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -648,7 +686,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "vote/vote-Prefix.pch";
 				INFOPLIST_FILE = "vote/vote-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/kuaiehana/Documents/编程项目/vote/Source_Code/vote/vote/libs/TestFlightSDK2",
@@ -669,7 +707,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "vote/vote-Prefix.pch";
 				INFOPLIST_FILE = "vote/vote-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/kuaiehana/Documents/编程项目/vote/Source_Code/vote/vote/libs/TestFlightSDK2",
