@@ -469,6 +469,7 @@ bool LLLogicVote::adminResolveVote(int voteid) {
 	double timeSpan = difftime(timeTmp, tmpVote.endTime);
 	if (timeSpan > 0 || tmpVote.hasReachMaxValidNumber()) {
 		//if the vote end time has passed,set this vote finished
+		//or if the vote user number (pending+confirm) is max valid, set this vote finished
 		if (tmpVote.setVoteFinish()) {
 			return true;
 		} else {

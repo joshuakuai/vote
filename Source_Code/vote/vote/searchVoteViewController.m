@@ -100,10 +100,15 @@
     _voteByIDResultView = [[VoteSearchResultCell alloc] init];
     _voteByIDResultView.frame = CGRectMake(0, 44, _voteByIDResultView.frame.size.width, _voteByIDResultView.frame.size.height);
     [_voteByIDResultView setHidden:YES];
+
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(searchByIDResultGesture:)];
+    tapGesture.numberOfTapsRequired = 1;
+    tapGesture.numberOfTouchesRequired = 1;
+    [_voteByIDResultView addGestureRecognizer:tapGesture];
     [self.view addSubview:_voteByIDResultView];
     
     //hide the index label
-    _voteByIDResultView.indexCircleImageView.hidden = YES;
+    _voteByIDResultView.indexCell.hidden = YES;
     
     //init the vote object which will store the result of searching by id
     self.voteByIDInfo = [[Vote alloc] init];
@@ -133,6 +138,17 @@
     }
     
     self.voteByLocationArray = tmpArray;
+}
+
+- (void)searchByIDResultGesture:(UITapGestureRecognizer*)gesture
+{
+    [self prepareForRequestVoteDetailWithVoteid:[_voteByIDInfo voteID]];
+}
+
+- (void)prepareForRequestVoteDetailWithVoteid:(int)voteid
+{
+    //TODO::request vote detail from here
+    
 }
 
 #pragma mark - Loading Relate
@@ -195,7 +211,9 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    //TODO:request the vote data and prepare to segue to detial
+    Vote *voteInfo = [_voteByLocationArray objectAtIndex:indexPath.row];
+    
+    [self prepareForRequestVoteDetailWithVoteid:[voteInfo voteID]];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

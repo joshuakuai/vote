@@ -46,7 +46,7 @@
     NSLog(@"DeviceToken:%@", hexString);
     
     /*
-    //all pass, prepare the data
+    //send the token to the server
     NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:UploadToken];
     [dic setObject:[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"] forKey:@"userid"];
     [dic setObject:hexString forKey:@"tokenid"];
