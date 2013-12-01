@@ -120,6 +120,22 @@ bool Vote::getVoteByInitiatorID() {
 	}
 }
 
+bool Vote::getVoteByOptionID(int optionID)
+{
+	string queryString = "SELECT * FROM vote,voteOption WHERE voteOption.idvoteOption="
+			+ Converter::int_to_string(optionID) + " AND vote.idvote=voteOption.idvote;";
+
+	vector<vector<string> > result = this->database->querySQL(queryString);
+
+	if (result.size() == 0) {
+		this->errorMessage == "Can't find Vote.";
+		return false;
+	} else {
+		this->setVoteByDatabaseResult(result);
+		return true;
+	}
+}
+
 void Vote::setVoteByDatabaseResult(vector<vector<string> > result) {
 	if (result.size() == 0) {
 		return;
@@ -178,13 +194,12 @@ vector<vector<string> > Vote::getDuplicateNameList() {
 
 	vector<VoteSelection*> selectionList;
 
-	VoteSelection tmpSelection(this->database);
-
 	//get all selection of each option
 	for (unsigned int i = 0; i < optionList.size(); i++) {
 		//get the option id
 		int voteOptionID = optionList[i]->idvoteOption;
 
+		VoteSelection tmpSelection(this->database);
 		tmpSelection.idvoteOption = voteOptionID;
 
 		//get the selection list
@@ -215,7 +230,7 @@ vector<vector<string> > Vote::getDuplicateNameList() {
 		tmpUser.userid = selectionList[i]->iduser;
 		tmpUser.getUserByID();
 
-		string userFullName = tmpUser.firstName + "" + tmpUser.lastName;
+		string userFullName = tmpUser.firstName + " " + tmpUser.lastName;
 
 		bool hasFindOverlap = false;
 		for (unsigned int j = 0; j < tmpNameList.size(); j++) {
@@ -278,9 +293,13 @@ bool Vote::setVoteFinish() {
 			char log[100];
 			sprintf(log, "Vote(%d) has a final result, check it out!",
 					this->voteid);
-			string pushContent(log);
 
-			Pusher::Instance()->pushNotification(pushContent, tokenStringList);
+			PusherContent content;
+			content.badge = 1;
+			content.content = string(log);
+			content.sound = "default";
+
+			Pusher::Instance()->pushNotification(content, tokenStringList);
 		}
 
 		return true;
@@ -298,7 +317,7 @@ bool Vote::hasReachMaxValidNumber() {
 	}
 
 	string queryString =
-			"SELECT * FROM vote,voteOption,voteSelection WHERE vote.idvote=voteOption.idvote AND voteOption.idvoteOption = voteSelection.idvoteOption AND voteSelection.state!=-1";
+			"SELECT * FROM vote,voteOption,voteSelection WHERE vote.idvote=voteOption.idvote AND voteOption.idvoteOption = voteSelection.idvoteOption AND voteSelection.state=1";
 
 	vector<vector<string> > result = this->database->querySQL(queryString);
 

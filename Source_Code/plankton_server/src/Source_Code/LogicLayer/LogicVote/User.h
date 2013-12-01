@@ -26,7 +26,6 @@ public:
 	string email;
 	string password;
 	string token;
-
 	string errorMessage;
 
 	bool checkIfEmailExist();

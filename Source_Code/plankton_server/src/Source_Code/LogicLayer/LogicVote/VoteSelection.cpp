@@ -50,8 +50,42 @@ vector<VoteSelection*> VoteSelection::getSelectionByVoteOptionID() {
 
 bool VoteSelection::cancelSelection(int voteid, string userEmail) {
 	string queryString =
-			"UPDATE voteOption,user,vote,voteSelection SET voteSelection.state=-1 WHERE vote.idVote="
-					+ Converter::int_to_string(voteid) + " AND user.email='" + userEmail + "';";
+			"UPDATE voteOption,user,vote,voteSelection SET voteSelection.state=-1 WHERE vote.idvote="
+					+ Converter::int_to_string(voteid) + " AND user.email='"
+					+ userEmail + "';";
+
+	return this->database->executeSQL(queryString);
+}
+
+bool VoteSelection::newSelection() {
+	//all new selection will be pending
+	std::ostringstream stringStream;
+	stringStream
+			<< "INSERT INTO voteSelection(idvoteOption,iduser,state) VALUES("
+			<< idvoteOption << "," << this->iduser << ",0);";
+
+	string queryString = stringStream.str();
+
+	return this->database->executeSQL(queryString);
+}
+
+bool VoteSelection::setAllSelectionPendingWithName(string userFirstName,
+		string userLastName) {
+	std::ostringstream stringStream;
+	stringStream
+			<< "UPDATE voteSelection,user SET voteSelection.state=0 WHERE user.iduser=voteSelection.iduser AND user.first_name='"
+			<< userFirstName << "' AND user.last_name='" << userLastName
+			<< "';";
+	string queryString = stringStream.str();
+
+	return this->database->executeSQL(queryString);
+}
+
+bool VoteSelection::setSelectionConfirm() {
+	std::ostringstream stringStream;
+	stringStream << "UPDATE voteSelection SET state=1 WHERE idvoteOption="
+			<< this->idvoteOption << " AND iduser=" << this->iduser << ";";
+	string queryString = stringStream.str();
 
 	return this->database->executeSQL(queryString);
 }

@@ -7,6 +7,7 @@
 
 #include "LLLogicVote.h"
 #include "../../Common/Converter.h"
+#include "../../Common/Pusher.h"
 
 bool LLLogicVote::doesAutoScanOpened = false;
 
@@ -134,7 +135,7 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			}
 
 			vector<string> contentVector;
-			for (unsigned int i = 0; i< contentValue.size(); i++) {
+			for (unsigned int i = 0; i < contentValue.size(); i++) {
 				contentVector.push_back(contentValue[i].asString());
 			}
 
@@ -150,6 +151,19 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			sendValue["success"] = initializeVote(title, maxValidUser,
 					passsword, longitude, latitude, endTime, userid,
 					contentVector, colorIndex);
+			break;
+		}
+		case JoinVote: {
+			int voteOptionid = receivedValue["voteoptionid"].asInt();
+			int userid = receivedValue["userid"].asInt();
+
+			sendValue["success"] = this->joinVote(voteOptionid, userid);
+			break;
+		}
+		case ViewProcessingVote: {
+			int voteid = receivedValue["voteid"].asInt();
+			string password = receivedValue["password"].asString();
+			sendValue["success"] = this->viewProcessingVote(voteid, password);
 			break;
 		}
 		default: {
@@ -495,6 +509,8 @@ bool LLLogicVote::adminResolveVote(int voteid) {
 	tmpVote.voteid = voteid;
 	tmpVote.getVoteByID();
 
+	//TODO:set all user as confirm
+
 	time_t timeTmp = time(NULL);
 	double timeSpan = difftime(timeTmp, tmpVote.endTime);
 	if (timeSpan > 0 || tmpVote.hasReachMaxValidNumber()) {
@@ -554,4 +570,83 @@ bool LLLogicVote::initializeVote(string title, int maxValidN, string passwd,
 		this->errorString = newVote.errorMessage;
 		return false;
 	}
+}
+
+bool LLLogicVote::joinVote(int voteOptionID, int userid) {
+	//get the vote
+	Vote tmpVote(this->database);
+	if (!tmpVote.getVoteByOptionID(voteOptionID)) {
+		this->errorString = tmpVote.errorMessage;
+		return false;
+	}
+
+	//determine the vote is expired or not
+	time_t timeTmp = time(NULL);
+	double timeSpan = difftime(timeTmp, tmpVote.endTime);
+	if (timeSpan > 0) {
+		this->errorString = "This vote has already expired.";
+		return false;
+	}
+
+	//insert this vote as pending
+	VoteSelection tmpSelection(this->database);
+	tmpSelection.iduser = userid;
+	tmpSelection.idvoteOption = voteOptionID;
+	if (!tmpSelection.newSelection()) {
+		this->errorString = "Failed to new selection";
+		return false;
+	}
+
+	//get the user
+	User tmpUser(this->database);
+	tmpUser.getUserByID(userid);
+
+	//compare if there is a user name same with the new one
+	vector<vector<string> > duplicateList = tmpVote.getDuplicateNameList();
+
+	bool isNameDuplicate = false;
+	for (unsigned int i = 0; i < duplicateList.size(); i++) {
+		string duplicateName = duplicateList[i][0];
+		if (duplicateName.compare(tmpUser.firstName + " " + tmpUser.lastName)
+				== 0) {
+			isNameDuplicate = true;
+			break;
+		}
+	}
+
+	if (isNameDuplicate) {
+		//if we find them, set all of them as pending,and push the notification to admin
+		tmpSelection.setAllSelectionPendingWithName(tmpUser.firstName,
+				tmpUser.lastName);
+
+		PusherContent content;
+		content.badge = 1;
+		content.content =
+				"One of the Vote you initialized are facing duplicate user problem. We need your help.";
+		content.sound = "default";
+
+		//get the initiator's token String
+		User initiatorUser(this->database);
+		initiatorUser.userid = tmpVote.initiatorid;
+		initiatorUser.getUserByID();
+
+		vector<string> tokenStringList;
+		tokenStringList.push_back(initiatorUser.token);
+
+		Pusher::Instance()->pushNotification(content, tokenStringList);
+	} else {
+		//or we set this selection as confirm
+		tmpSelection.setSelectionConfirm();
+	}
+
+	//check if the vote has reach the max valid and all of them are all confirm
+	if (tmpVote.hasReachMaxValidNumber()) {
+		tmpVote.setVoteFinish();
+	}
+
+	return true;
+}
+
+bool LLLogicVote::viewProcessingVote(int voteid, string password) {
+
 }

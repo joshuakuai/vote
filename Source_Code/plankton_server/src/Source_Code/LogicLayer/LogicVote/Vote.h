@@ -37,6 +37,7 @@ public:
 	bool setVoteFinish();
 	bool getVoteByID();
 	bool getVoteByInitiatorID();
+	bool getVoteByOptionID(int optionID);
 	bool hasReachMaxValidNumber();
 	bool newVote();
 	int getPendingSelectionNumber();

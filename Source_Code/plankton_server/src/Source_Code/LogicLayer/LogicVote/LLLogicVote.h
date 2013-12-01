@@ -37,7 +37,9 @@ public:
 		GetDuplicateSelection,
 		CancelSelection,
 		AdminResolveVote,
-		InitialVote
+		InitialVote,
+		JoinVote,
+		ViewProcessingVote
 	} VoteRequestType;
 
 	LLLogicVote() {
@@ -121,6 +123,11 @@ private:
 			double longitude, double latitude, int endTime, int userid,
 			vector<string> contentVector, int color);
 
+	//Give an selection for an vote
+	bool joinVote(int voteOptionID,int userid);
+
+	//view a processing vote
+	bool viewProcessingVote(int voteid, string password);
 	//登录
 	//bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);
 };

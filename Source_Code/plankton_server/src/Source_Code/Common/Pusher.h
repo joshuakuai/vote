@@ -32,10 +32,17 @@
 #define DEVICE_BINARY_SIZE 32
 #define MAXPAYLOAD_SIZE 256
 
+typedef struct _PusherContent{
+	string content;
+	int badge;
+	string sound;
+	string userData;
+}PusherContent;
+
 using namespace std;
 
 typedef struct _PusherItem{
-	string content;
+	PusherContent content;
 	vector<string> tokenList;
 }PusherItem;
 
@@ -62,7 +69,7 @@ public:
 	bool isSandbox;
 	bool isAutoPush;
 
-	void pushNotification(string pushContent,vector<string> tokenStringVector);
+	void pushNotification(PusherContent pushContent,vector<string> tokenStringVector);
 	void beginAutoPush();
 
 	//don't call this if you use an auto push

@@ -28,6 +28,9 @@ public:
 	string errorMessage;
 
 	vector<VoteSelection*> getSelectionByVoteOptionID();
+	bool newSelection();
+	bool setAllSelectionPendingWithName(string userFirstName,string userLastName);
+	bool setSelectionConfirm();
 	bool cancelSelection(int voteid,string userEmail);
 
 private:

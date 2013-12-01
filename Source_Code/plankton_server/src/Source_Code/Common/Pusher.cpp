@@ -99,7 +99,7 @@ void *Pusher::autoPushThread(void *msg) {
 	return NULL;
 }
 
-void Pusher::pushNotification(string pushContent,
+void Pusher::pushNotification(PusherContent pushContent,
 		vector<string> tokenStringVector) {
 	if (tokenStringVector.size() == 0) {
 		return;
@@ -247,12 +247,26 @@ void Pusher::prepareConnect() {
 
 		//get the first item of the list
 		PusherItem tmpItem = pushItemList.front();
+		PusherContent pushContent = tmpItem.content;
+
+		//convert the content to json string
+		ostringstream stringStream;
+		stringStream << "{\"aps\":{\"alert\":\"" << pushContent.content
+				<< "\",\"badge\":" << pushContent.badge << ",\"sound\":\""
+				<< pushContent.sound << "\"}";
+		if (pushContent.userData.empty()) {
+			stringStream << "}";
+		} else {
+			stringStream << "," << pushContent.userData << "}";
+		}
+
+		string contentString = stringStream.str();
 
 		for (; i < tmpItem.tokenList.size(); i++) {
 			if (!this->sendPayload(ssl,
 					(char*) this->binaryToken(tmpItem.tokenList[i]).c_str(),
-					(char*) tmpItem.content.c_str(),
-					tmpItem.content.length())) {
+					(char*) contentString.c_str(),
+					contentString.length())) {
 				failedNumber++;
 			} else {
 				successNumber++;
