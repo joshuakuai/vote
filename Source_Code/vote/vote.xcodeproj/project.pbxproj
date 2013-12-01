@@ -53,10 +53,10 @@
 		AAAB415318307B5B00A968EA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAAB415218307B5B00A968EA /* CoreLocation.framework */; };
 		AACD9FF4183D693200BF40AA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACD9FF3183D693200BF40AA /* AdSupport.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		AACD9FF6183D694600BF40AA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AACD9FF5183D694600BF40AA /* libz.dylib */; };
+		AADAE9141842B18100DF1BD0 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AADAE90E1842B18100DF1BD0 /* libTestFlight.a */; };
+		AADAE9151842B18100DF1BD0 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = AADAE90F1842B18100DF1BD0 /* README.md */; };
+		AADAE9161842B18100DF1BD0 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = AADAE9101842B18100DF1BD0 /* release_notes.md */; };
 		E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E909B0A51829E8FE00360DB2 /* CodeViewController.m */; };
-		E9D78D6018444B4600629A4C /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9D78D5A18444B4600629A4C /* libTestFlight.a */; };
-		E9D78D6118444B4600629A4C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E9D78D5B18444B4600629A4C /* README.md */; };
-		E9D78D6218444B4600629A4C /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = E9D78D5C18444B4600629A4C /* release_notes.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -143,14 +143,14 @@
 		AAAB415218307B5B00A968EA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AACD9FF3183D693200BF40AA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		AACD9FF5183D694600BF40AA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		AADAE90E1842B18100DF1BD0 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		AADAE90F1842B18100DF1BD0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		AADAE9101842B18100DF1BD0 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		AADAE9111842B18100DF1BD0 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		AADAE9121842B18100DF1BD0 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		AADAE9131842B18100DF1BD0 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		E909B0A41829E8FE00360DB2 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
 		E909B0A51829E8FE00360DB2 /* CodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CodeViewController.m; sourceTree = "<group>"; };
-		E9D78D5A18444B4600629A4C /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		E9D78D5B18444B4600629A4C /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		E9D78D5C18444B4600629A4C /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
-		E9D78D5D18444B4600629A4C /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		E9D78D5E18444B4600629A4C /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
-		E9D78D5F18444B4600629A4C /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,7 +161,7 @@
 				AACD9FF6183D694600BF40AA /* libz.dylib in Frameworks */,
 				AACD9FF4183D693200BF40AA /* AdSupport.framework in Frameworks */,
 				AA3A287B1831425F004B8791 /* QuartzCore.framework in Frameworks */,
-				E9D78D6018444B4600629A4C /* libTestFlight.a in Frameworks */,
+				AADAE9141842B18100DF1BD0 /* libTestFlight.a in Frameworks */,
 				AAAB415318307B5B00A968EA /* CoreLocation.framework in Frameworks */,
 				AA3F8FD81826B00C007ABF9B /* CoreGraphics.framework in Frameworks */,
 				AA3F8FDA1826B00C007ABF9B /* UIKit.framework in Frameworks */,
@@ -318,7 +318,7 @@
 		AA3F90171826EE61007ABF9B /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				E9D78D5918444B4600629A4C /* TestFlightSDK2 */,
+				AADAE90D1842B18100DF1BD0 /* TestFlightSDK2 */,
 				AA3A287C18314641004B8791 /* EGO */,
 				AA3F90181826EE61007ABF9B /* PlanktonServerSDK */,
 			);
@@ -391,6 +391,19 @@
 			name = UserManagementControllers;
 			sourceTree = "<group>";
 		};
+		AADAE90D1842B18100DF1BD0 /* TestFlightSDK2 */ = {
+			isa = PBXGroup;
+			children = (
+				AADAE90E1842B18100DF1BD0 /* libTestFlight.a */,
+				AADAE90F1842B18100DF1BD0 /* README.md */,
+				AADAE9101842B18100DF1BD0 /* release_notes.md */,
+				AADAE9111842B18100DF1BD0 /* TestFlight+AsyncLogging.h */,
+				AADAE9121842B18100DF1BD0 /* TestFlight+ManualSessions.h */,
+				AADAE9131842B18100DF1BD0 /* TestFlight.h */,
+			);
+			path = TestFlightSDK2;
+			sourceTree = "<group>";
+		};
 		AADAE9171842B7B400DF1BD0 /* InitializeVoteControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -398,26 +411,6 @@
 			name = InitializeVoteControllers;
 			sourceTree = "<group>";
 		};
-		AADAE9181842B7C200DF1BD0 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "New Group";
-			sourceTree = "<group>";
-		};
-<<<<<<< HEAD
-		E9D78D5918444B4600629A4C /* TestFlightSDK2 */ = {
-			isa = PBXGroup;
-			children = (
-				E9D78D5A18444B4600629A4C /* libTestFlight.a */,
-				E9D78D5B18444B4600629A4C /* README.md */,
-				E9D78D5C18444B4600629A4C /* release_notes.md */,
-				E9D78D5D18444B4600629A4C /* TestFlight+AsyncLogging.h */,
-				E9D78D5E18444B4600629A4C /* TestFlight+ManualSessions.h */,
-				E9D78D5F18444B4600629A4C /* TestFlight.h */,
-			);
-			path = TestFlightSDK2;
-=======
 		AADAE9181842B7C200DF1BD0 /* VoteHistoryControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,7 +420,6 @@
 				AA4609D4184A2D8F002D398B /* DuplicateListView.m */,
 			);
 			name = VoteHistoryControllers;
->>>>>>> 403640f42a36bc262c8de2e2198b623dfb49b811
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -510,16 +502,16 @@
 			files = (
 				AA3F8FE01826B00C007ABF9B /* InfoPlist.strings in Resources */,
 				AA3A289218315602004B8791 /* grayArrow@2x.png in Resources */,
+				AADAE9161842B18100DF1BD0 /* release_notes.md in Resources */,
 				AA3A289318315602004B8791 /* whiteArrow.png in Resources */,
+				AADAE9151842B18100DF1BD0 /* README.md in Resources */,
 				AA3A288D18315602004B8791 /* blackArrow.png in Resources */,
 				AA3A289118315602004B8791 /* grayArrow.png in Resources */,
 				AA3A288E18315602004B8791 /* blackArrow@2x.png in Resources */,
-				E9D78D6118444B4600629A4C /* README.md in Resources */,
 				AA3F8FE81826B00C007ABF9B /* Images.xcassets in Resources */,
 				AA3F90051826B55B007ABF9B /* Storyboard.storyboard in Resources */,
 				AA3A288F18315602004B8791 /* blueArrow.png in Resources */,
 				AA3A289418315602004B8791 /* whiteArrow@2x.png in Resources */,
-				E9D78D6218444B4600629A4C /* release_notes.md in Resources */,
 				AA3A289018315602004B8791 /* blueArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -690,7 +682,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/kuaiehana/Documents/编程项目/vote/Source_Code/vote/vote/libs/TestFlightSDK2",
-					/Users/shinezhao/Documents/vote/Source_Code/vote/vote/libs/TestFlightSDK2,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -711,7 +702,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/kuaiehana/Documents/编程项目/vote/Source_Code/vote/vote/libs/TestFlightSDK2",
-					/Users/shinezhao/Documents/vote/Source_Code/vote/vote/libs/TestFlightSDK2,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
