@@ -44,12 +44,16 @@ vector<Vote*> Vote::indexVoteNearByLocation() {
 	string timeString = Converter::time_t_to_mysql_datetime_string(now);
 
 	//get the vote in the same location and available
-	string queryString =
-			"SELECT idvote,first_name,last_name,color_index,longitude,latitude FROM vote WHERE first_name IN(SELECT first_name from user WHERE vote.idinitiator=user.iduser) AND last_name IN(SELECT last_name from user WHERE vote.idinitiator=user.iduser) AND (longitude-"
-					+ longitudeString + ")<1 AND (latitude-" + latitudeString
-					+ ")<1 AND end_time>" + timeString
-					+ " AND is_Finish=false;";
+	std::ostringstream stringStream;
+	stringStream << "SELECT vote.idvote,user.first_name,user.last_name,vote.color_index,vote.longitude,vote.latitude FROM vote,user WHERE vote.idinitiator=user.iduser AND (" << longitudeString << "-vote.longitude"<< ")<1 AND (" << latitudeString
+			<< "-vote.latitude)<1 AND end_time>'" << timeString
+			<< "' AND is_Finish=false;";
+
+	string queryString = stringStream.str();
+
 	vector<vector<string> > sqlResult = this->database->querySQL(queryString);
+
+	cout<<"The vote near by number:" <<sqlResult.size() << endl;
 
 	//form the result
 	vector<Vote*> result;
@@ -67,6 +71,7 @@ vector<Vote*> Vote::indexVoteNearByLocation() {
 		double distance = LocationCalculator::calculateDistance(vote->longitude,
 				vote->latitude, this->longitude, this->latitude);
 
+		cout<< "The distance is about " << distance << endl;
 		if (distance < 1) {
 			result.push_back(vote);
 		} else {
@@ -106,9 +111,9 @@ bool Vote::getVoteByID() {
 	return true;
 }
 
-bool Vote::getVoteByInitiatorID() {
+bool Vote::getVoteByInitiatorIDAndCreateTime() {
 	string queryString = "SELECT * FROM vote WHERE idinitiator="
-			+ Converter::int_to_string(this->initiatorid);
+			+ Converter::int_to_string(this->initiatorid) + " AND create_time='" + Converter::time_t_to_mysql_datetime_string(this->createTime) + "';" ;
 
 	vector<vector<string> > result = this->database->querySQL(queryString);
 
@@ -162,14 +167,18 @@ bool Vote::newVote() {
 	password = md5.md5();
 
 	std::ostringstream stringStream;
+	//cout<< "Initiator id is" << initiatorid <<endl;
 	stringStream
 			<< "INSERT INTO vote(idinitiator,title,max_valid_user,password,longitude,latitude,create_time,end_time,color_index) VALUES("
 			<< initiatorid << ",'" << title << "'," << maxValidUser << ",'"
-			<< password << "','" << longitude << "','" << latitude << "',"
-			<< Converter::time_t_to_mysql_datetime_string(createTime) << ","
-			<< Converter::time_t_to_mysql_datetime_string(endTime) << ","
+			<< password << "','" << longitude << "','" << latitude << "','"
+			<< Converter::time_t_to_mysql_datetime_string(createTime) << "','"
+			<< Converter::time_t_to_mysql_datetime_string(endTime) << "',"
 			<< colorIndex << ");";
 	string queryString = stringStream.str();
+
+	//cout<< "Request sql statment is:" << queryString <<endl;
+	//cout<< createTime << "    " << endTime << endl;
 
 	if (this->database->executeSQL(queryString)) {
 		return true;
