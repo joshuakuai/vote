@@ -133,21 +133,9 @@
  
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 - (void)viewWillAppear:(BOOL)animated
 {
-    if (attendedScrollView || initiatedScrollView) {
-        [attendedScrollView removeFromSuperview];
-        [initiatedScrollView removeFromSuperview];
-        attendedScrollView = nil;
-        initiatedScrollView = nil;
-    }
+    [super viewWillAppear:animated];
     
     //TODO:add refresh
     //get the data from server, initia first
@@ -160,6 +148,16 @@
     [[PLServer shareInstance] sendDataWithDic:dic];
     
     [self showLoadingView:@"" isWithCancelButton:NO];
+}
+
+- (void)refresh
+{
+    if (attendedScrollView || initiatedScrollView) {
+        [attendedScrollView removeFromSuperview];
+        [initiatedScrollView removeFromSuperview];
+        attendedScrollView = nil;
+        initiatedScrollView = nil;
+    }
     
     //共用数据
     GLfloat sizeOfIndexImage = 20;
@@ -437,6 +435,8 @@
                     }
                     
                     attendedVoteList = [[NSArray alloc] initWithArray:tempAttendArray];
+                    
+                    [self refresh];
                 }
                 
                 break;
