@@ -53,6 +53,19 @@
         [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
 }
 
++ (void) moveLeft: (UIView *)view andAnimationDuration: (float) duration andWait:(BOOL) wait andLength:(float) length{
+    __block BOOL done = wait; //wait =  YES wait to finish animation
+    [UIView animateWithDuration:duration animations:^{
+        view.center = CGPointMake(view.center.x - length, view.center.y);
+        
+    } completion:^(BOOL finished) {
+        done = NO;
+    }];
+    // wait for animation to finish
+    while (done == YES)
+        [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.01]];
+}
+
 + (void) moveUp: (UIView *)view andAnimationDuration: (float) duration andWait:(BOOL) wait andLength:(float) length{
     __block BOOL done = wait; //wait =  YES wait to finish animation
     [UIView animateWithDuration:duration/3 animations:^{

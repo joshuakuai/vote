@@ -11,6 +11,7 @@
 @interface InitializeVoteViewController ()
 {
     GLfloat mainContainerHeight;
+    GLfloat originalHeightOfMainContainerContentSize;
     CGRect originalSecondContainerFrame;
     CGRect originalThirdContainerFrame;
     CGRect originalFourthContainerFrame;
@@ -24,6 +25,8 @@
     
     //names of arrows' images
     NSArray *arrowImages;
+    
+    NSArray *solidArrowImage;
     
     //the condition image's address
     NSString *onGoingIcon;
@@ -91,7 +94,25 @@
     CGFloat currentHeightOfCurrentResponder;
     //store current index
     int currentIndex;
+    
+    //store password textfield width
+    GLfloat widthOfPasswordTextField;
+    int passwordConfirmTimes;
+    int tempPassword;
+    int confirmedPassword;
 
+    //time selected button
+    UIButton *currentSelectedTimeButton;
+    
+    BOOL colorChoiceIsDone;
+    BOOL subjectSetIsDone;
+    BOOL optionSetIsDone;
+    NSArray *eachOptionSetIsDoneArray;
+    BOOL numberSetIsDone;
+    BOOL passwordSetIsDone;
+    BOOL timeSetIsDone;
+    
+    int stepsHasBeenFinished;
 }
 
 @end
@@ -122,6 +143,19 @@
     numberOfLines = 1;
     heightOfOneLineInResponder = 35;
     numberOfPeople = 0;
+    stepsHasBeenFinished = 0;
+    
+    colorChoiceIsDone = NO;
+    subjectSetIsDone = NO;
+    optionSetIsDone = NO;
+    numberSetIsDone = NO;
+    passwordSetIsDone = NO;
+    timeSetIsDone = NO;
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     //draw a rectangular around the arrow
     _arrowRect.layer.borderWidth = 2;
@@ -130,7 +164,9 @@
     
     circleImageArray = [[NSArray alloc] initWithObjects:@"greenCircle", @"blueCircle", @"yellowCircle", @"redCircle", @"blackCircle", nil];
     
-    arrowImages = [[NSArray alloc] initWithObjects:@"greenArrowBorder", @"blueArrowBorder", @"yellowArrowBorder", @"redArrowBorder", @"blackArrowBorder", nil];
+    arrowImages = [[NSArray alloc] initWithObjects:@"greenArrowBorder", @"blueArrowBorder", @"yellowArrowBorder", @"redArrowBorder", @"grayArrowBorder", nil];
+    
+    solidArrowImage = [[NSArray alloc] initWithObjects:@"GreenSolidArrow", @"BlueSolidArrow", @"YellowSolidArrow", @"RedSolidArrow", @"GraySolidArrow", nil];
    
     //set onGoingIcon and WaitingIcon
     onGoingIcon = @"inProgressImage";
@@ -149,9 +185,10 @@
     [_arrowRect addSubview:_arrow];
     
     //set scrollview height
-    mainContainerHeight = 5 * ( heightOfOneLineInContainer + intervalBetweenLines ) + heightOfOneLineInContainer;
+    mainContainerHeight = ScreenHeigh - 165 - 49;
+    originalHeightOfMainContainerContentSize = 5 * (heightOfOneLineInContainer + intervalBetweenLines) + heightOfOneLineInContainer;
     _mainContainer = [[UIScrollView alloc] init];
-    _mainContainer.contentSize = CGSizeMake(298, mainContainerHeight);
+    _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize);
     _mainContainer.frame = CGRectMake(11, 165, 298, mainContainerHeight);
     [self.view addSubview:_mainContainer];
     
@@ -339,6 +376,8 @@
     _optionInputViewArray = @[firstInputView, secondInputView];
     UIView *tempInputView;
     
+    eachOptionSetIsDoneArray = [NSArray arrayWithObjects:[NSNumber numberWithBool:NO], [NSNumber numberWithBool:NO], nil];
+
 
     
     //initiate responder
@@ -487,6 +526,16 @@
     _numberOfPeopleTextField.frame = CGRectMake( intervalOfButton + widthOfButton + intervalOfButton, 0, 50, heightOfOneLineInResponder);
     //_numberOfPeopleTextField.layer.borderWidth = 1;
     _numberOfPeopleTextField.keyboardType = UIKeyboardTypeNumberPad;
+    
+    //Add number pad
+    UIToolbar* numberToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    numberToolbar.barStyle = UIBarStyleBlackTranslucent;
+    numberToolbar.items = [NSArray arrayWithObjects:
+                           [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
+                           [[UIBarButtonItem alloc]initWithTitle:@"Apply" style:UIBarButtonItemStyleDone target:self action:@selector(doneWithNumberPad)],nil];
+    [numberToolbar sizeToFit];
+    _numberOfPeopleTextField.inputAccessoryView = numberToolbar;
+    
     _numberOfPeopleTextField.textAlignment = UITextAlignmentCenter;
     _numberOfPeopleTextField.delegate = self;
     _numberOfPeopleTextField.returnKeyType = UIReturnKeyDone;
@@ -526,35 +575,173 @@
     _passwordLabel.text = @"Password";
     [_fifthContainer addSubview:_passwordLabel];
     
+    //tap the choice of subject
+     _tapPasswordGestureRecognizer = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(respondToTapPasswordGesture)];
+    
+    // Specify that the gesture must be a single tap
+    _tapPasswordGestureRecognizer.numberOfTapsRequired = 1;
+    
+    // Add the tap gesture recognizer to the view
+    _passwordLabel.userInteractionEnabled = YES;
+    [_passwordLabel addGestureRecognizer:_tapPasswordGestureRecognizer];
+    
 #pragma -mark fifth responder
+    widthOfPasswordTextField = 70;
+    
     _fifthResponder = [[UIView alloc] init];
     _fifthResponder.frame = CGRectMake(-320, heightOfOneLineInContainer + intervalBetweenLineAndResponder, 298, heightOfOneLineInResponder);
     [_fifthContainer addSubview:_fifthResponder];
     _fifthResponder.userInteractionEnabled = YES;
     
-    UIImageView *passwordLineMarker = [[UIImageView alloc] initWithImage:[UIImage imageNamed:lineImage]];
-    passwordLineMarker.frame = CGRectMake( (leftMarginOfWords - heightOfLineArrow) / 2, ( heightOfOneLineInResponder - heightOfLineArrow ) / 2, heightOfLineArrow, heightOfLineArrow);
-    [_fifthResponder addSubview:passwordLineMarker];
+    _passwordLineMarker = [[UIImageView alloc] initWithImage:[UIImage imageNamed:lineImage]];
+    _passwordLineMarker.frame = CGRectMake( (leftMarginOfWords - heightOfLineArrow) / 2, ( heightOfOneLineInResponder - heightOfLineArrow ) / 2, heightOfLineArrow, heightOfLineArrow);
+    [_fifthResponder addSubview:_passwordLineMarker];
     
     _passwordTextField = [[UITextField alloc] init];
-    _passwordTextField.frame = CGRectMake(leftMarginOfWords, 0, 298 - leftMarginOfWords, heightOfOneLineInResponder);
+    _passwordTextField.frame = CGRectMake(leftMarginOfWords, 0, widthOfPasswordTextField, heightOfOneLineInResponder);
+    _passwordTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _passwordTextField.textAlignment = UITextAlignmentCenter;
+    _passwordTextField.delegate = self;
+    _passwordTextField.secureTextEntry = YES;
+    [_fifthResponder addSubview:_passwordTextField];
+    
+    _passwordTip = [[UILabel alloc] init];
+    _passwordTip.frame = CGRectMake(leftMarginOfWords + widthOfPasswordTextField, 0, 180, heightOfOneLineInResponder);
+    _passwordTip.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
+    _passwordTip.textAlignment = UITextAlignmentCenter;
+    _passwordTip.font = [UIFont systemFontOfSize:fontSizeOfInput];
+    _passwordTip.text = @"Tip: Need Six Numbers";
+    [_fifthResponder addSubview:_passwordTip];
+    
+    _passwordConfirmButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _passwordConfirmButton.frame = CGRectMake(leftMarginOfWords + widthOfPasswordTextField, (heightOfOneLineInResponder - heightOfButton) / 2, widthOfButton, heightOfButton);
+    [_passwordConfirmButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
+    [_passwordConfirmButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateHighlighted];
+    [_passwordConfirmButton addTarget:self action:@selector(passwordConfirm:) forControlEvents:UIControlEventTouchDown];
+    _passwordConfirmButton.hidden = YES;
+    [_fifthResponder addSubview:_passwordConfirmButton];
+    
+    UILabel *confirmLabel = [[UILabel alloc] init];
+    confirmLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
+    confirmLabel.textColor = [UIColor whiteColor];
+    confirmLabel.textAlignment = UITextAlignmentCenter;
+    confirmLabel.text = @"OK";
+    [_passwordConfirmButton addSubview:confirmLabel];
     
     
+#pragma -mark sixth container
+    originalSixthContainerFrame = CGRectMake(0, heightOfOneLineInContainer + intervalBetweenLines, 298, heightOfOneLineInContainer + intervalBetweenLines + heightOfOneLineInContainer);
     
-#pragma -mark sixth container without container
+    _sixthContainer = [[UIView alloc] init];
+    _sixthContainer.frame = originalSixthContainerFrame;
+    [_fifthContainer addSubview:_sixthContainer];
+    
     //time limit
     _timeIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:waitingIcon]];
-    _timeIcon.frame = CGRectMake(0, heightOfOneLineInContainer + intervalBetweenLines, heightOfOneLineInContainer, heightOfOneLineInContainer);
-    [_fifthContainer addSubview:_timeIcon];
+    _timeIcon.frame = CGRectMake(0, 0, heightOfOneLineInContainer, heightOfOneLineInContainer);
+    [_sixthContainer addSubview:_timeIcon];
     
     _timeLabel = [[UILabel alloc] init];
-    _timeLabel.frame = CGRectMake(leftMarginOfWords, heightOfOneLineInContainer + intervalBetweenLines, 150, heightOfOneLineInContainer);
+    _timeLabel.frame = CGRectMake(leftMarginOfWords, 0, 150, heightOfOneLineInContainer);
     _timeLabel.textColor = [UIColor darkGrayColor];
     _timeLabel.font = [UIFont systemFontOfSize:fontSizeOfTitles];
     _timeLabel.text = @"Time limit";
-    [_fifthContainer addSubview:_timeLabel];
+    [_sixthContainer addSubview:_timeLabel];
+    
+    //tap the choice of subject
+    _tapTimeGestureRecoginizer = [[UITapGestureRecognizer alloc]
+                                     initWithTarget:self
+                                     action:@selector(respondToTapTimeGesture)];
+    
+    // Specify that the gesture must be a single tap
+    _tapTimeGestureRecoginizer.numberOfTapsRequired = 1;
+    
+    // Add the tap gesture recognizer to the view
+    _timeLabel.userInteractionEnabled = YES;
+    [_timeLabel addGestureRecognizer:_tapTimeGestureRecoginizer];
+    
+#pragma -mark sixth responder
+    GLfloat intervalBetweenTimeButtons = 10;
+    
+    _sixthResponder = [[UIView alloc] init];
+    _sixthResponder.frame = CGRectMake(-320, heightOfOneLineInContainer + intervalBetweenLineAndResponder, 298, heightOfOneLineInResponder);
+    [_sixthContainer addSubview:_sixthResponder];
+    _sixthResponder.userInteractionEnabled = YES;
+    
+    UIButton *firstTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    firstTimeButton.frame = CGRectMake(leftMarginOfWords, (heightOfOneLineInResponder - heightOfButton) / 2, widthOfButton, heightOfButton);
+    [firstTimeButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
+    [firstTimeButton setImage:[UIImage imageNamed:redButtonBackground] forState:UIControlStateHighlighted];
+    [firstTimeButton addTarget:self action:@selector(choiceTime:) forControlEvents:UIControlEventTouchDown];
+    [_sixthResponder addSubview:firstTimeButton];
+ 
+    UILabel *firstTimeLabel = [[UILabel alloc] init];
+    firstTimeLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
+    firstTimeLabel.textColor = [UIColor whiteColor];
+    firstTimeLabel.textAlignment = UITextAlignmentCenter;
+    firstTimeLabel.text = @"5 min";
+    [firstTimeButton addSubview:firstTimeLabel];
+  
+    UIButton *secondTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    secondTimeButton.frame = CGRectMake(leftMarginOfWords + widthOfButton + intervalBetweenTimeButtons, (heightOfOneLineInResponder - heightOfButton) / 2, widthOfButton, heightOfButton);
+    [secondTimeButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
+    [secondTimeButton setImage:[UIImage imageNamed:redButtonBackground] forState:UIControlStateHighlighted];
+    [secondTimeButton addTarget:self action:@selector(choiceTime:) forControlEvents:UIControlEventTouchDown];
+    [_sixthResponder addSubview:secondTimeButton];
+    
+    UILabel *secondTimeLabel = [[UILabel alloc] init];
+    secondTimeLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
+    secondTimeLabel.textColor = [UIColor whiteColor];
+    secondTimeLabel.textAlignment = UITextAlignmentCenter;
+    secondTimeLabel.text = @"15 min";
+    [secondTimeButton addSubview:secondTimeLabel];
+    
+    UIButton *thirdTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    thirdTimeButton.frame = CGRectMake(leftMarginOfWords + 2 * (widthOfButton + intervalBetweenTimeButtons), (heightOfOneLineInResponder - heightOfButton) / 2, widthOfButton, heightOfButton);
+    [thirdTimeButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
+    [thirdTimeButton setImage:[UIImage imageNamed:redButtonBackground] forState:UIControlStateHighlighted];
+    [thirdTimeButton addTarget:self action:@selector(choiceTime:) forControlEvents:UIControlEventTouchDown];
+    [_sixthResponder addSubview:thirdTimeButton];
+    
+    UILabel *thirdTimeLabel = [[UILabel alloc] init];
+    thirdTimeLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
+    thirdTimeLabel.textColor = [UIColor whiteColor];
+    thirdTimeLabel.textAlignment = UITextAlignmentCenter;
+    thirdTimeLabel.text = @"30 min";
+    [thirdTimeButton addSubview:thirdTimeLabel];
+    
+    UIButton *fourthTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    fourthTimeButton.frame = CGRectMake(leftMarginOfWords + 3 * (widthOfButton + intervalBetweenTimeButtons), (heightOfOneLineInResponder - heightOfButton) / 2, widthOfButton, heightOfButton);
+    [fourthTimeButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
+    [fourthTimeButton setImage:[UIImage imageNamed:redButtonBackground] forState:UIControlStateHighlighted];
+    [fourthTimeButton addTarget:self action:@selector(choiceTime:) forControlEvents:UIControlEventTouchDown];
+    [_sixthResponder addSubview:fourthTimeButton];
+    
+    UILabel *fourthTimeLabel = [[UILabel alloc] init];
+    fourthTimeLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
+    fourthTimeLabel.textColor = [UIColor whiteColor];
+    fourthTimeLabel.textAlignment = UITextAlignmentCenter;
+    fourthTimeLabel.text = @"1 hour";
+    [fourthTimeButton addSubview:fourthTimeLabel];
     
     
+    //Done button
+    _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _doneButton.frame = CGRectMake(leftMarginOfWords, 6 * (heightOfOneLineInContainer + intervalBetweenLines) + (heightOfOneLineInResponder - heightOfButton) / 2 + heightOfOneLineInResponder, widthOfButton, heightOfButton);
+    [_doneButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
+    [_doneButton setImage:[UIImage imageNamed:redButtonBackground] forState:UIControlStateHighlighted];
+    _doneButton.hidden = YES;
+    [_doneButton addTarget:self action:@selector(doneWithAllSteps:) forControlEvents:UIControlEventTouchDown];
+    [_mainContainer addSubview:_doneButton];
+    
+    UILabel *doneLabel = [[UILabel alloc] init];
+    doneLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
+    doneLabel.textColor = [UIColor whiteColor];
+    doneLabel.textAlignment = UITextAlignmentCenter;
+    doneLabel.text = @"Done";
+    [_doneButton addSubview:doneLabel];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -582,7 +769,7 @@
         numberOfLines--;
         _thirdContainer.frame = CGRectMake(originalThirdContainerFrame.origin.x, originalThirdContainerFrame.origin.y +  numberOfLines * oneLineInTextfield, originalThirdContainerFrame.size.width, originalThirdContainerFrame.size.height);
     }
-    _mainContainer.contentSize = CGSizeMake(298, mainContainerHeight + newFrame.size.height);
+    
     textView.frame = newFrame;
     CGRect responderFrame = _secondResponder.frame;
     _secondResponder.frame = CGRectMake(responderFrame.origin.x, responderFrame.origin.y, responderFrame.size.width, newFrame.size.height);
@@ -592,6 +779,13 @@
         [_mainContainer setContentOffset:CGPointMake(0, heightOfOneLineInContainer + intervalBetweenLines ) animated:NO];
     }
     currentHeightOfCurrentResponder = _secondResponder.frame.size.height;
+    _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder);
+    if ([textView.text isEqualToString:@""]) {
+        subjectSetIsDone = NO;
+    }else{
+        subjectSetIsDone = YES;
+    }
+
     
 }
 
@@ -601,8 +795,10 @@
     
     if ([text isEqualToString:@"\n"]) {
         
+        taskInCurrentResponderIsDone = subjectSetIsDone;
+    
         [textView resignFirstResponder];
-        
+
         [_mainContainer setContentOffset:CGPointMake(0, 0) animated:YES];
         
         return NO;
@@ -610,12 +806,10 @@
     return  YES;
 }
 
+
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    
-    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, 403);
-    
-    _mainContainer.contentSize = CGSizeMake(298, mainContainerHeight + currentHeightOfCurrentResponder );
     
     [textField resignFirstResponder];
     [_mainContainer setContentOffset:CGPointMake(0, 0) animated:YES];
@@ -624,11 +818,10 @@
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, 187);
-    _mainContainer.contentSize = CGSizeMake(298, mainContainerHeight + (numberOfOptions + 1) * heightOfOneLineInResponder );
     
     for (int i = 0; i < numberOfOptions; i++) {
         if ([textField isEqual:_optionTextfieldArray[i]]) {
+            currentTextfield = _optionTextfieldArray[i];
             if (i < 3) {
                 [_mainContainer setContentOffset:CGPointMake(0, 2 * (heightOfOneLineInContainer + intervalBetweenLines) ) animated:YES];
             }else{
@@ -644,20 +837,38 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     int tempNumber;
+
     if ([textField isEqual:_numberOfPeopleTextField]) {
+        if (range.location >= 3) {
+            return  NO;
+        }
         tempNumber = [_numberOfPeopleTextField.text intValue];
         numberOfPeople = tempNumber * 10 + [string intValue];
+    }else if ([textField isEqual:_passwordTextField]){
+        if (range.location == 5) {
+            tempPassword = [_passwordTextField.text intValue] * 10 + [string intValue];
+            _passwordTip.hidden = YES;
+            _passwordConfirmButton.hidden = NO;
+        }
+        
+        if (range.location >= 6)
+            return NO;
     }
-    NSLog(@"%@", string);
     return  YES;
 }
 
-#pragma -mark action of taping color
+
+
+#pragma -mark action related to each title
 - (void)respondToTapColorChoiceGesture
 {
     [_mainContainer setContentOffset:CGPointMake(0, 0 ) animated:NO];
     //recomputer the main container's size
-    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, mainContainerHeight + heightOfOneLineInResponder);
+   // _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, mainContainerHeight + heightOfOneLineInResponder);
+    
+    taskInCurrentResponderIsDone = [self isCurrentTaskDone];
+    
+    [self calculateStepsHaveBeenFinished];
     
     //if there is a textfield having focous, then resign it
     if (currentTextfield) {
@@ -705,11 +916,7 @@
     
     //first responder move right
     [Animations moveRight:_theFirstResponder andAnimationDuration:1.0 andWait:YES andLength:320.0];
-    
-    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, _mainContainer.frame.size.height + heightOfOneLineInResponder);
-    
-    //change the size of main container
-    _mainContainer.contentSize = CGSizeMake(298, mainContainerHeight+heightOfOneLineInResponder );
+
     
     //remove the Theme color choice action
     [_themeColorLabel removeGestureRecognizer:_tapColorChoiceRecognizer];
@@ -730,14 +937,25 @@
     //store the curent height of responder
     currentHeightOfCurrentResponder = _theFirstResponder.frame.size.height;
     
+    currentHeightOfCurrentResponder = heightOfOneLineInResponder;
+    
+    colorChoiceIsDone = YES;
+    
+    taskInCurrentResponderIsDone = colorChoiceIsDone;
+    
+    //change the size of main container
+    _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder );
+    
 }
 
-#pragma -mark action of tapping subject
 - (void)respondToTapSubjectGesture
 {
+    
     [_mainContainer setContentOffset:CGPointMake(0, 0 ) animated:NO];
     
-    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, mainContainerHeight + currentHeightOfCurrentResponder);
+    
+    taskInCurrentResponderIsDone = [self isCurrentTaskDone];
+    [self calculateStepsHaveBeenFinished];
     
     //if there is a textfield having focous, then resign it
     if (currentTextfield) {
@@ -770,7 +988,7 @@
     [Animations moveUp:currentRunningContainer andAnimationDuration:1.0 andWait:YES andLength:currentHeightOfCurrentResponder];
     
     //move down the next container
-    [Animations moveDown:_thirdContainer andAnimationDuration:1.0 andWait:YES andLength:heightOfOneLineInResponder];
+    [Animations moveDown:_thirdContainer andAnimationDuration:1.0 andWait:YES andLength:_secondResponder.frame.size.height];
     
     //change the state icon
     _subjectIcon.image = [UIImage imageNamed:onGoingIcon];
@@ -787,8 +1005,6 @@
     //remove the action bond with the subject title
     [_subjectLabel removeGestureRecognizer:_tapSubjectRecognizer];
     
-    //recompute the height of main container
-    _mainContainer.contentSize = CGSizeMake(298, mainContainerHeight + heightOfOneLineInResponder);
     
     //recompute the hiehgt of second container
     _secondContainer.frame = CGRectMake(originalSecondContainerFrame.origin.x, originalSecondContainerFrame.origin.y, originalSecondContainerFrame.size.width, originalSecondContainerFrame.size.height + heightOfOneLineInResponder);
@@ -808,22 +1024,25 @@
     
     [_mainContainer setContentOffset:CGPointMake(0, heightOfOneLineInContainer + intervalBetweenLines) animated:YES];
     
-    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, 187);
     
     currentHeightOfCurrentResponder = _secondResponder.frame.size.height;
+
+    [_subjectTextView becomeFirstResponder];
+
+    //change the size of main container
+    _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder );
     
     [_subjectTextView becomeFirstResponder];
 }
 
-#pragma -mark action of tapping option
+
 - (void)respondToTapOptionGesture
 {
 
     [_mainContainer setContentOffset:CGPointMake(0, 0 ) animated:NO];
     
-    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, mainContainerHeight + (numberOfOptions + 1) * heightOfOneLineInResponder);
-    
-    _mainContainer.contentSize = CGSizeMake(298, mainContainerHeight + (numberOfOptions + 1) * heightOfOneLineInResponder);
+    taskInCurrentResponderIsDone = [self isCurrentTaskDone];
+    [self calculateStepsHaveBeenFinished];
     
     //if there is a textfield having focous, then resign it
     if (currentTextfield) {
@@ -875,10 +1094,10 @@
 
     
     //recompute the hiehgt of second container
-    _secondContainer.frame = CGRectMake(originalSecondContainerFrame.origin.x, originalSecondContainerFrame.origin.y, originalSecondContainerFrame.size.width, originalSecondContainerFrame.size.height + 3 * heightOfOneLineInResponder);
+    _secondContainer.frame = CGRectMake(originalSecondContainerFrame.origin.x, originalSecondContainerFrame.origin.y, originalSecondContainerFrame.size.width, originalSecondContainerFrame.size.height + (numberOfOptions + 1) * heightOfOneLineInResponder);
     
     //recompute the height of third container
-    _thirdContainer.frame = CGRectMake(originalThirdContainerFrame.origin.x, originalThirdContainerFrame.origin.y, originalThirdContainerFrame.size.width, originalThirdContainerFrame.size.height + 3 * heightOfOneLineInResponder);
+    _thirdContainer.frame = CGRectMake(originalThirdContainerFrame.origin.x, originalThirdContainerFrame.origin.y, originalThirdContainerFrame.size.width, originalThirdContainerFrame.size.height + (numberOfOptions + 1) * heightOfOneLineInResponder);
     
     //store the current state icon
     currentStateIcon = _optionIcon;
@@ -895,21 +1114,23 @@
     
     [_mainContainer setContentOffset:CGPointMake(0, 2 * (heightOfOneLineInContainer + intervalBetweenLines) ) animated:YES];
     
-    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, 187);
-    
-    
     currentHeightOfCurrentResponder = _thirdResponder.frame.size.height;
+    
+    //change the size of main container
+    _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder );
     
     currentTextfield = _optionTextfieldArray[0];
     
     [_optionTextfieldArray[0] becomeFirstResponder];
 }
 
+
 - (void)respondToTapNumberGesture
 {
     [_mainContainer setContentOffset:CGPointMake(0, 0 ) animated:NO];
     
-    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, _mainContainer.frame.size.height + heightOfOneLineInResponder);
+    taskInCurrentResponderIsDone = [self isCurrentTaskDone];
+    [self calculateStepsHaveBeenFinished];
     
     if (currentTextfield) {
         [currentTextfield resignFirstResponder];
@@ -958,15 +1179,15 @@
     
     //remove the action
     [_numbersLabel removeGestureRecognizer:_tapNumberGestureRecognizer];
-    
-    //recompute the height of main container's content
-    _mainContainer.contentSize = CGSizeMake(298, mainContainerHeight + heightOfOneLineInResponder);
+
     
     //recompute the hiehgt of second container
     _secondContainer.frame = CGRectMake(originalSecondContainerFrame.origin.x, originalSecondContainerFrame.origin.y, originalSecondContainerFrame.size.width, originalSecondContainerFrame.size.height + heightOfOneLineInResponder);
     
     //recompute the height of third container
     _thirdContainer.frame = CGRectMake(originalThirdContainerFrame.origin.x, originalThirdContainerFrame.origin.y, originalThirdContainerFrame.size.width, originalThirdContainerFrame.size.height + heightOfOneLineInResponder);
+    
+    _fourthContainer.frame = CGRectMake(originalFourthContainerFrame.origin.x, originalFourthContainerFrame.origin.y, originalFourthContainerFrame.size.width, originalFourthContainerFrame.size.height + heightOfOneLineInResponder);
     
     //store the current state icon
     currentStateIcon = _numbersIcon;
@@ -982,16 +1203,199 @@
     
     [_mainContainer setContentOffset:CGPointMake(0, 3 * (heightOfOneLineInContainer + intervalBetweenLines) ) animated:NO];
     
-    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, 187);
+    //_mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, 187);
     
     currentTextfield = _numberOfPeopleTextField;
     
     currentHeightOfCurrentResponder = _fourthResponder.frame.size.height;
     
+    //change the size of main container
+    _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder );
+    
     [_numberOfPeopleTextField becomeFirstResponder];
     
 }
 
+
+- (void)respondToTapPasswordGesture
+{
+    [_mainContainer setContentOffset:CGPointMake(0, 0 ) animated:NO];
+    
+    taskInCurrentResponderIsDone = [self isCurrentTaskDone];
+    [self calculateStepsHaveBeenFinished];
+    
+    if (currentTextfield) {
+        [currentTextfield resignFirstResponder];
+    }
+    
+    if (_subjectTextView) {
+        [_subjectTextView resignFirstResponder];
+    }
+    
+    //to judge if the task in current responder is completed
+    if (taskInCurrentResponderIsDone) {
+        currentStateIcon.image = [UIImage imageNamed:DoneIcon];
+    } else {
+        currentStateIcon.image = [UIImage imageNamed:FailedIcon];
+    }
+    
+    //let the current responder move away(to the right)
+    [Animations moveRight:currentRunningResponder andAnimationDuration:1.0 andWait:YES andLength:320.0];
+    
+    
+    //replace the current responder to its original place
+    CGRect tempFrame = currentRunningResponder.frame;
+    currentRunningResponder.frame = CGRectMake(-320, tempFrame.origin.y, tempFrame.size.width, tempFrame.size.height);
+    
+    //reconnect the current title of container and the tap gesture resongnizer
+    [currentTitleOfContainer addGestureRecognizer:currentTapGestureRecongnizer];
+    
+    //move the current container back
+    [Animations moveUp:currentRunningContainer andAnimationDuration:1.0 andWait:YES andLength:currentHeightOfCurrentResponder];
+
+    //move down the next container
+    [Animations moveDown:_sixthContainer andAnimationDuration:1.0 andWait:YES andLength:heightOfOneLineInResponder];
+    
+    //change the state icon
+    _passwordIcon.image = [UIImage imageNamed:onGoingIcon];
+    
+    //record fifth container to current container
+    currentRunningContainer = _sixthContainer;
+    
+    //show the fourth responder
+    [Animations moveRight:_fifthResponder andAnimationDuration:1.0 andWait:YES andLength:320.0];
+    
+    //record the fourth responder to current responder
+    currentRunningResponder = _fifthResponder;
+    
+    //remove the action
+    [_passwordLabel removeGestureRecognizer:_tapPasswordGestureRecognizer];
+    
+    
+    //recompute the hiehgt of second container
+    _secondContainer.frame = CGRectMake(originalSecondContainerFrame.origin.x, originalSecondContainerFrame.origin.y, originalSecondContainerFrame.size.width, originalSecondContainerFrame.size.height + heightOfOneLineInResponder);
+    
+    //recompute the height of third container
+    _thirdContainer.frame = CGRectMake(originalThirdContainerFrame.origin.x, originalThirdContainerFrame.origin.y, originalThirdContainerFrame.size.width, originalThirdContainerFrame.size.height + heightOfOneLineInResponder);
+    
+    _fourthContainer.frame = CGRectMake(originalFourthContainerFrame.origin.x, originalFourthContainerFrame.origin.y, originalFourthContainerFrame.size.width, originalFourthContainerFrame.size.height + heightOfOneLineInResponder);
+    
+    _fifthContainer.frame = CGRectMake(originalFifthContainerFrame.origin.x, originalFifthContainerFrame.origin.y, originalFifthContainerFrame.size.width, originalFifthContainerFrame.size.height + heightOfOneLineInResponder);
+    
+    //store the current state icon
+    currentStateIcon = _passwordIcon;
+    
+    //reset the mark
+    taskInCurrentResponderIsDone = NO;
+    
+    //store the title of current container
+    currentTitleOfContainer = _passwordLabel;
+    
+    //store the current tap gesture recognizer
+    currentTapGestureRecongnizer = _tapPasswordGestureRecognizer;
+    
+    currentTextfield = _passwordTextField;
+    
+    currentHeightOfCurrentResponder = _fifthResponder.frame.size.height;
+    
+    //change the size of main container
+    _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder );
+    
+    [_mainContainer setContentOffset:CGPointMake(0, 4 * (heightOfOneLineInContainer + intervalBetweenLines) ) animated:NO];
+    
+    [_passwordTextField becomeFirstResponder];
+}
+
+
+- (void)respondToTapTimeGesture
+{
+    [_mainContainer setContentOffset:CGPointMake(0, 0 ) animated:NO];
+
+    
+    taskInCurrentResponderIsDone = [self isCurrentTaskDone];
+    [self calculateStepsHaveBeenFinished];
+    
+    if (currentTextfield) {
+        [currentTextfield resignFirstResponder];
+    }
+    
+    if (_subjectTextView) {
+        [_subjectTextView resignFirstResponder];
+    }
+    
+    //to judge if the task in current responder is completed
+    if (taskInCurrentResponderIsDone) {
+        currentStateIcon.image = [UIImage imageNamed:DoneIcon];
+    } else {
+        currentStateIcon.image = [UIImage imageNamed:FailedIcon];
+    }
+    
+    //let the current responder move away(to the right)
+    [Animations moveRight:currentRunningResponder andAnimationDuration:1.0 andWait:YES andLength:320.0];
+    
+    
+    //replace the current responder to its original place
+    CGRect tempFrame = currentRunningResponder.frame;
+    currentRunningResponder.frame = CGRectMake(-320, tempFrame.origin.y, tempFrame.size.width, tempFrame.size.height);
+    
+    //reconnect the current title of container and the tap gesture resongnizer
+    [currentTitleOfContainer addGestureRecognizer:currentTapGestureRecongnizer];
+    
+    //move the current container back
+    [Animations moveUp:currentRunningContainer andAnimationDuration:1.0 andWait:YES andLength:currentHeightOfCurrentResponder];
+    
+    //change the state icon
+    _timeIcon.image = [UIImage imageNamed:onGoingIcon];
+    
+    //record fifth container to current container
+    currentRunningContainer = nil;
+    
+    //show the fourth responder
+    [Animations moveRight:_sixthResponder andAnimationDuration:1.0 andWait:YES andLength:320.0];
+    
+    //record the fourth responder to current responder
+    currentRunningResponder = _sixthResponder;
+    
+    //remove the action
+    [_timeLabel removeGestureRecognizer:_tapTimeGestureRecoginizer];
+    
+    
+    //recompute the hiehgt of second container
+    _secondContainer.frame = CGRectMake(originalSecondContainerFrame.origin.x, originalSecondContainerFrame.origin.y, originalSecondContainerFrame.size.width, originalSecondContainerFrame.size.height + heightOfOneLineInResponder + intervalBetweenLineAndResponder);
+    
+    //recompute the height of third container
+    _thirdContainer.frame = CGRectMake(originalThirdContainerFrame.origin.x, originalThirdContainerFrame.origin.y, originalThirdContainerFrame.size.width, originalThirdContainerFrame.size.height + heightOfOneLineInResponder + intervalBetweenLineAndResponder);
+    
+    _fourthContainer.frame = CGRectMake(originalFourthContainerFrame.origin.x, originalFourthContainerFrame.origin.y, originalFourthContainerFrame.size.width, originalFourthContainerFrame.size.height + heightOfOneLineInResponder + intervalBetweenLineAndResponder);
+    
+    _fifthContainer.frame = CGRectMake(originalFifthContainerFrame.origin.x, originalFifthContainerFrame.origin.y, originalFifthContainerFrame.size.width, originalFifthContainerFrame.size.height + heightOfOneLineInResponder + intervalBetweenLineAndResponder);
+    
+    _sixthContainer.frame = CGRectMake(originalSixthContainerFrame.origin.x, originalSixthContainerFrame.origin.y, originalSixthContainerFrame.size.width, originalSixthContainerFrame.size.height + heightOfOneLineInResponder + intervalBetweenLineAndResponder);
+    
+    //store the current state icon
+    currentStateIcon = _timeIcon;
+    
+    //reset the mark
+    taskInCurrentResponderIsDone = NO;
+    
+    //store the title of current container
+    currentTitleOfContainer = _timeLabel;
+    
+    //store the current tap gesture recognizer
+    currentTapGestureRecongnizer = _tapTimeGestureRecoginizer;
+    
+    currentTextfield = nil;
+    
+    currentHeightOfCurrentResponder = _sixthResponder.frame.size.height;
+    
+    //change the size of main container
+    _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder );
+    
+    timeSetIsDone = YES;
+    
+}
+
+#pragma -mark other
 
 - (void)didReceiveMemoryWarning
 {
@@ -1040,9 +1444,9 @@
     GLfloat tempHeight;
     tempHeight = _mainContainer.frame.size.height +  heightOfOneLineInResponder;
     
-    if (tempHeight < 403) {
+ /*   if (tempHeight < 403) {
         _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, tempHeight);
-    }
+    }*/
     
     //test if it need to reset the main container's offset
     BOOL needScroll = YES;
@@ -1061,12 +1465,9 @@
  
     //modify the height of second container
     _secondContainer.frame = CGRectMake(originalSecondContainerFrame.origin.x, originalSecondContainerFrame.origin.y, originalSecondContainerFrame.size.width, originalSecondContainerFrame.size.height + (numberOfOptions + 1) * heightOfOneLineInResponder);
-    
-    //modify the height of container's content
-    _mainContainer.contentSize = CGSizeMake(298, mainContainerHeight + (numberOfOptions + 1) * heightOfOneLineInResponder);
 
     //modify the height of third container
-    _thirdContainer.frame = CGRectMake(originalThirdContainerFrame.origin.x, originalThirdContainerFrame.origin.y, originalThirdContainerFrame.size.width, originalThirdContainerFrame.size.height + (numberOfOptions + 1) * heightOfOneLineInResponder);
+    _thirdContainer.frame = CGRectMake(originalThirdContainerFrame.origin.x, originalThirdContainerFrame.origin.y, originalThirdContainerFrame.size.width, originalThirdContainerFrame.size.height + (numberOfOptions +1) * heightOfOneLineInResponder);
     
     //use the tempArry to store all buttons
     NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:_optionIndexArray];
@@ -1170,11 +1571,15 @@
         
     }
     
- //   currentHeightOfCurrentResponder = _thirdResponder.frame.size.height;
-    currentHeightOfCurrentResponder = (numberOfOptions + 1) * heightOfOneLineInResponder;
-    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, 187);
+    NSMutableArray *tempEachOptionSetIsDone = [NSMutableArray arrayWithArray:eachOptionSetIsDoneArray];
+    [tempEachOptionSetIsDone addObject:[NSNumber numberWithBool:NO]];
+    eachOptionSetIsDoneArray = [NSArray arrayWithArray:tempEachOptionSetIsDone];
     
-    _mainContainer.contentSize = CGSizeMake(298, mainContainerHeight + (numberOfOptions + 1) * heightOfOneLineInResponder);
+    currentHeightOfCurrentResponder = (numberOfOptions + 1) * heightOfOneLineInResponder;
+    
+    //change the size of main container
+    _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder );
+    
      [currentTextfield becomeFirstResponder];
 }
 
@@ -1326,11 +1731,11 @@
         
         tempFrame = _secondContainer.frame;
         _secondContainer.frame = CGRectMake(tempFrame.origin.x, tempFrame.origin.y, tempFrame.size.width, tempFrame.size.height);
-
-        
-        _mainContainer.contentSize = CGSizeMake(298, mainContainerHeight + (numberOfOptions + 1) * heightOfOneLineInResponder);
         
         currentHeightOfCurrentResponder = _thirdResponder.frame.size.height;
+        
+        //change the size of main container
+        _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder );
     }
 
 }
@@ -1349,4 +1754,189 @@
     }
     _numberOfPeopleTextField.text = [NSString stringWithFormat:@"%d",numberOfPeople];
 }
+
+- (void)keyboardWillShow:(NSNotification*)notification
+{
+    CGRect keyboardRect = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, ScreenHeigh - _mainContainer.frame.origin.y - keyboardRect.size.height );
+    
+    _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder);
+}
+
+- (void)keyboardWillHide:(NSNotification*)notification
+{
+    _mainContainer.frame = CGRectMake(_mainContainer.frame.origin.x, _mainContainer.frame.origin.y, _mainContainer.frame.size.width, mainContainerHeight);
+    _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder);
+}
+
+- (void)passwordConfirm:(UIButton *)sender
+{
+    passwordConfirmTimes++;
+    
+    if (passwordConfirmTimes == 1) {
+        confirmedPassword = tempPassword;
+        _passwordConfirmButton.hidden = YES;
+        _passwordTip.text = @"Tip:Please enter again";
+        _passwordTip.hidden = NO;
+        [_passwordTextField setText:nil];
+    }else{
+        if (tempPassword == confirmedPassword) {
+            _passwordTip.text = @"Your password is saved!";
+            _passwordTip.hidden = NO;
+            _passwordLineMarker.hidden = YES;
+            _passwordTextField.hidden = YES;
+            _passwordConfirmButton.hidden = YES;
+            [Animations moveLeft:_passwordTip andAnimationDuration:1.0 andWait:YES andLength:widthOfPasswordTextField];
+            _resetPasswordButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            _resetPasswordButton.frame = CGRectMake(leftMarginOfWords + 180, 0, widthOfButton, heightOfButton);
+            [_resetPasswordButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
+            [_resetPasswordButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateHighlighted];
+            [_resetPasswordButton addTarget:self action:@selector(resetPassword:) forControlEvents:UIControlEventTouchDown];
+            [_fifthResponder addSubview:_resetPasswordButton];
+            
+            UILabel *resetLabel = [[UILabel alloc] init];
+            resetLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
+            resetLabel.textColor = [UIColor whiteColor];
+            resetLabel.textAlignment = UITextAlignmentCenter;
+            resetLabel.text = @"reset";
+            [_resetPasswordButton addSubview:resetLabel];
+        }else{
+            passwordConfirmTimes = 0;
+            _passwordTip.text = @"Don't match. Start over!";
+            _passwordTip.hidden = NO;
+            _passwordConfirmButton.hidden = YES;
+            [_passwordTextField setText:nil];
+        }
+    }
+}
+
+- (void)resetPassword:(UIButton *)sender
+{
+    passwordConfirmTimes = 0;
+    [_resetPasswordButton removeFromSuperview];
+    _passwordTip.text = @"Tip: Need Six Numbers";
+    [Animations moveRight:_passwordTip andAnimationDuration:1.0 andWait:YES andLength:widthOfPasswordTextField];
+    [_passwordTextField setText:nil];
+    _passwordLineMarker.hidden = NO;
+    _passwordTextField.hidden = NO;
+    
+}
+
+- (void)choiceTime:(UIButton *)sender
+{
+    if (currentSelectedTimeButton) {
+        [currentSelectedTimeButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
+    }
+    [sender setImage:[UIImage imageNamed:redButtonBackground] forState:UIControlStateNormal];
+    currentSelectedTimeButton = sender;
+    [self calculateStepsHaveBeenFinished];
+    if (stepsHasBeenFinished == 6) {
+        _doneButton.hidden = NO;
+        [_mainContainer setContentOffset:CGPointMake(0,  heightOfOneLineInContainer + intervalBetweenLines ) animated:YES];
+        _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder + heightOfOneLineInResponder + intervalBetweenLines);
+    }
+    
+}
+
+
+- (void)isOptionPartDone
+{
+    optionSetIsDone = YES;
+    for (int i = 0; i < numberOfOptions; i++) {
+        UITextField *tempTextField = _optionTextfieldArray[i];
+        if ([tempTextField.text isEqualToString:@""]) {
+            optionSetIsDone = NO;
+        }
+    }
+}
+
+- (BOOL)isCurrentTaskDone{
+    
+    if ([currentRunningResponder isEqual:_theFirstResponder]) {
+        
+        colorChoiceIsDone = YES;
+        return colorChoiceIsDone;
+        
+    } else if([currentRunningResponder isEqual:_secondResponder]){
+        subjectSetIsDone = YES;
+        
+        if (_subjectTextView.text == nil || [_subjectTextView.text isEqualToString:@""])
+        {
+            subjectSetIsDone = NO;
+        }
+        return subjectSetIsDone;
+        
+    }else if ([currentRunningResponder isEqual:_thirdResponder]){
+        optionSetIsDone = YES;
+        for (int i = 0; i < numberOfOptions; i++) {
+            UITextField *tempTextField = _optionTextfieldArray[i];
+            if (tempTextField.text == nil || [tempTextField.text isEqualToString:@""]) {
+                optionSetIsDone = NO;
+            }
+        }
+        return optionSetIsDone;
+        
+    }else if ([currentRunningResponder isEqual:_fourthResponder]){
+        numberSetIsDone = YES;
+        if (_numberOfPeopleTextField.text == nil || [_numberOfPeopleTextField.text isEqualToString:@""]) {
+            numberSetIsDone = NO;
+        }
+        return numberSetIsDone;
+        
+    }else if ([currentRunningResponder isEqual:_fifthResponder]){
+        if ([_passwordTip.text isEqualToString:@"Your password is saved!"]) {
+            passwordSetIsDone = YES;
+        }
+        return passwordSetIsDone;
+        
+    }else if ([currentRunningResponder isEqual:_sixthResponder]){
+        timeSetIsDone = YES;
+        return timeSetIsDone;
+        
+    }else{
+        return NO;
+    }
+}
+
+- (void)calculateStepsHaveBeenFinished
+{
+    stepsHasBeenFinished = 0;
+    
+    if (colorChoiceIsDone) {
+        stepsHasBeenFinished++;
+    }
+    
+    if (subjectSetIsDone) {
+        stepsHasBeenFinished++;
+    }
+    
+    if (optionSetIsDone) {
+        stepsHasBeenFinished++;
+    }
+    
+    if (numberSetIsDone) {
+        stepsHasBeenFinished++;
+    }
+    
+    if (passwordSetIsDone) {
+        stepsHasBeenFinished++;
+    }
+    
+    if (timeSetIsDone) {
+        stepsHasBeenFinished++;
+    }
+
+}
+
+- (void)doneWithAllSteps:(UIButton *)sender
+{
+    
+}
+
+- (void)doneWithNumberPad
+{
+    [currentTextfield resignFirstResponder];
+}
+
 @end
