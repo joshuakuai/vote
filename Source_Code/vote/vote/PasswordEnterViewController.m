@@ -127,7 +127,7 @@
         [dic setObject:[NSNumber numberWithInt:self.voteid] forKey:@"voteid"];
         [dic setObject:_passwordTextField.text forKey:@"password"];
         
-        NSLog(@"%@",[dic description]);
+        //NSLog(@"%@",[dic description]);
         
         [[PLServer shareInstance] sendDataWithDic:dic];
         

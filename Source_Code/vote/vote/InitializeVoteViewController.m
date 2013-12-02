@@ -2003,7 +2003,7 @@
     [dic setObject:[NSNumber numberWithInteger:[_numberOfPeopleTextField.text intValue]] forKey:@"maxvaliduser"];
     [dic setObject:_passwordTextField.text forKey:@"password"];
     //TODO:need end time
-    [dic setObject:[NSNumber numberWithInt:5] forKey:@"endtime"];
+    [dic setObject:[NSNumber numberWithInt:timeMinutes] forKey:@"endtime"];
     [dic setObject:[NSNumber numberWithInt:[[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"] integerValue]] forKey:@"userid"];
     [dic setObject:[NSNumber numberWithInt:selectedColorIndex] forKey:@"color"];
     [dic setObject:[NSNumber numberWithDouble:location.longitude] forKey:@"longitude"];
@@ -2040,7 +2040,7 @@
         
         switch (requetType) {
             case SearchVote:{
-                
+                self.tabBarController.selectedIndex = 2;
                 break;
             }
                 
