@@ -43,23 +43,6 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    //TODO:add refresh
-    //get the data from server, initia first
-    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:IndexHistory];
-    [dic setObject:[NSNumber numberWithInt:1] forKey:@"indextype"];
-    [dic setObject:UserId forKey:@"userid"];
-    
-    //NSLog(@"%@",[dic description]);
-    
-    [[PLServer shareInstance] sendDataWithDic:dic];
-    
-    [self showLoadingView:@"" isWithCancelButton:NO];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -72,7 +55,7 @@
     attendArrowButtonArray = [[NSArray alloc] initWithObjects: nil];
     initiatedArrowButtonArray = [[NSArray alloc] initWithObjects: nil];
 
-    
+    /*
     //模拟服务器传回的数据
     _emailAddress = @"@shineamnys@gmail.com";
     NSMutableArray *tempAttendVoteArray = [[NSMutableArray alloc] initWithArray:attendedVoteList];
@@ -110,7 +93,7 @@
         [tempInitiateArray addObject:tempDicitionary];
     }
     initiateVoteList = [[NSArray alloc] initWithArray:tempInitiateArray];
-    
+    */
     
     solidArrowImage = [[NSArray alloc] initWithObjects:@"GreenSolidArrow", @"BlueSolidArrow", @"YellowSolidArrow", @"RedSolidArrow", @"GraySolidArrow", nil];
 	// Do any additional setup after loading the view.
@@ -147,6 +130,37 @@
     [_historySegment addTarget:self action:@selector(historySwitchAction:) forControlEvents:UIControlEventValueChanged];
     _historySegment.selectedSegmentIndex = 0;
     
+ 
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (attendedScrollView || initiatedScrollView) {
+        [attendedScrollView removeFromSuperview];
+        [initiatedScrollView removeFromSuperview];
+        attendedScrollView = nil;
+        initiatedScrollView = nil;
+    }
+    
+    //TODO:add refresh
+    //get the data from server, initia first
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:IndexHistory];
+    [dic setObject:[NSNumber numberWithInt:1] forKey:@"indextype"];
+    [dic setObject:UserId forKey:@"userid"];
+    
+    //NSLog(@"%@",[dic description]);
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
+    
     //共用数据
     GLfloat sizeOfIndexImage = 20;
     GLfloat leftMargin = 30;
@@ -163,7 +177,7 @@
     
     attendedScrollView = [[UIScrollView alloc] init];
     attendedScrollView.frame = CGRectMake(0, 170, 320, 349);
-  //  attendedScrollView.layer.borderWidth = 1;
+    //  attendedScrollView.layer.borderWidth = 1;
     attendedScrollView.hidden = NO;
     [self.view addSubview:attendedScrollView];
     
@@ -236,7 +250,7 @@
     numberOfAllInitiatedVotes = initiateVoteList.count;
     initiatedScrollView = [[UIScrollView alloc] init];
     initiatedScrollView.frame = CGRectMake(0, 170, 320, 349);
-   // initiatedScrollView.layer.borderWidth = 2;
+    // initiatedScrollView.layer.borderWidth = 2;
     initiatedScrollView.hidden = YES;
     [self.view addSubview:initiatedScrollView];
     initiatedScrollView.contentSize = CGSizeMake(320, (numberOfAllAttendedVotes - 1) * (heightOfeachVoteImageView + intervalBetweenEachVoteView) + heightOfeachVoteImageView);
