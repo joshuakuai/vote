@@ -7,6 +7,7 @@
 //
 
 #import "PasswordEnterViewController.h"
+#import "Vote.h"
 
 @interface PasswordEnterViewController ()
 {
@@ -14,6 +15,10 @@
     NSString *_imageOfReturnButton;
     NSArray *_arrowImageArray;
     UILabel *_passwordTip;
+    
+    //For next view
+    NSMutableArray *_optionArray;
+    
 }
 
 @end
@@ -146,6 +151,26 @@
     return  YES;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"mainViewShowVotePasswordViewSegue"]) {
+        PasswordEnterViewController *destViewController = segue.destinationViewController;
+        //NSLog(@"%@", _emailTextField.text);
+        if (_voteByLocationTableView.hidden == YES) {
+            //search by id
+            destViewController.voteid = _voteByIDInfo.voteID;
+            destViewController.colorIndex = _voteByIDInfo.colorIndex;
+            destViewController.initiatorName = _voteByIDInfo.initiator;
+        }else{
+            //search by location
+            Vote *voteInfo = [_voteByLocationArray objectAtIndex:_currentVoteByLocationSelectionIndex];
+            destViewController.voteid = voteInfo.voteID;
+            destViewController.colorIndex = voteInfo.colorIndex;
+            destViewController.initiatorName = voteInfo.initiator;
+        }
+    }
+}
+
 #pragma mark - PLServer delegate
 - (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
 {
@@ -162,7 +187,7 @@
         
         switch (requetType) {
             case ViewProcessingVote:{
-                
+                [self performSegueWithIdentifier:@"votePasswordViewShowAttendVoteViewSegue" sender:self];
             }
                 
             default:

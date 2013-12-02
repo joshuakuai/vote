@@ -22,11 +22,20 @@
         self.longitude = 0.0;
         self.latitude = 0.0;
         self.createTime = nil;
-        self.endTime = 0;
+        self.endTime = nil;
         self.isFinished = NO;
         self.colorIndex = greenArrow;
     }
     return self;
+}
+
+- (void)dealloc
+{
+    self.initiator = nil;
+    self.title = nil;
+    self.password = nil;
+    self.createTime = nil;
+    self.endTime = nil;
 }
 
 @end

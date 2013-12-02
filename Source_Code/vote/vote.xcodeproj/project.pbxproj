@@ -51,6 +51,7 @@
 		AAAB414E183065B000A968EA /* searchVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB414D183065B000A968EA /* searchVoteViewController.m */; };
 		AAAB4151183079BC00A968EA /* NSDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */; };
 		AAAB415318307B5B00A968EA /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAAB415218307B5B00A968EA /* CoreLocation.framework */; };
+		AAB9116A184CF14E007BDC38 /* VoteOption.m in Sources */ = {isa = PBXBuildFile; fileRef = AAB91169184CF14E007BDC38 /* VoteOption.m */; };
 		AACD9FF4183D693200BF40AA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACD9FF3183D693200BF40AA /* AdSupport.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		AACD9FF6183D694600BF40AA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AACD9FF5183D694600BF40AA /* libz.dylib */; };
 		E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E909B0A51829E8FE00360DB2 /* CodeViewController.m */; };
@@ -145,6 +146,8 @@
 		AAAB414F183079BC00A968EA /* NSDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+PLPackage.h"; sourceTree = "<group>"; };
 		AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+PLPackage.m"; sourceTree = "<group>"; };
 		AAAB415218307B5B00A968EA /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		AAB91168184CF14E007BDC38 /* VoteOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteOption.h; sourceTree = "<group>"; };
+		AAB91169184CF14E007BDC38 /* VoteOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteOption.m; sourceTree = "<group>"; };
 		AACD9FF3183D693200BF40AA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		AACD9FF5183D694600BF40AA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E909B0A41829E8FE00360DB2 /* CodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CodeViewController.h; sourceTree = "<group>"; };
@@ -390,6 +393,8 @@
 			children = (
 				AA84683418384A5600C9B632 /* Vote.h */,
 				AA84683518384A5600C9B632 /* Vote.m */,
+				AAB91168184CF14E007BDC38 /* VoteOption.h */,
+				AAB91169184CF14E007BDC38 /* VoteOption.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -558,6 +563,7 @@
 				E97DCE69184C46B800E59F4A /* PasswordEnterViewController.m in Sources */,
 				AA4609DE184A40C4002D398B /* UILabel+SizeCalculate.m in Sources */,
 				AA3F8FE61826B00C007ABF9B /* AppDelegate.m in Sources */,
+				AAB9116A184CF14E007BDC38 /* VoteOption.m in Sources */,
 				E9D484A2184AF10A00CD5110 /* InitializeVoteViewController.m in Sources */,
 				AA846832183839AC00C9B632 /* VoteSearchResultCell.m in Sources */,
 				AA3F90081826D1A9007ABF9B /* RootViewController.m in Sources */,
