@@ -552,7 +552,7 @@
     [numberToolbar sizeToFit];
     _numberOfPeopleTextField.inputAccessoryView = numberToolbar;
     
-    _numberOfPeopleTextField.textAlignment = UITextAlignmentCenter;
+    _numberOfPeopleTextField.textAlignment = NSTextAlignmentCenter;
     _numberOfPeopleTextField.delegate = self;
     _numberOfPeopleTextField.returnKeyType = UIReturnKeyDone;
     [_fourthResponder addSubview:_numberOfPeopleTextField];
@@ -567,7 +567,7 @@
     UILabel *addLabel = [[UILabel alloc] init];
     addLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
     addLabel.font = [UIFont systemFontOfSize:fontSizeOfInput];
-    addLabel.textAlignment = UITextAlignmentCenter;
+    addLabel.textAlignment = NSTextAlignmentCenter;
     addLabel.text = @"add";
     addLabel.textColor = [UIColor whiteColor];
     [addButton addSubview:addLabel];
@@ -618,7 +618,7 @@
     _passwordTextField = [[UITextField alloc] init];
     _passwordTextField.frame = CGRectMake(leftMarginOfWords, 0, widthOfPasswordTextField, heightOfOneLineInResponder);
     _passwordTextField.keyboardType = UIKeyboardTypeNumberPad;
-    _passwordTextField.textAlignment = UITextAlignmentCenter;
+    _passwordTextField.textAlignment = NSTextAlignmentCenter;
     _passwordTextField.delegate = self;
     _passwordTextField.secureTextEntry = YES;
     [_fifthResponder addSubview:_passwordTextField];
@@ -626,7 +626,7 @@
     _passwordTip = [[UILabel alloc] init];
     _passwordTip.frame = CGRectMake(leftMarginOfWords + widthOfPasswordTextField, 0, 180, heightOfOneLineInResponder);
     _passwordTip.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
-    _passwordTip.textAlignment = UITextAlignmentCenter;
+    _passwordTip.textAlignment = NSTextAlignmentCenter;
     _passwordTip.font = [UIFont systemFontOfSize:fontSizeOfInput];
     _passwordTip.text = @"Tip: Need Six Numbers";
     [_fifthResponder addSubview:_passwordTip];
@@ -642,7 +642,7 @@
     UILabel *confirmLabel = [[UILabel alloc] init];
     confirmLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
     confirmLabel.textColor = [UIColor whiteColor];
-    confirmLabel.textAlignment = UITextAlignmentCenter;
+    confirmLabel.textAlignment = NSTextAlignmentCenter;
     confirmLabel.text = @"OK";
     [_passwordConfirmButton addSubview:confirmLabel];
     
@@ -696,7 +696,7 @@
     UILabel *firstTimeLabel = [[UILabel alloc] init];
     firstTimeLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
     firstTimeLabel.textColor = [UIColor whiteColor];
-    firstTimeLabel.textAlignment = UITextAlignmentCenter;
+    firstTimeLabel.textAlignment = NSTextAlignmentCenter;
     firstTimeLabel.text = @"5 min";
     [firstTimeButton addSubview:firstTimeLabel];
   
@@ -710,7 +710,7 @@
     UILabel *secondTimeLabel = [[UILabel alloc] init];
     secondTimeLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
     secondTimeLabel.textColor = [UIColor whiteColor];
-    secondTimeLabel.textAlignment = UITextAlignmentCenter;
+    secondTimeLabel.textAlignment = NSTextAlignmentCenter;
     secondTimeLabel.text = @"15 min";
     [secondTimeButton addSubview:secondTimeLabel];
     
@@ -724,7 +724,7 @@
     UILabel *thirdTimeLabel = [[UILabel alloc] init];
     thirdTimeLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
     thirdTimeLabel.textColor = [UIColor whiteColor];
-    thirdTimeLabel.textAlignment = UITextAlignmentCenter;
+    thirdTimeLabel.textAlignment = NSTextAlignmentCenter;
     thirdTimeLabel.text = @"30 min";
     [thirdTimeButton addSubview:thirdTimeLabel];
     
@@ -738,7 +738,7 @@
     UILabel *fourthTimeLabel = [[UILabel alloc] init];
     fourthTimeLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
     fourthTimeLabel.textColor = [UIColor whiteColor];
-    fourthTimeLabel.textAlignment = UITextAlignmentCenter;
+    fourthTimeLabel.textAlignment = NSTextAlignmentCenter;
     fourthTimeLabel.text = @"1 hour";
     [fourthTimeButton addSubview:fourthTimeLabel];
     
@@ -755,7 +755,7 @@
     UILabel *doneLabel = [[UILabel alloc] init];
     doneLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
     doneLabel.textColor = [UIColor whiteColor];
-    doneLabel.textAlignment = UITextAlignmentCenter;
+    doneLabel.textAlignment = NSTextAlignmentCenter;
     doneLabel.text = @"Done";
     [_doneButton addSubview:doneLabel];
     
@@ -1525,7 +1525,7 @@
     //index number
     UILabel *addedIndexLabel = [[UILabel alloc] init];
     addedIndexLabel.frame = CGRectMake(0, 0, heightOfOneLineInContainer, heightOfOneLineInContainer);
-    addedIndexLabel.textAlignment = UITextAlignmentCenter;
+    addedIndexLabel.textAlignment = NSTextAlignmentCenter;
     [addedIndexLabel setText:[NSString stringWithFormat:@"%d", numberOfOptions]];
     [tempButton addSubview:addedIndexLabel];
     
@@ -1582,7 +1582,7 @@
     UILabel *cancelLabel = [[UILabel alloc] init];
     cancelLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
     cancelLabel.font = [UIFont systemFontOfSize:fontSizeOfInput];
-    cancelLabel.textAlignment = UITextAlignmentCenter;
+    cancelLabel.textAlignment = NSTextAlignmentCenter;
     cancelLabel.text = @"Cancel";
     cancelLabel.textColor = [UIColor whiteColor];
     [tempCancelButton addSubview:cancelLabel];
@@ -1598,7 +1598,7 @@
     UILabel *deleteLabel = [[UILabel alloc] init];
     deleteLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
     deleteLabel.font = [UIFont systemFontOfSize:fontSizeOfInput];
-    deleteLabel.textAlignment = UITextAlignmentCenter;
+    deleteLabel.textAlignment = NSTextAlignmentCenter;
     deleteLabel.text = @"Delete";
     deleteLabel.textColor = [UIColor whiteColor];
     [tempDeleteButton addSubview:deleteLabel];
@@ -1668,7 +1668,7 @@
             UILabel *cancelLabel = [[UILabel alloc] init];
             cancelLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
             cancelLabel.font = [UIFont systemFontOfSize:fontSizeOfInput];
-            cancelLabel.textAlignment = UITextAlignmentCenter;
+            cancelLabel.textAlignment = NSTextAlignmentCenter;
             cancelLabel.text = @"Cancel";
             cancelLabel.textColor = [UIColor whiteColor];
             [_cancelButton addSubview:cancelLabel];
@@ -1684,7 +1684,7 @@
             UILabel *deleteLabel = [[UILabel alloc] init];
             deleteLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
             deleteLabel.font = [UIFont systemFontOfSize:fontSizeOfInput];
-            deleteLabel.textAlignment = UITextAlignmentCenter;
+            deleteLabel.textAlignment = NSTextAlignmentCenter;
             deleteLabel.text = @"Delete";
             deleteLabel.textColor = [UIColor whiteColor];
             [_deleteButton addSubview:deleteLabel];
@@ -1840,7 +1840,7 @@
             UILabel *resetLabel = [[UILabel alloc] init];
             resetLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
             resetLabel.textColor = [UIColor whiteColor];
-            resetLabel.textAlignment = UITextAlignmentCenter;
+            resetLabel.textAlignment = NSTextAlignmentCenter;
             resetLabel.text = @"reset";
             [_resetPasswordButton addSubview:resetLabel];
         }else{
