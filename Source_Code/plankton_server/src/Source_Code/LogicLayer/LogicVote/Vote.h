@@ -33,12 +33,15 @@ public:
 
 	//get the vote near by 1000m
 	vector<Vote*> indexVoteNearByLocation();
+	vector<Vote> getVoteHistoryWithInitiatorID();
+	vector<Vote> getVoteHistoryWithParticipantsID(int participantID);
 	vector<vector<string> > getDuplicateNameList();
 	bool setVoteFinish();
 	bool setAllPendingVoteSelectionConfirmed();
 	bool getVoteByID();
 	bool getVoteByInitiatorID();
 	bool getVoteByOptionID(int optionID);
+	int  currentValidNumber();
 	bool hasReachMaxValidNumber();
 	bool newVote();
 	bool checkPassword();
@@ -51,6 +54,7 @@ private:
 	DLDatabase *database;
 
 	void setVoteByDatabaseResult(vector<vector<string> > result);
+	vector<Vote> getVoteListBySQLResult(vector<vector<string> > sqlResult);
 };
 
 #endif /* VOTE_H_ */

@@ -352,7 +352,7 @@ vector<Vote*> Vote::getAllUnfinishedVote() {
 	vector<vector<string> > sqlResult = this->database->querySQL(queryString);
 
 	vector<Vote*> result;
-	for (unsigned int i = 0; i < result.size(); i++) {
+	for (unsigned int i = 0; i < sqlResult.size(); i++) {
 		Vote *tmpVote = new Vote(this->database);
 
 		tmpVote->initiatorid = Converter::string_to_int(sqlResult[i][1]);
@@ -383,6 +383,15 @@ int Vote::getPendingSelectionNumber() {
 	return result.size();
 }
 
+int Vote::currentValidNumber() {
+	string queryString =
+			"SELECT * FROM vote,voteOption,voteSelection WHERE vote.idvote=voteOption.idvote AND voteOption.idvoteOption = voteSelection.idvoteOption AND voteSelection.state=1";
+
+	vector<vector<string> > result = this->database->querySQL(queryString);
+
+	return result.size();
+}
+
 bool Vote::checkPassword() {
 	//encrypt the password
 	MD5 md5(password);
@@ -400,4 +409,55 @@ bool Vote::checkPassword() {
 	} else {
 		return false;
 	}
+}
+
+vector<Vote> Vote::getVoteHistoryWithInitiatorID() {
+	std::ostringstream stringStream;
+	stringStream << "SELECT * FROM vote WHERE idinitiator=" << this->initiatorid
+			<< ";";
+	string queryString = stringStream.str();
+
+	vector<vector<string> > sqlResult = this->database->querySQL(queryString);
+
+	return this->getVoteListBySQLResult(sqlResult);
+}
+
+vector<Vote> Vote::getVoteHistoryWithParticipantsID(int participantID) {
+	std::ostringstream stringStream;
+	stringStream
+			<< "SELECT vote.idvote,vote.idinitiator,vote.title,vote.max_valid_user,vote.password,vote.longitude,vote.latitude,vote.create_time,vote.end_time,vote.is_finished,vote.color_index"
+			<< " FROM vote,voteOption,voteSelection,user WHERE user.iduser="
+			<< participantID
+			<< " AND user.iduser=voteSelection.iduser AND voteSelection.idvoteOption=voteOption.idvoteOption AND voteOption.idvote=vote.idvote;";
+	string queryString = stringStream.str();
+
+	vector<vector<string> > sqlResult = this->database->querySQL(queryString);
+
+	return this->getVoteListBySQLResult(sqlResult);
+}
+
+vector<Vote> Vote::getVoteListBySQLResult(vector<vector<string> > sqlResult) {
+	vector<Vote> result;
+
+	for (unsigned int i = 0; i < sqlResult.size(); i++) {
+		Vote tmpVote(this->database);
+
+		tmpVote.voteid = Converter::string_to_int(sqlResult[i][0]);
+		tmpVote.initiatorid = Converter::string_to_int(sqlResult[i][1]);
+		tmpVote.title = sqlResult[i][2];
+		tmpVote.maxValidUser = Converter::string_to_int(sqlResult[i][3]);
+		tmpVote.password = sqlResult[i][4];
+		tmpVote.longitude = Converter::string_to_double(sqlResult[i][5]);
+		tmpVote.latitude = Converter::string_to_double(sqlResult[i][6]);
+		tmpVote.createTime = Converter::mysql_datetime_string_to_time_t(
+				sqlResult[i][7]);
+		tmpVote.endTime = Converter::mysql_datetime_string_to_time_t(
+				sqlResult[i][8]);
+		tmpVote.isFnished = Converter::string_to_int(sqlResult[i][9]);
+		tmpVote.colorIndex = Converter::string_to_int(sqlResult[i][10]);
+
+		result.push_back(tmpVote);
+	}
+
+	return result;
 }

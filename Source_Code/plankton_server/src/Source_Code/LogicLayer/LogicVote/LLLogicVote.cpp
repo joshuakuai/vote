@@ -166,6 +166,13 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			sendValue["success"] = this->viewProcessingVote(voteid, password,sendValue);
 			break;
 		}
+		case IndexHistory:{
+			int userid = receivedValue["userid"].asInt();
+			int requestType = receivedValue["requestType"].asInt();
+			sendValue["success"] = this->getHistoryVote(userid, requestType, sendValue);
+			sendValue["requestType"] = requestType;
+			break;
+		}
 		default: {
 			return "{\"msg\":\"Invalid request type\",\"success\":false}";
 			break;
@@ -701,4 +708,41 @@ bool LLLogicVote::viewProcessingVote(int voteid, string password, Json::Value &s
 		this->errorString = "Wrong password, please check again.";
 		return false;
 	}
+}
+
+bool LLLogicVote::getHistoryVote(int userid, int requestType, Json::Value &sendValue)
+{
+	vector<Vote> voteList;
+	Vote tmpVote(this->database);
+	//check the request type
+	if(requestType == 1){
+		//return the history as initiator
+		tmpVote.initiatorid = userid;
+		voteList = tmpVote.getVoteHistoryWithInitiatorID();
+	}else{
+		voteList = tmpVote.getVoteHistoryWithParticipantsID(userid);
+	}
+
+	//establish the array in send value
+	Json::Value arrayValue(Json::arrayValue);
+
+	//return the vote's information
+	for (unsigned int i = 0; i < voteList.size(); i++) {
+		Json::Value arrayItem;
+
+		arrayItem["title"] = voteList[i].title;
+		arrayItem["color"] = voteList[i].colorIndex;
+		arrayItem["maxvaliduser"] = voteList[i].maxValidUser;
+		arrayItem["cteatetime"] = Converter::time_t_to_mysql_datetime_string(voteList[i].createTime);
+		arrayItem["endtime"] = Converter::time_t_to_mysql_datetime_string(voteList[i].endTime);
+		arrayItem["voteid"] = voteList[i].voteid;
+		arrayItem["initiatorid"] = voteList[i].initiatorid;
+		arrayItem["currentvalidvote"] = voteList[i].currentValidNumber();
+
+		arrayValue.append(arrayItem);
+	}
+
+	sendValue["historylist"] = arrayValue;
+
+	return true;
 }

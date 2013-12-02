@@ -39,7 +39,8 @@ public:
 		AdminResolveVote,
 		InitialVote,
 		JoinVote,
-		ViewProcessingVote
+		ViewProcessingVote,
+		IndexHistory
 	} VoteRequestType;
 
 	LLLogicVote() {
@@ -128,6 +129,10 @@ private:
 
 	//view a processing vote
 	bool viewProcessingVote(int voteid, string password, Json::Value &sendValue);
+
+	//get the list of history
+	//Request type: 1:user as initiator 2:user as participant
+	bool getHistoryVote(int userid, int requestType, Json::Value &sendValue);
 	//登录
 	//bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);
 };
