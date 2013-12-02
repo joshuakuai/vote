@@ -39,7 +39,7 @@ public:
 	bool setVoteFinish();
 	bool setAllPendingVoteSelectionConfirmed();
 	bool getVoteByID();
-	bool getVoteByInitiatorID();
+	bool getVoteByInitiatorIDAndCreateTime();
 	bool getVoteByOptionID(int optionID);
 	int  currentValidNumber();
 	bool hasReachMaxValidNumber();
