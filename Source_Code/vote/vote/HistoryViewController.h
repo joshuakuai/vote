@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface HistoryViewController : UIViewController
+@interface HistoryViewController : BaseViewController
 
 @property NSString *emailAddress;
 @property (strong, nonatomic) UISegmentedControl *historySegment;

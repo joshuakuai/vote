@@ -7,6 +7,7 @@
 //
 
 #import "HistoryViewController.h"
+#import "Vote.h"
 
 @interface HistoryViewController ()
 {
@@ -40,6 +41,23 @@
     }
     
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    //TODO:add refresh
+    //get the data from server, initia first
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:IndexHistory];
+    [dic setObject:[NSNumber numberWithInt:1] forKey:@"indextype"];
+    [dic setObject:UserId forKey:@"userid"];
+    
+    //NSLog(@"%@",[dic description]);
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
 }
 
 - (void)viewDidLoad
@@ -76,6 +94,7 @@
         }
         [tempAttendVoteArray addObject:tempDicitionary];
     }
+    
     attendedVoteList = [[NSArray alloc] initWithArray:tempAttendVoteArray];
     
     for (int i = 0; i<5; i++) {
@@ -283,12 +302,6 @@
     initiatedArrowButtonArray = [[NSArray alloc] initWithArray:tempInitiatedArrowButtonArray];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)historySwitchAction:(UIButton *)sender
 {
     int selectedIndex = _historySegment.selectedSegmentIndex;
@@ -298,6 +311,147 @@
     }else{
         attendedScrollView.hidden = YES;
         initiatedScrollView.hidden = NO;
+    }
+}
+
+#pragma mark - PLServer delegate
+- (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
+{
+    [self dismissLoadingView];
+    
+    NSDictionary *cacheDic = (NSDictionary*)jsonString;
+    BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
+    
+    NSLog(@"%@",cacheDic);
+    
+    if (result) {
+        //check if is the refresh by location
+        VoteRequestType requetType = [cacheDic getRequestType];
+        
+        switch (requetType) {
+            case IndexHistory:{
+                int indexType = [[cacheDic valueForKey:@"indextype"] intValue];
+                
+                if (indexType == 1) {
+                    //fullfill the data
+                    NSMutableArray *tempInitiateArray = [NSMutableArray arrayWithCapacity:3];
+                    NSArray *historyDicArray = [cacheDic valueForKey:@"historylist"];
+                    
+                    if (historyDicArray.count != 0) {
+                        for (NSDictionary *voteDic in historyDicArray) {
+                            NSMutableDictionary *tmpDic  = [NSMutableDictionary dictionary];
+                            [tmpDic setObject:[voteDic valueForKey:@"color"] forKey:@"colorIndex"];
+                            [tmpDic setObject:[voteDic valueForKey:@"cteatetime"] forKey:@"time"];
+                            [tmpDic setObject:[voteDic valueForKey:@"initiator"] forKey:@"initiator"];
+                            
+                            int currentUser = [[voteDic objectForKey:@"currentvalidvote"] intValue];
+                            int maxValidUser = [[voteDic objectForKey:@"maxvaliduser"] intValue];
+                            
+                            if (currentUser == maxValidUser) {
+                                [tmpDic setObject:@"YES" forKey:@"state"];
+                            }else{
+                                NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                                [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                                NSString *endTimeString = [voteDic objectForKey:@"endtime"];
+                                NSString *serverTimeString = [voteDic objectForKey:@"servercurrentime"];
+                                
+                                NSDate *endTime = [df dateFromString:endTimeString];
+                                NSDate *serverCurrentTime = [df dateFromString:serverTimeString];
+                                
+                                int intervall = (int) [endTime timeIntervalSinceDate: serverCurrentTime] / 60;
+                                
+                                if (intervall > 0) {
+                                    [tmpDic setObject:@"NO" forKey:@"state"];
+                                }else{
+                                    [tmpDic setObject:@"YES" forKey:@"state"];
+                                }
+                            }
+                            
+
+                            [tempInitiateArray addObject:tmpDic];
+                        }
+                    }
+                    
+                    initiateVoteList = [[NSArray alloc] initWithArray:tempInitiateArray];
+                    
+                    //request the particiapant
+                    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:IndexHistory];
+                    [dic setObject:[NSNumber numberWithInt:2] forKey:@"indextype"];
+                    [dic setObject:UserId forKey:@"userid"];
+                    
+                    [[PLServer shareInstance] sendDataWithDic:dic];
+                    
+                    [self showLoadingView:@"" isWithCancelButton:NO];
+                }else{
+                    //refresh the scroll view
+                    NSMutableArray *tempAttendArray = [NSMutableArray arrayWithCapacity:3];
+                    NSArray *historyDicArray = [cacheDic valueForKey:@"historylist"];
+                    
+                    if (historyDicArray.count != 0) {
+                        for (NSDictionary *voteDic in historyDicArray) {
+                            NSMutableDictionary *tmpDic  = [NSMutableDictionary dictionary];
+                            [tmpDic setObject:[voteDic valueForKey:@"color"] forKey:@"colorIndex"];
+                            [tmpDic setObject:[voteDic valueForKey:@"cteatetime"] forKey:@"time"];
+                            [tmpDic setObject:[voteDic valueForKey:@"initiator"] forKey:@"initiator"];
+                            
+                            int currentUser = [[voteDic objectForKey:@"currentvalidvote"] intValue];
+                            int maxValidUser = [[voteDic objectForKey:@"maxvaliduser"] intValue];
+                            
+                            if (currentUser == maxValidUser) {
+                                [tmpDic setObject:@"YES" forKey:@"state"];
+                            }else{
+                                NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                                [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                                NSString *endTimeString = [voteDic objectForKey:@"endtime"];
+                                NSString *serverTimeString = [voteDic objectForKey:@"servercurrentime"];
+                                
+                                NSDate *endTime = [df dateFromString:endTimeString];
+                                NSDate *serverCurrentTime = [df dateFromString:serverTimeString];
+                                
+                                int intervall = (int) [endTime timeIntervalSinceDate: serverCurrentTime] / 60;
+                                
+                                if (intervall > 0) {
+                                    [tmpDic setObject:@"NO" forKey:@"state"];
+                                }else{
+                                    [tmpDic setObject:@"YES" forKey:@"state"];
+                                }
+                            }
+                            
+                            
+                            [tempAttendArray addObject:tmpDic];
+                        }
+                    }
+                    
+                    attendedVoteList = [[NSArray alloc] initWithArray:tempAttendArray];
+                }
+                
+                break;
+            }
+                
+            default:
+                break;
+        }
+        
+    }else{
+        [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
+    }
+}
+
+- (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
+{
+    [self dismissLoadingView];
+    if (error) {
+        [self showErrorMessage:[error description]];
+    }else{
+        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
+    }
+}
+
+- (void)connectionClosed:(PLServer *)plServer
+{
+    if (isShowingLoadingView) {
+        [self dismissLoadingView];
+        [self showErrorMessage:@"Lost connection,check your internet connection."];
     }
 }
 
