@@ -46,9 +46,6 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
-    
-    //set the plankton server's delegate
-    [[PLServer shareInstance] setDelegate:self];
 }
 
 - (void)viewDidLoad
@@ -291,4 +288,5 @@
         [self showErrorMessage:@"Lost connection,check your internet connection."];
     }
 }
+
 @end

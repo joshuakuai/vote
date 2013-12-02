@@ -22,17 +22,8 @@
     
     self.navigationController.navigationBarHidden = NO;
     
-    //set the plankton server's delegate
-    [[PLServer shareInstance] setDelegate:self];
-    
     _emailTextField.text = @"";
     _passwordTextField.text = @"";
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[PLServer shareInstance] closeConnection];
 }
 
 - (void)viewDidLoad
