@@ -127,7 +127,7 @@ private:
 	bool joinVote(int voteOptionID,int userid);
 
 	//view a processing vote
-	bool viewProcessingVote(int voteid, string password);
+	bool viewProcessingVote(int voteid, string password, Json::Value &sendValue);
 	//登录
 	//bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);
 };

@@ -35,11 +35,13 @@ public:
 	vector<Vote*> indexVoteNearByLocation();
 	vector<vector<string> > getDuplicateNameList();
 	bool setVoteFinish();
+	bool setAllPendingVoteSelectionConfirmed();
 	bool getVoteByID();
 	bool getVoteByInitiatorID();
 	bool getVoteByOptionID(int optionID);
 	bool hasReachMaxValidNumber();
 	bool newVote();
+	bool checkPassword();
 	int getPendingSelectionNumber();
 
 	vector<Vote*> getAllUnfinishedVote();

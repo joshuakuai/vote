@@ -9,6 +9,7 @@
 #include "../../Common/Converter.h"
 #include "../../Common/LocationCalculator.h"
 #include "../../Common/Pusher.h"
+#include "../../Common/md5.h"
 #include "VoteOption.h"
 #include "VoteSelection.h"
 #include "User.h"
@@ -120,10 +121,11 @@ bool Vote::getVoteByInitiatorID() {
 	}
 }
 
-bool Vote::getVoteByOptionID(int optionID)
-{
-	string queryString = "SELECT * FROM vote,voteOption WHERE voteOption.idvoteOption="
-			+ Converter::int_to_string(optionID) + " AND vote.idvote=voteOption.idvote;";
+bool Vote::getVoteByOptionID(int optionID) {
+	string queryString =
+			"SELECT * FROM vote,voteOption WHERE voteOption.idvoteOption="
+					+ Converter::int_to_string(optionID)
+					+ " AND vote.idvote=voteOption.idvote;";
 
 	vector<vector<string> > result = this->database->querySQL(queryString);
 
@@ -155,6 +157,10 @@ void Vote::setVoteByDatabaseResult(vector<vector<string> > result) {
 }
 
 bool Vote::newVote() {
+	//encrypt the password
+	MD5 md5(password);
+	password = md5.md5();
+
 	std::ostringstream stringStream;
 	stringStream
 			<< "INSERT INTO vote(idinitiator,title,max_valid_user,password,longitude,latitude,create_time,end_time,color_index) VALUES("
@@ -309,6 +315,17 @@ bool Vote::setVoteFinish() {
 	}
 }
 
+bool Vote::setAllPendingVoteSelectionConfirmed() {
+	std::ostringstream stringStream;
+	stringStream
+			<< "UPDATE voteSelection,vote,voteOption SET voteSelection.state=1 WHERE vote.idvote="
+			<< this->voteid
+			<< " AND vote.idvote=voteOption.idvote AND voteOption.idvoteOption=voteSelection.idvoteOption AND voteSelection.state=0";
+	string queryString = stringStream.str();
+
+	return this->database->executeSQL(queryString);
+}
+
 //MUST GET THE VOTE'S INFO BEFORE CALL THIS METHOD
 bool Vote::hasReachMaxValidNumber() {
 	if (this->voteid == -1) {
@@ -364,4 +381,23 @@ int Vote::getPendingSelectionNumber() {
 	vector<vector<string> > result = this->database->querySQL(queryString);
 
 	return result.size();
+}
+
+bool Vote::checkPassword() {
+	//encrypt the password
+	MD5 md5(password);
+	password = md5.md5();
+
+	std::ostringstream stringStream;
+	stringStream << "SELECT * FROM vote WHERE idvote=" << this->voteid
+			<< " AND password='" << this->password << "';";
+	string queryString = stringStream.str();
+
+	vector<vector<string> > result = this->database->querySQL(queryString);
+
+	if (result.size() != 0) {
+		return true;
+	} else {
+		return false;
+	}
 }

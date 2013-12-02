@@ -163,7 +163,7 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 		case ViewProcessingVote: {
 			int voteid = receivedValue["voteid"].asInt();
 			string password = receivedValue["password"].asString();
-			sendValue["success"] = this->viewProcessingVote(voteid, password);
+			sendValue["success"] = this->viewProcessingVote(voteid, password,sendValue);
 			break;
 		}
 		default: {
@@ -509,7 +509,8 @@ bool LLLogicVote::adminResolveVote(int voteid) {
 	tmpVote.voteid = voteid;
 	tmpVote.getVoteByID();
 
-	//TODO:set all user as confirm
+	//confirm all pending selection
+	tmpVote.setAllPendingVoteSelectionConfirmed();
 
 	time_t timeTmp = time(NULL);
 	double timeSpan = difftime(timeTmp, tmpVote.endTime);
@@ -647,6 +648,57 @@ bool LLLogicVote::joinVote(int voteOptionID, int userid) {
 	return true;
 }
 
-bool LLLogicVote::viewProcessingVote(int voteid, string password) {
+bool LLLogicVote::viewProcessingVote(int voteid, string password, Json::Value &sendValue) {
+	//check if the vote has expired
+	//get the vote
+	Vote tmpVote(this->database);
+	tmpVote.voteid = voteid;
+	if (!tmpVote.getVoteByID()) {
+		this->errorString = tmpVote.errorMessage;
+		return false;
+	}
 
+	//determine the vote is expired or not
+	time_t timeTmp = time(NULL);
+	double timeSpan = difftime(timeTmp, tmpVote.endTime);
+	if (timeSpan > 0) {
+		this->errorString = "This vote has already expired.";
+		return false;
+	}
+
+	//check if the password is right
+	if(tmpVote.checkPassword()){
+		//get all option
+		VoteOption tmpOption(this->database);
+		tmpOption.idvote = voteid;
+		vector<VoteOption*> optionList = tmpOption.getVoteOptionsByVoteid();
+
+		//establish the array in send value
+		Json::Value arrayValue(Json::arrayValue);
+
+		//return the vote's information
+		for (unsigned int i = 0; i < optionList.size(); i++) {
+			Json::Value arrayItem;
+
+			arrayItem["content"] = optionList[i]->content;
+			arrayItem["voteoptionid"] = optionList[i]->idvoteOption;
+
+			arrayValue.append(arrayItem);
+
+			delete optionList[i];
+		}
+
+		optionList.clear();
+
+		sendValue["optionlist"] = arrayValue;
+		sendValue["title"] = tmpVote.title;
+		sendValue["maxvaliduser"] = tmpVote.maxValidUser;
+		sendValue["starttime"] = Converter::time_t_to_mysql_datetime_string(tmpVote.createTime);
+		sendValue["endtime"] = Converter::time_t_to_mysql_datetime_string(tmpVote.endTime);
+
+		return true;
+	}else{
+		this->errorString = "Wrong password, please check again.";
+		return false;
+	}
 }
