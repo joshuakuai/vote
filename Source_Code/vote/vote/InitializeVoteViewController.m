@@ -477,7 +477,7 @@
     UILabel *minusLabel = [[UILabel alloc] init];
     minusLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
     minusLabel.font = [UIFont systemFontOfSize:fontSizeOfInput];
-    minusLabel.textAlignment = UITextAlignmentCenter;
+    minusLabel.textAlignment = NSTextAlignmentCenter;
     minusLabel.text = @"minus";
     minusLabel.textColor = [UIColor whiteColor];
     [minusButton addSubview:minusLabel];
@@ -813,9 +813,6 @@
     currentHeightOfCurrentResponder = _secondResponder.frame.size.height;
     
     [_subjectTextView becomeFirstResponder];
-    
-    
-
 }
 
 #pragma -mark action of tapping option
