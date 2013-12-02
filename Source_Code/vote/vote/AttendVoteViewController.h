@@ -10,4 +10,11 @@
 
 @interface AttendVoteViewController : UIViewController
 
+@property int indexOfColor;
+//TODO: time
+//subject
+@property NSString *sujectContent;
+//option array
+@property (strong, nonatomic)NSArray *optionArray;
+
 @end
