@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface PasswordEnterViewController : UIViewController
+@interface PasswordEnterViewController : BaseViewController<UITextFieldDelegate>
 
 @property (strong, nonatomic) UITextField *passwordTextField;
 
