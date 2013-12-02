@@ -1445,6 +1445,7 @@ Failed:
 
 	if (![self isDisconnected])
 	{
+        return false;
 		[NSException raise:AsyncSocketException
 		            format:@"Attempting to connect while connected or accepting connections. Disconnect first."];
 	}
