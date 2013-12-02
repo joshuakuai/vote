@@ -95,8 +95,10 @@ public:
 	static time_t mysql_datetime_string_to_time_t(const string& input)
 	{
 		struct tm tmlol;
-		strptime(input.c_str(),"Y%-m%-d% %H-%M-%S",&tmlol);
-		return mktime(&tmlol);
+		strptime(input.c_str(), "%Y-%m-%d %H:%M:%S", &tmlol);
+		time_t t = mktime(&tmlol);
+		//cout << "T time int " << t << endl;
+		return t;
 	}
 };
 

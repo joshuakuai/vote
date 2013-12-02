@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface AttendVoteViewController : UIViewController
+@interface AttendVoteViewController : BaseViewController<PLServerDelegate>
 
 @property int indexOfColor;
-//TODO: time
+@property int leftMinutes;
+
 //subject
-@property NSString *sujectContent;
+@property NSString *subject;
 //option array
 @property (strong, nonatomic)NSArray *optionArray;
 

@@ -24,15 +24,6 @@
     
     _emailTextField.text = @"";
     _emailAgainTextField.text = @"";
-    
-    //set the plankton server's delegate
-    [[PLServer shareInstance] setDelegate:self];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[PLServer shareInstance] closeConnection];
 }
 
 - (void)viewDidLoad

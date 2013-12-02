@@ -7,6 +7,9 @@
 //
 
 #import "PasswordEnterViewController.h"
+#import "AttendVoteViewController.h"
+#import "Vote.h"
+#import "VoteOption.h"
 
 @interface PasswordEnterViewController ()
 {
@@ -14,6 +17,11 @@
     NSString *_imageOfReturnButton;
     NSArray *_arrowImageArray;
     UILabel *_passwordTip;
+    
+    //For next view
+    NSMutableArray *_optionArray;
+    Vote *_voteInfo;
+    NSDate *_serverCurrentTime;
 }
 
 @end
@@ -25,9 +33,6 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
-    
-    //set the plankton server's delegate
-    [[PLServer shareInstance] setDelegate:self];
 }
 
 - (void)viewDidLoad
@@ -127,9 +132,11 @@
         [dic setObject:[NSNumber numberWithInt:self.voteid] forKey:@"voteid"];
         [dic setObject:_passwordTextField.text forKey:@"password"];
         
-        NSLog(@"%@",[dic description]);
+        //NSLog(@"%@",[dic description]);
         
         [[PLServer shareInstance] sendDataWithDic:dic];
+        
+        [self showLoadingView:@"" isWithCancelButton:NO];
         
     }else{
         _passwordTip.hidden = NO;
@@ -144,6 +151,22 @@
     }
     
     return  YES;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"votePasswordViewShowAttendVoteViewSegue"]) {
+        AttendVoteViewController *destViewController = segue.destinationViewController;
+
+        destViewController.optionArray = _optionArray;
+        destViewController.subject = _voteInfo.title;
+        destViewController.indexOfColor = _voteInfo.colorIndex;
+        
+        //left time
+        int intervall = (int) [_voteInfo.endTime timeIntervalSinceDate: _serverCurrentTime] / 60;
+        
+        destViewController.leftMinutes = intervall;
+    }
 }
 
 #pragma mark - PLServer delegate
@@ -162,7 +185,32 @@
         
         switch (requetType) {
             case ViewProcessingVote:{
+                //store the result
+                _voteInfo = [[Vote alloc] init];
+                _voteInfo.title = [cacheDic objectForKey:@"title"];
+                _voteInfo.maxValidUserNumber = [[cacheDic objectForKey:@"maxvaliduser"] integerValue];
                 
+                //time
+                NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                NSString *createTimeString = [cacheDic objectForKey:@"starttime"];
+                NSString *endTimeString = [cacheDic objectForKey:@"endtime"];
+                NSString *serverTimeString = [cacheDic objectForKey:@"servercurrentime"];
+                
+                _voteInfo.createTime = [df dateFromString:createTimeString];
+                _voteInfo.endTime = [df dateFromString:endTimeString];
+                _serverCurrentTime = [df dateFromString:serverTimeString];
+                
+                _optionArray = [NSMutableArray arrayWithCapacity:3];
+                NSArray *tmpOptionArray = [cacheDic objectForKey:@"optionlist"];
+                for (NSDictionary *arrayItem in tmpOptionArray) {
+                    VoteOption *option = [[VoteOption alloc] init];
+                    option.content = [arrayItem objectForKey:@"content"];
+                    option.voteOptionID = [[arrayItem objectForKey:@"voteoptionid"] intValue];
+                    [_optionArray addObject:option];
+                }
+                
+                [self performSegueWithIdentifier:@"votePasswordViewShowAttendVoteViewSegue" sender:self];
             }
                 
             default:

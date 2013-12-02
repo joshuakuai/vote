@@ -8,6 +8,7 @@
 
 #import "AttendVoteViewController.h"
 #import "UILabel+SizeCalculate.h"
+#import "VoteOption.h"
 
 @interface AttendVoteViewController ()
 {
@@ -15,9 +16,8 @@
     NSString *_titleImage;
     NSArray *_arrowImageArray;
     CGFloat _heightOfSubjectView;
-    NSString *_subject;
     int _numberOfOptions;
-    NSArray *_optionsContent;
+    NSMutableArray *_optionsContent;
     CGRect _firstOptionOriginalSize;
     GLfloat _heightOfOptionView;
     GLfloat _widthOfOptionView;
@@ -41,24 +41,31 @@
 
 @implementation AttendVoteViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (void)viewWillAppear:(BOOL)animated
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    /*
     //模拟服务器传过来的数值
 
-    _subject = @"Eventually, the car she was in came to a stop with a thud. She managed to get off the train carrying her cell phone, its screen shattered but still working.";
     _optionsContent = [[NSArray alloc] initWithObjects:@"kobe", @"James", @"jodan", nil];
     _numberOfOptions = _optionsContent.count;
+     */
+    _optionsContent = [NSMutableArray arrayWithCapacity:3];
+    
+    for (VoteOption *voteOption in self.optionArray) {
+        [_optionsContent addObject:voteOption.content];
+    }
+    
+    _numberOfOptions = _optionsContent.count;
+    
     buttonArray = [[NSArray alloc] initWithObjects: nil];
     
     _titleImage = @"titleImage";
@@ -87,7 +94,8 @@
     timeLabel.textAlignment = NSTextAlignmentCenter;
     timeLabel.textColor = [UIColor whiteColor];
     timeLabel.font = [UIFont systemFontOfSize:16];
-    timeLabel.text = [@"Time left: about " stringByAppendingString:@"5 minutes"];
+    NSString *timeLeftString = [NSString stringWithFormat:@"%d minutes",self.leftMinutes];
+    timeLabel.text = [@"Time left: about " stringByAppendingString:timeLeftString];
     [timeImageView addSubview:timeLabel];
     
     _heightOfSubjectView = 100;
@@ -107,14 +115,15 @@
     subjectLabel.font = [UIFont systemFontOfSize:16];
     subjectLabel.text = @"subject";
     [subjectView addSubview:subjectLabel];
-    
+        
     UILabel *subjectContentLabel = [[UILabel alloc] init];
     subjectContentLabel.frame = CGRectMake(20, 20, 278, 150);
     subjectContentLabel.numberOfLines = 0;
     subjectContentLabel.font = [UIFont systemFontOfSize:20];
     subjectContentLabel.text = _subject;
+    
     //resize the height of _subject view
-    CGSize expectedSize = [subjectLabel perfectLabelSizeWithMaxSize:CGSizeMake(278, 9999)];
+    CGSize expectedSize = [subjectContentLabel perfectLabelSizeWithMaxSize:CGSizeMake(278, 1000)];
     subjectContentLabel.frame = CGRectMake(20, 20, expectedSize.width, expectedSize.height);
     [subjectView addSubview:subjectContentLabel];
 
@@ -206,12 +215,6 @@
     
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)tapOnIndexOfOption:(UIButton *)sender
 {
     for (int i=0; i < _numberOfOptions; i++) {
@@ -225,6 +228,65 @@
 
 - (void)doneWithVote:(UIButton *)sender
 {
+    //get the option id
+    VoteOption *option = [_optionArray objectAtIndex:voteIndex];
     
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:JoinVote];
+    [dic setObject:[NSNumber numberWithInt:option.voteOptionID] forKey:@"voteoptionid"];
+    [dic setObject:UserId forKey:@"userid"];
+    
+    //NSLog(@"%@",[dic description]);
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
 }
+
+#pragma mark - PLServer delegate
+- (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
+{
+    [self dismissLoadingView];
+    
+    NSDictionary *cacheDic = (NSDictionary*)jsonString;
+    
+    NSLog(@"%@",[cacheDic description]);
+    
+    BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
+    if (result) {
+        //check if is the refresh by location
+        VoteRequestType requetType = [cacheDic getRequestType];
+        
+        switch (requetType) {
+            case JoinVote:{
+                //success
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }
+                
+            default:
+                break;
+        }
+        
+    }else{
+        [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
+    }
+}
+
+- (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
+{
+    [self dismissLoadingView];
+    if (error) {
+        [self showErrorMessage:[error description]];
+    }else{
+        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
+    }
+}
+
+- (void)connectionClosed:(PLServer *)plServer
+{
+    if (isShowingLoadingView) {
+        [self dismissLoadingView];
+        [self showErrorMessage:@"Lost connection,check your internet connection."];
+    }
+}
+
 @end

@@ -28,7 +28,7 @@ vector<VoteOption*> VoteOption::getVoteOptionsByVoteid() {
 		return result;
 	}
 
-	string queryString = "SELECT * FROM voteOption WHERE idvoteOption="
+	string queryString = "SELECT * FROM voteOption WHERE idvote="
 			+ Converter::int_to_string(this->idvote);
 
 	vector<vector<string> > voteOptionResult = this->database->querySQL(
@@ -50,8 +50,8 @@ vector<VoteOption*> VoteOption::getVoteOptionsByVoteid() {
 
 bool VoteOption::newVoteOption() {
 	std::ostringstream stringStream;
-	stringStream << "INSERT INTO voteOption(content,idvote) VALUES(" << content
-			<< "," << idvote << ");";
+	stringStream << "INSERT INTO voteOption(content,idvote) VALUES('" << content
+			<< "'," << idvote << ");";
 	string queryString = stringStream.str();
 
 	if (this->database->executeSQL(queryString)) {

@@ -144,7 +144,7 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			string passsword = receivedValue["password"].asString();
 			double longitude = receivedValue["longitude"].asDouble();
 			double latitude = receivedValue["latitude"].asDouble();
-			int endTime = receivedValue["endTime"].asInt();
+			int endTime = receivedValue["endtime"].asInt();
 			int userid = receivedValue["userid"].asInt();
 			int colorIndex = receivedValue["color"].asInt();
 
@@ -230,6 +230,7 @@ void *LLLogicVote::autoScanFinishedVote(void *msg) {
 		sleep(600);
 	}
 
+	PLog::logHint("LogicVote- Finish auto-scan");
 	return NULL;
 }
 
@@ -392,13 +393,11 @@ bool LLLogicVote::searchVoteByLocation(double longitude, double latitude,
 		return false;
 	}
 
-	Vote *vote = new Vote(this->database);
-	vote->longitude = longitude;
-	vote->latitude = latitude;
+	Vote vote(this->database);
+	vote.longitude = longitude;
+	vote.latitude = latitude;
 
-	vector<Vote*> result = vote->indexVoteNearByLocation();
-
-	delete vote;
+	vector<Vote*> result = vote.indexVoteNearByLocation();
 
 	//establish the array in send value
 	Json::Value arrayValue(Json::arrayValue);
@@ -558,15 +557,18 @@ bool LLLogicVote::initializeVote(string title, int maxValidN, string passwd,
 	newVote.password = passwd;
 	newVote.maxValidUser = maxValidN;
 	newVote.longitude = longitude;
-	newVote.latitude = longitude;
+	newVote.latitude = latitude;
 	newVote.initiatorid = userid;
 	newVote.colorIndex = color;
-	newVote.endTime = time(NULL) + endTime * 60;
+	newVote.createTime = time(NULL);
+	newVote.endTime = time(NULL) + (endTime * 60);
+
+	//cout<< endTime << "    " << newVote.createTime << "    " << newVote.endTime << endl;
 
 	//save the Vote
 	if (newVote.newVote()) {
 		//get the voteid
-		newVote.getVoteByInitiatorID();
+		newVote.getVoteByInitiatorIDAndCreateTime();
 
 		//save the options
 		vector<string>::iterator it = contentVector.begin();
@@ -678,11 +680,15 @@ bool LLLogicVote::viewProcessingVote(int voteid, string password,
 	//determine the vote is expired or not
 	time_t timeTmp = time(NULL);
 	double timeSpan = difftime(timeTmp, tmpVote.endTime);
+
+	//cout<< "Current Time " << timeTmp << " EndTime " << tmpVote.endTime <<endl;
+
 	if (timeSpan > 0) {
 		this->errorString = "This vote has already expired.";
 		return false;
 	}
 
+	tmpVote.password = password;
 	//check if the password is right
 	if (tmpVote.checkPassword()) {
 		//get all option
@@ -714,6 +720,7 @@ bool LLLogicVote::viewProcessingVote(int voteid, string password,
 				tmpVote.createTime);
 		sendValue["endtime"] = Converter::time_t_to_mysql_datetime_string(
 				tmpVote.endTime);
+		sendValue["servercurrentime"] = Converter::time_t_to_mysql_datetime_string(time(NULL));
 
 		return true;
 	} else {
@@ -761,7 +768,8 @@ bool LLLogicVote::getHistoryVoteList(int userid, int requestType,
 	return true;
 }
 
-bool LLLogicVote::viewHistoryVoteDetial(int voteid, int userid, Json::Value &sendValue) {
+bool LLLogicVote::viewHistoryVoteDetial(int voteid, int userid,
+		Json::Value &sendValue) {
 	//get the vote
 	VoteOption tmpVoteOption(this->database);
 	tmpVoteOption.idvote = voteid;
@@ -790,7 +798,7 @@ bool LLLogicVote::viewHistoryVoteDetial(int voteid, int userid, Json::Value &sen
 	//get user's selection and state
 	VoteSelection tmpSelection(this->database);
 	tmpSelection.iduser = userid;
-	if(!tmpSelection.getVoteSelection(optionIDList)){
+	if (!tmpSelection.getVoteSelection(optionIDList)) {
 		this->errorString = tmpSelection.errorMessage;
 		return false;
 	}

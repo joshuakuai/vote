@@ -18,6 +18,21 @@
 
 @implementation BaseViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    //set the plankton server's delegate
+    [[PLServer shareInstance] setDelegate:self];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self dismissLoadingView];
+}
+
 #pragma mark - Loading View Method
 - (void)showLoadingView:(NSString*)message isWithCancelButton:(BOOL)isWhitCancelButton
 {

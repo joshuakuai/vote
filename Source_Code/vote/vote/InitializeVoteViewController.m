@@ -133,7 +133,6 @@
     
     if (self) {
         self.title =@"Initiate";
-
         //set the tab bar item background
         [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"InitializeTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"InitializeTabBarNormal"]];
         
@@ -789,9 +788,6 @@
         
         [_locationManager startUpdatingLocation];
     }
-    
-    //set the plankton server's delegate
-    [[PLServer shareInstance] setDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -799,8 +795,6 @@
     [super viewWillDisappear:animated];
     
     [_locationManager stopUpdatingLocation];
-    [self dismissLoadingView];
-    //[[PLServer shareInstance] closeConnection];
 }
 
 - (void)textViewDidChange:(UITextView *)textView
@@ -2003,7 +1997,7 @@
     [dic setObject:[NSNumber numberWithInteger:[_numberOfPeopleTextField.text intValue]] forKey:@"maxvaliduser"];
     [dic setObject:_passwordTextField.text forKey:@"password"];
     //TODO:need end time
-    [dic setObject:[NSNumber numberWithInt:5] forKey:@"endtime"];
+    [dic setObject:[NSNumber numberWithInt:timeMinutes] forKey:@"endtime"];
     [dic setObject:[NSNumber numberWithInt:[[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"] integerValue]] forKey:@"userid"];
     [dic setObject:[NSNumber numberWithInt:selectedColorIndex] forKey:@"color"];
     [dic setObject:[NSNumber numberWithDouble:location.longitude] forKey:@"longitude"];
@@ -2040,7 +2034,7 @@
         
         switch (requetType) {
             case SearchVote:{
-                
+                self.tabBarController.selectedIndex = 2;
                 break;
             }
                 

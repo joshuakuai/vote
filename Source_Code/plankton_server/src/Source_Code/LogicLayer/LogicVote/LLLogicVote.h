@@ -50,6 +50,7 @@ public:
 		database = PLDataLayer::Instance()->getDatabaseByName("Vote");
 
 		if (!doesAutoScanOpened) {
+			PLog::logHint("LogicVote-Prepare to start auto-scan.");
 			pthread_t sessionThread = NULL;
 
 			if (pthread_create(&sessionThread, NULL, &autoScanFinishedVote,
