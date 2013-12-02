@@ -355,7 +355,7 @@
     [dic setObject:[NSNumber numberWithDouble:location.longitude] forKey:@"longitude"];
     [dic setObject:[NSNumber numberWithDouble:location.latitude] forKey:@"latitude"];
     
-    NSLog(@"%@",[dic description]);
+    //NSLog(@"%@",[dic description]);
     
     [[PLServer shareInstance] sendDataWithDic:dic];
 }
@@ -373,7 +373,7 @@
 
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     
-    NSLog(@"%@",[cacheDic description]);
+    //NSLog(@"%@",[cacheDic description]);
     
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     if (result) {

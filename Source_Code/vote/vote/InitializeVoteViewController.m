@@ -121,6 +121,20 @@
 
 @implementation InitializeVoteViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if (self) {
+        //set the tab bar item background
+        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"InitializeTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"InitializeTabBarNormal"]];
+        
+        self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
