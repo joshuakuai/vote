@@ -777,7 +777,7 @@
     
     [_locationManager stopUpdatingLocation];
     [self dismissLoadingView];
-    [[PLServer shareInstance] closeConnection];
+    //[[PLServer shareInstance] closeConnection];
 }
 
 - (void)textViewDidChange:(UITextView *)textView

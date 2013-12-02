@@ -52,7 +52,7 @@
     _isAutoScroll = NO;
     [self dismissLoadingView];
     [_locationManager stopUpdatingLocation];
-    [[PLServer shareInstance] closeConnection];
+    //[[PLServer shareInstance] closeConnection];
     [self doneLoadingVoteNearBy];
 }
 
@@ -355,6 +355,8 @@
     [dic setObject:[NSNumber numberWithDouble:location.longitude] forKey:@"longitude"];
     [dic setObject:[NSNumber numberWithDouble:location.latitude] forKey:@"latitude"];
     
+    NSLog(@"%@",[dic description]);
+    
     [[PLServer shareInstance] sendDataWithDic:dic];
 }
 
@@ -370,6 +372,9 @@
     [self doneLoadingVoteNearBy];
 
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
+    
+    NSLog(@"%@",[cacheDic description]);
+    
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     if (result) {
         //check if is the refresh by location
