@@ -40,7 +40,8 @@ public:
 		InitialVote,
 		JoinVote,
 		ViewProcessingVote,
-		IndexHistory
+		IndexHistory,
+		ViewHistoryVote
 	} VoteRequestType;
 
 	LLLogicVote() {
@@ -132,7 +133,10 @@ private:
 
 	//get the list of history
 	//Request type: 1:user as initiator 2:user as participant
-	bool getHistoryVote(int userid, int requestType, Json::Value &sendValue);
+	bool getHistoryVoteList(int userid, int requestType, Json::Value &sendValue);
+
+	//view the history vote detial
+	bool viewHistoryVoteDetial(int voteid, int userid, Json::Value &sendValue);
 	//登录
 	//bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);
 };

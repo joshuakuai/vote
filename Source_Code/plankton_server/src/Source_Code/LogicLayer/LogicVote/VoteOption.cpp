@@ -62,3 +62,15 @@ bool VoteOption::newVoteOption() {
 	}
 }
 
+int VoteOption::getPollNumber() {
+	std::ostringstream stringStream;
+	stringStream
+			<< "SELECT * FROM voteSelection,voteOption WHERE voteSelection.idvoteOption=voteOption.idvoteOption AND voteOption.idvoteOption="
+			<< this->idvoteOption << ";";
+	string queryString = stringStream.str();
+
+	vector<vector<string> > result = this->database->querySQL(queryString);
+
+	return result.size();
+}
+

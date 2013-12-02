@@ -163,14 +163,23 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 		case ViewProcessingVote: {
 			int voteid = receivedValue["voteid"].asInt();
 			string password = receivedValue["password"].asString();
-			sendValue["success"] = this->viewProcessingVote(voteid, password,sendValue);
+			sendValue["success"] = this->viewProcessingVote(voteid, password,
+					sendValue);
 			break;
 		}
-		case IndexHistory:{
+		case IndexHistory: {
 			int userid = receivedValue["userid"].asInt();
 			int requestType = receivedValue["requestType"].asInt();
-			sendValue["success"] = this->getHistoryVote(userid, requestType, sendValue);
+			sendValue["success"] = this->getHistoryVoteList(userid, requestType,
+					sendValue);
 			sendValue["requestType"] = requestType;
+			break;
+		}
+		case ViewHistoryVote: {
+			int userid = receivedValue["userid"].asInt();
+			int voteid = receivedValue["voteid"].asInt();
+			sendValue["success"] = this->viewHistoryVoteDetial(voteid, userid,
+					sendValue);
 			break;
 		}
 		default: {
@@ -655,7 +664,8 @@ bool LLLogicVote::joinVote(int voteOptionID, int userid) {
 	return true;
 }
 
-bool LLLogicVote::viewProcessingVote(int voteid, string password, Json::Value &sendValue) {
+bool LLLogicVote::viewProcessingVote(int voteid, string password,
+		Json::Value &sendValue) {
 	//check if the vote has expired
 	//get the vote
 	Vote tmpVote(this->database);
@@ -674,7 +684,7 @@ bool LLLogicVote::viewProcessingVote(int voteid, string password, Json::Value &s
 	}
 
 	//check if the password is right
-	if(tmpVote.checkPassword()){
+	if (tmpVote.checkPassword()) {
 		//get all option
 		VoteOption tmpOption(this->database);
 		tmpOption.idvote = voteid;
@@ -700,26 +710,28 @@ bool LLLogicVote::viewProcessingVote(int voteid, string password, Json::Value &s
 		sendValue["optionlist"] = arrayValue;
 		sendValue["title"] = tmpVote.title;
 		sendValue["maxvaliduser"] = tmpVote.maxValidUser;
-		sendValue["starttime"] = Converter::time_t_to_mysql_datetime_string(tmpVote.createTime);
-		sendValue["endtime"] = Converter::time_t_to_mysql_datetime_string(tmpVote.endTime);
+		sendValue["starttime"] = Converter::time_t_to_mysql_datetime_string(
+				tmpVote.createTime);
+		sendValue["endtime"] = Converter::time_t_to_mysql_datetime_string(
+				tmpVote.endTime);
 
 		return true;
-	}else{
+	} else {
 		this->errorString = "Wrong password, please check again.";
 		return false;
 	}
 }
 
-bool LLLogicVote::getHistoryVote(int userid, int requestType, Json::Value &sendValue)
-{
+bool LLLogicVote::getHistoryVoteList(int userid, int requestType,
+		Json::Value &sendValue) {
 	vector<Vote> voteList;
 	Vote tmpVote(this->database);
 	//check the request type
-	if(requestType == 1){
+	if (requestType == 1) {
 		//return the history as initiator
 		tmpVote.initiatorid = userid;
 		voteList = tmpVote.getVoteHistoryWithInitiatorID();
-	}else{
+	} else {
 		voteList = tmpVote.getVoteHistoryWithParticipantsID(userid);
 	}
 
@@ -733,8 +745,10 @@ bool LLLogicVote::getHistoryVote(int userid, int requestType, Json::Value &sendV
 		arrayItem["title"] = voteList[i].title;
 		arrayItem["color"] = voteList[i].colorIndex;
 		arrayItem["maxvaliduser"] = voteList[i].maxValidUser;
-		arrayItem["cteatetime"] = Converter::time_t_to_mysql_datetime_string(voteList[i].createTime);
-		arrayItem["endtime"] = Converter::time_t_to_mysql_datetime_string(voteList[i].endTime);
+		arrayItem["cteatetime"] = Converter::time_t_to_mysql_datetime_string(
+				voteList[i].createTime);
+		arrayItem["endtime"] = Converter::time_t_to_mysql_datetime_string(
+				voteList[i].endTime);
 		arrayItem["voteid"] = voteList[i].voteid;
 		arrayItem["initiatorid"] = voteList[i].initiatorid;
 		arrayItem["currentvalidvote"] = voteList[i].currentValidNumber();
@@ -743,6 +757,50 @@ bool LLLogicVote::getHistoryVote(int userid, int requestType, Json::Value &sendV
 	}
 
 	sendValue["historylist"] = arrayValue;
+
+	return true;
+}
+
+bool LLLogicVote::viewHistoryVoteDetial(int voteid, int userid, Json::Value &sendValue) {
+	//get the vote
+	VoteOption tmpVoteOption(this->database);
+	tmpVoteOption.idvote = voteid;
+
+	//get all option
+	vector<VoteOption*> tmpOptionList = tmpVoteOption.getVoteOptionsByVoteid();
+
+	//establish the array in send value
+	Json::Value arrayValue(Json::arrayValue);
+	vector<int> optionIDList;
+	//get the option's information
+	for (unsigned int i = 0; i < tmpOptionList.size(); i++) {
+		Json::Value arrayItem;
+
+		arrayItem["content"] = tmpOptionList[i]->content;
+		arrayItem["pollnumber"] = tmpOptionList[i]->getPollNumber();
+		arrayItem["voteoptionid"] = tmpOptionList[i]->idvoteOption;
+		optionIDList.push_back(tmpOptionList[i]->idvoteOption);
+
+		arrayValue.append(arrayItem);
+
+		delete tmpOptionList[i];
+	}
+	tmpOptionList.clear();
+
+	//get user's selection and state
+	VoteSelection tmpSelection(this->database);
+	tmpSelection.iduser = userid;
+	if(!tmpSelection.getVoteSelection(optionIDList)){
+		this->errorString = tmpSelection.errorMessage;
+		return false;
+	}
+
+	Json::Value userSelectionValue;
+	userSelectionValue["voteoptionid"] = tmpSelection.idvoteOption;
+	userSelectionValue["state"] = tmpSelection.state;
+
+	sendValue["selectionlist"] = arrayValue;
+	sendValue["userselection"] = userSelectionValue;
 
 	return true;
 }

@@ -89,3 +89,32 @@ bool VoteSelection::setSelectionConfirm() {
 
 	return this->database->executeSQL(queryString);
 }
+
+bool VoteSelection::getVoteSelection(vector<int> optionIDList) {
+	std::ostringstream stringStream;
+	stringStream << "SELECT * FROM voteSelection WHERE iduser=" << iduser << " AND (";
+
+	for(unsigned int i =0;i<optionIDList.size();i++){
+		stringStream <<" idvoteOption=" << optionIDList[i];
+
+		if(optionIDList.size() == i+1){
+			stringStream << ");";
+		}else{
+			stringStream << " OR";
+		}
+	}
+
+	string queryString = stringStream.str();
+
+	vector<vector<string> > sqlResult = this->database->querySQL(queryString);
+
+	if(sqlResult.size()==0){
+		this->errorMessage = "Can't find selection!";
+		return false;
+	}else{
+		this->idvoteOption = Converter::string_to_int(sqlResult[0][0]);
+		this->iduser = Converter::string_to_int(sqlResult[0][1]);
+		this->state = Converter::string_to_int(sqlResult[0][2]);
+		return true;
+	}
+}
