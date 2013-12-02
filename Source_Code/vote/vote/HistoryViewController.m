@@ -16,6 +16,9 @@
     int numberOfAllAttendedVotes;
     int numberOfAllInitiatedVotes;
     NSArray *solidArrowImage;
+    NSString *indexImage;
+    NSArray *attendArrowButtonArray;
+    NSArray *initiatedArrowButtonArray;
     
     //模拟需要
     NSArray *attendedVoteList;
@@ -40,8 +43,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    indexImage = @"CellIndexCircle";
+    
     attendedVoteList = [[NSArray alloc] initWithObjects: nil];
     initiateVoteList = [[NSArray alloc] initWithObjects: nil];
+    
+    attendArrowButtonArray = [[NSArray alloc] initWithObjects: nil];
+    initiatedArrowButtonArray = [[NSArray alloc] initWithObjects: nil];
+
     
     //模拟服务器传回的数据
     _emailAddress = @"@shineamnys@gmail.com";
@@ -116,35 +126,159 @@
     [_historySegment addTarget:self action:@selector(historySwitchAction:) forControlEvents:UIControlEventValueChanged];
     _historySegment.selectedSegmentIndex = 0;
     
+    //共用数据
+    GLfloat sizeOfIndexImage = 20;
+    GLfloat leftMargin = 30;
+    GLfloat heightOftimeLabel = 15;
+    GLfloat heightOfArrowButton = 50;
+    GLfloat heightOfStateLabel = 15;
+    GLfloat intervalBetweenEachVoteView = 5;
+    
 #pragma attended part
     //初始化数据
     numberOfAllAttendedVotes = attendedVoteList.count;
-    CGRect firstVoteViewFrame = CGRectMake(11, 0, 298, 50);
-    CGFloat heightOfeachVoteImageView = 50;
+    CGRect firstVoteViewFrame = CGRectMake(11, 0, 298, 70);
+    CGFloat heightOfeachVoteImageView = heightOftimeLabel + heightOfArrowButton + heightOfStateLabel;
     
     attendedScrollView = [[UIScrollView alloc] init];
     attendedScrollView.frame = CGRectMake(0, 170, 320, 349);
-    attendedScrollView.layer.borderWidth = 1;
+  //  attendedScrollView.layer.borderWidth = 1;
     attendedScrollView.hidden = NO;
     [self.view addSubview:attendedScrollView];
     
+    attendedScrollView.contentSize = CGSizeMake(320, (numberOfAllAttendedVotes - 1) * (heightOfeachVoteImageView + intervalBetweenEachVoteView) + heightOfeachVoteImageView);
+    
+    NSMutableArray *tempAttendArrowButtonArray = [[NSMutableArray alloc] initWithArray:attendArrowButtonArray];
     for (int i = 0 ; i < numberOfAllAttendedVotes; i++) {
+        
+        
+        NSDictionary *tempDictionary = attendedVoteList[i];
         UIView *eachVoteView = [[UIView alloc] init];
-        eachVoteView.frame = CGRectMake(firstVoteViewFrame.origin.x, firstVoteViewFrame.origin.y + i * heightOfeachVoteImageView, firstVoteViewFrame.size.width, firstVoteViewFrame.size.height);
+        eachVoteView.frame = CGRectMake(firstVoteViewFrame.origin.x, firstVoteViewFrame.origin.y + i * (heightOfeachVoteImageView + intervalBetweenEachVoteView), firstVoteViewFrame.size.width, firstVoteViewFrame.size.height);
+        //eachVoteView.layer.borderWidth = 2;
+        [attendedScrollView addSubview:eachVoteView];
         
+        UIImageView *indexImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:indexImage]];
+        indexImageView.frame = CGRectMake(0, (heightOfeachVoteImageView - sizeOfIndexImage) /2, sizeOfIndexImage, sizeOfIndexImage);
+        [eachVoteView addSubview:indexImageView];
         
+        UILabel *indexLabel = [[UILabel alloc] init];
+        indexLabel.frame = CGRectMake(0, 0, sizeOfIndexImage, sizeOfIndexImage);
+        indexLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
+        indexLabel.textAlignment = NSTextAlignmentCenter;
+        indexLabel.text = [NSString stringWithFormat:@"%d", i+1];
+        [indexImageView addSubview:indexLabel];
+        
+        UILabel *timeLabel = [[UILabel alloc] init];
+        timeLabel.frame = CGRectMake(leftMargin, 0, 200, heightOftimeLabel);
+        timeLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
+        timeLabel.font = [UIFont systemFontOfSize:12];
+        timeLabel.text = [tempDictionary objectForKey:@"time"];
+        [eachVoteView addSubview:timeLabel];
+        
+        int indexOfcolor = [[tempDictionary objectForKey:@"colorIndex"] intValue];
+        NSString *arrowImage = solidArrowImage[indexOfcolor];
+        
+        UIButton *arrowButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        arrowButton.frame = CGRectMake(leftMargin, heightOftimeLabel, 298 - leftMargin, heightOfArrowButton);
+        [arrowButton setImage:[UIImage imageNamed:arrowImage]  forState:UIControlStateNormal];
+        [arrowButton setImage:[UIImage imageNamed:arrowImage]  forState:UIControlStateHighlighted];
+        [eachVoteView addSubview:arrowButton];
+        
+        [tempAttendArrowButtonArray addObject:arrowButton];
+        
+        UILabel *initiatorLabel = [[UILabel alloc] init];
+        initiatorLabel.frame = CGRectMake(0, 0, 298 - leftMargin, heightOfArrowButton);
+        initiatorLabel.textColor = [UIColor whiteColor];
+        initiatorLabel.textAlignment = NSTextAlignmentCenter;
+        initiatorLabel.text = [@"Initiator:" stringByAppendingString:[tempDictionary objectForKey:@"initiator"]];
+        [arrowButton addSubview:initiatorLabel];
+        
+        NSString *stateString = [tempDictionary objectForKey:@"state"];
+        UILabel *stateLabel = [[UILabel alloc] init];
+        stateLabel.frame = CGRectMake(leftMargin, heightOftimeLabel + heightOfArrowButton, 298 - leftMargin, heightOfStateLabel);
+        stateLabel.font = [UIFont systemFontOfSize:12];
+        stateLabel.textAlignment = NSTextAlignmentCenter;
+        timeLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
+        if ([stateString isEqualToString:@"YES"]) {
+            stateLabel.text = @"This vote is finished";
+        }else{
+            stateLabel.text = @"This vote is in progress";
+        }
+        [eachVoteView addSubview:stateLabel];
         
     }
+    attendArrowButtonArray = [[NSArray alloc] initWithArray:tempAttendArrowButtonArray];
     
     
 #pragma initiated part
+    numberOfAllInitiatedVotes = initiateVoteList.count;
     initiatedScrollView = [[UIScrollView alloc] init];
     initiatedScrollView.frame = CGRectMake(0, 170, 320, 349);
-    initiatedScrollView.layer.borderWidth = 2;
+   // initiatedScrollView.layer.borderWidth = 2;
     initiatedScrollView.hidden = YES;
     [self.view addSubview:initiatedScrollView];
+    initiatedScrollView.contentSize = CGSizeMake(320, (numberOfAllAttendedVotes - 1) * (heightOfeachVoteImageView + intervalBetweenEachVoteView) + heightOfeachVoteImageView);
     
+    NSMutableArray *tempInitiatedArrowButtonArray = [[NSMutableArray alloc] initWithArray:initiatedArrowButtonArray];
     
+    for (int i = 0; i < numberOfAllInitiatedVotes; i++) {
+        NSDictionary *tempDictionary = initiateVoteList[i];
+        UIView *eachVoteView = [[UIView alloc] init];
+        eachVoteView.frame = CGRectMake(firstVoteViewFrame.origin.x, firstVoteViewFrame.origin.y + i * (heightOfeachVoteImageView + intervalBetweenEachVoteView), firstVoteViewFrame.size.width, firstVoteViewFrame.size.height);
+        //eachVoteView.layer.borderWidth = 2;
+        [initiatedScrollView addSubview:eachVoteView];
+        
+        UIImageView *indexImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:indexImage]];
+        indexImageView.frame = CGRectMake(0, (heightOfeachVoteImageView - sizeOfIndexImage) /2, sizeOfIndexImage, sizeOfIndexImage);
+        [eachVoteView addSubview:indexImageView];
+        
+        UILabel *indexLabel = [[UILabel alloc] init];
+        indexLabel.frame = CGRectMake(0, 0, sizeOfIndexImage, sizeOfIndexImage);
+        indexLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
+        indexLabel.textAlignment = NSTextAlignmentCenter;
+        indexLabel.text = [NSString stringWithFormat:@"%d", i+1];
+        [indexImageView addSubview:indexLabel];
+        
+        UILabel *timeLabel = [[UILabel alloc] init];
+        timeLabel.frame = CGRectMake(leftMargin, 0, 200, heightOftimeLabel);
+        timeLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
+        timeLabel.font = [UIFont systemFontOfSize:12];
+        timeLabel.text = [tempDictionary objectForKey:@"time"];
+        [eachVoteView addSubview:timeLabel];
+        
+        int indexOfcolor = [[tempDictionary objectForKey:@"colorIndex"] intValue];
+        NSString *arrowImage = solidArrowImage[indexOfcolor];
+        
+        UIButton *arrowButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        arrowButton.frame = CGRectMake(leftMargin, heightOftimeLabel, 298 - leftMargin, heightOfArrowButton);
+        [arrowButton setImage:[UIImage imageNamed:arrowImage]  forState:UIControlStateNormal];
+        [arrowButton setImage:[UIImage imageNamed:arrowImage]  forState:UIControlStateHighlighted];
+        [eachVoteView addSubview:arrowButton];
+        
+        [tempAttendArrowButtonArray addObject:arrowButton];
+        
+        UILabel *initiatorLabel = [[UILabel alloc] init];
+        initiatorLabel.frame = CGRectMake(0, 0, 298 - leftMargin, heightOfArrowButton);
+        initiatorLabel.textColor = [UIColor whiteColor];
+        initiatorLabel.textAlignment = NSTextAlignmentCenter;
+        initiatorLabel.text = [@"Initiator:" stringByAppendingString:[tempDictionary objectForKey:@"initiator"]];
+        [arrowButton addSubview:initiatorLabel];
+        
+        NSString *stateString = [tempDictionary objectForKey:@"state"];
+        UILabel *stateLabel = [[UILabel alloc] init];
+        stateLabel.frame = CGRectMake(leftMargin, heightOftimeLabel + heightOfArrowButton, 298 - leftMargin, heightOfStateLabel);
+        stateLabel.font = [UIFont systemFontOfSize:12];
+        stateLabel.textAlignment = NSTextAlignmentCenter;
+        timeLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
+        if ([stateString isEqualToString:@"YES"]) {
+            stateLabel.text = @"This vote is finished";
+        }else{
+            stateLabel.text = @"This vote is in progress";
+        }
+        [eachVoteView addSubview:stateLabel];
+    }
+    initiatedArrowButtonArray = [[NSArray alloc] initWithArray:tempInitiatedArrowButtonArray];
 }
 
 - (void)didReceiveMemoryWarning

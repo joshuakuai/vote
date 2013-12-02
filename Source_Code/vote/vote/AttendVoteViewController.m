@@ -101,7 +101,7 @@
     _heightOfSubjectView = 100;
     UIView *subjectView = [[UIView alloc] init];
     subjectView.frame = CGRectMake(11, 180, 298, _heightOfSubjectView);
-    subjectView.layer.borderWidth = 1;
+    //subjectView.layer.borderWidth = 1;
     [self.view addSubview:subjectView];
     
     UIImageView *subjectImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flowerImage"]];
@@ -115,6 +115,8 @@
     subjectLabel.font = [UIFont systemFontOfSize:16];
     subjectLabel.text = @"subject";
     [subjectView addSubview:subjectLabel];
+    
+    
         
     UILabel *subjectContentLabel = [[UILabel alloc] init];
     subjectContentLabel.frame = CGRectMake(20, 20, 278, 150);
@@ -126,19 +128,23 @@
     CGSize expectedSize = [subjectContentLabel perfectLabelSizeWithMaxSize:CGSizeMake(278, 1000)];
     subjectContentLabel.frame = CGRectMake(20, 20, expectedSize.width, expectedSize.height);
     [subjectView addSubview:subjectContentLabel];
+    
+    //recalculate the frame of subject view
+    _heightOfSubjectView = 30 + expectedSize.height;
+    subjectView.frame = CGRectMake(11, 180, 298, _heightOfSubjectView);
 
     //option part
     _widthOfOptionView = 278;
     _heightOfOptionView = 30;
     _intervalBetweenOptions = 5;
-    _firstOptionOriginalSize = CGRectMake(20, 30, _widthOfOptionView, _heightOfOptionView);
+    _firstOptionOriginalSize = CGRectMake(20, 30 , _widthOfOptionView, _heightOfOptionView);
     _indexSize = 28;
     _optionIndexImage = @"CellIndexCircle";
     
     CGFloat heightOfOptionView = _numberOfOptions * (_intervalBetweenOptions + _heightOfOptionView) + _indexSize;
     
     UIView *optionView = [[UIView alloc] init];
-    optionView.frame = CGRectMake(11, 280, 298, heightOfOptionView);
+    optionView.frame = CGRectMake(11, 180 + _heightOfSubjectView + 5, 298, heightOfOptionView);
     //optionView.layer.borderWidth = 2;
     [self.view addSubview:optionView];
 
