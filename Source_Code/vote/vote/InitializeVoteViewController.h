@@ -11,7 +11,7 @@
 #import "Animations.h"
 #import "BaseViewController.h"
 
-@interface InitializeVoteViewController : BaseViewController<UITextViewDelegate, UITextFieldDelegate,CLLocationManagerDelegate>
+@interface InitializeVoteViewController : BaseViewController<UITextViewDelegate, UITextFieldDelegate,CLLocationManagerDelegate,PLServerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *arrowRect;
 

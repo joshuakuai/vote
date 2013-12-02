@@ -485,10 +485,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="kUq-Ni-cbV"/>
+                    <connections>
+                        <segue destination="lhe-Ws-TIM" kind="push" identifier="votePasswordViewShowAttendVoteViewSegue" id="VVR-WQ-yjj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i2E-zD-O8a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4329" y="255"/>
+            <point key="canvasLocation" x="4303" y="255"/>
         </scene>
         <!--Attend Vote View Controller-->
         <scene sceneID="HQu-1K-SVX">
@@ -503,10 +506,11 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="awI-JM-xZB"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ue-dW-1PW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4866" y="247"/>
+            <point key="canvasLocation" x="4906" y="255"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Lo7-Ak-apR">

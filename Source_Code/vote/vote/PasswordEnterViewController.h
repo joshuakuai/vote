@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface PasswordEnterViewController : BaseViewController<UITextFieldDelegate>
+@interface PasswordEnterViewController : BaseViewController<UITextFieldDelegate,PLServerDelegate>
 
 @property (strong, nonatomic) UITextField *passwordTextField;
 @property (nonatomic, assign) int colorIndex;
