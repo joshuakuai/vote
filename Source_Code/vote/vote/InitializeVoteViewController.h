@@ -23,9 +23,11 @@
 @property (strong, nonatomic) UIView *thirdContainer;
 @property (strong, nonatomic) UIView *fourthContainer;
 @property (strong, nonatomic) UIView *fifthContainer;
+@property (strong, nonatomic) UIView *sixthContainer;
 
 //arrow image
 @property (strong, nonatomic) UIImageView *arrow;
+@property (strong, nonatomic) UIImageView *solidArrowImageView;
 
 //about theme color
 @property (strong, nonatomic) UIImageView *themeColorIcon;
@@ -90,5 +92,21 @@
 //fifth responder
 @property (strong, nonatomic) UIView *fifthResponder;
 @property (strong, nonatomic) UITextField *passwordTextField;
+@property (strong, nonatomic) UILabel *passwordTip;
+@property (strong, nonatomic) UIImageView *passwordLineMarker;
+@property (strong, nonatomic) UIButton *passwordConfirmButton;
+@property (strong, nonatomic) UITapGestureRecognizer *tapPasswordGestureRecognizer;
+@property (strong, nonatomic) UIButton *resetPasswordButton;
 
+
+//sixth respoder
+@property (strong, nonatomic) UIView *sixthResponder;
+@property (strong, nonatomic) UIButton *firstTimeButton;
+@property (strong, nonatomic) UIButton *secondTimeButton;
+@property (strong, nonatomic) UIButton *thirdTimeButton;
+@property (strong, nonatomic) UIButton *fourthTimeButton;
+@property (strong, nonatomic) UITapGestureRecognizer *tapTimeGestureRecoginizer;
+
+//Done
+@property (strong, nonatomic) UIButton *doneButton;
 @end
