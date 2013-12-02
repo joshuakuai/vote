@@ -393,7 +393,7 @@
 
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     
-    //NSLog(@"%@",[cacheDic description]);
+    NSLog(@"%@",[cacheDic description]);
     
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     if (result) {

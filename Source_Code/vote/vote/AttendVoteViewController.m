@@ -8,6 +8,7 @@
 
 #import "AttendVoteViewController.h"
 #import "UILabel+SizeCalculate.h"
+#import "VoteOption.h"
 
 @interface AttendVoteViewController ()
 {
@@ -15,9 +16,8 @@
     NSString *_titleImage;
     NSArray *_arrowImageArray;
     CGFloat _heightOfSubjectView;
-    NSString *_subject;
     int _numberOfOptions;
-    NSArray *_optionsContent;
+    NSMutableArray *_optionsContent;
     CGRect _firstOptionOriginalSize;
     GLfloat _heightOfOptionView;
     GLfloat _widthOfOptionView;
@@ -41,24 +41,25 @@
 
 @implementation AttendVoteViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    /*
     //模拟服务器传过来的数值
 
     _subject = @"Eventually, the car she was in came to a stop with a thud. She managed to get off the train carrying her cell phone, its screen shattered but still working.";
     _optionsContent = [[NSArray alloc] initWithObjects:@"kobe", @"James", @"jodan", nil];
     _numberOfOptions = _optionsContent.count;
+     */
+    _optionsContent = [NSMutableArray arrayWithCapacity:3];
+    
+    for (VoteOption *voteOption in self.optionArray) {
+        [_optionsContent addObject:voteOption.content];
+    }
+    
+    _numberOfOptions = _optionsContent.count;
+    
     buttonArray = [[NSArray alloc] initWithObjects: nil];
     
     _titleImage = @"titleImage";
@@ -87,7 +88,8 @@
     timeLabel.textAlignment = NSTextAlignmentCenter;
     timeLabel.textColor = [UIColor whiteColor];
     timeLabel.font = [UIFont systemFontOfSize:16];
-    timeLabel.text = [@"Time left: about " stringByAppendingString:@"5 minutes"];
+    NSString *timeLeftString = [NSString stringWithFormat:@"%d minutes",self.leftMinutes];
+    timeLabel.text = [@"Time left: about " stringByAppendingString:timeLeftString];
     [timeImageView addSubview:timeLabel];
     
     _heightOfSubjectView = 100;
