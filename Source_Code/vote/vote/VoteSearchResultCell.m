@@ -19,7 +19,7 @@
         self.frame = CGRectMake(0, 0, 320, 60);
         
         //index circle
-        self.indexCell = [[CellIndexCircle alloc] initWithNumber:1 location:CGPointMake(10, 10)];
+        self.indexCell = [[CellIndexCircle alloc] initWithNumber:1 location:CGPointMake(20, 15)];
         self.indexNumber = 1;
         
         [self addSubview:self.indexCell];
@@ -51,7 +51,7 @@
     _indexNumber = indexNumber;
     
     //set the lable text
-    [self.indexCell setNumber:_indexNumber];
+    [self.indexCell setNumber:_indexNumber+1];
 }
 
 - (void)setArrowCorlor:(VoteArrowColor)arrowCorlor

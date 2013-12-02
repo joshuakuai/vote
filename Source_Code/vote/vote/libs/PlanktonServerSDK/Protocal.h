@@ -22,7 +22,7 @@ typedef struct _CMLPackageHead{
 	unsigned int  packageLength; //The package length,expect head length
 }CMLPackageHead;
 
-typedef enum _VoteRequestType{
+typedef enum _VoteRequestType {
     Unknow = -1,
     SignUp = 0,
     CheckCode,
@@ -33,7 +33,12 @@ typedef enum _VoteRequestType{
     SearchVote,
     GetDuplicateSelection,
     CancelSelection,
-    AdminResolveVote
-}VoteRequestType;
+    AdminResolveVote,
+    InitialVote,
+    JoinVote,
+    ViewProcessingVote,
+    IndexHistory,
+    ViewHistoryVote
+} VoteRequestType;
 
 #endif
