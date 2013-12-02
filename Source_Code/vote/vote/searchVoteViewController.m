@@ -8,6 +8,7 @@
 
 #import "searchVoteViewController.h"
 #import "VoteSearchResultCell.h"
+#import "PasswordEnterViewController.h"
 
 @interface searchVoteViewController (){
     CLLocationManager *_locationManager;
@@ -15,6 +16,7 @@
     VoteSearchResultCell *_voteByIDResultView;
     BOOL _isReloading;
     BOOL _isAutoScroll;
+    int  _currentVoteByLocationSelectionIndex;
 }
 
 @end
@@ -75,7 +77,7 @@
     [super viewDidLoad];
     
     self.voteSearchBar.delegate = self;
-    
+    _currentVoteByLocationSelectionIndex = -1;
     self.voteByLocationArray = [[NSMutableArray alloc] initWithCapacity:3];
     
     //init the vote by location table view
@@ -142,13 +144,28 @@
 
 - (void)searchByIDResultGesture:(UITapGestureRecognizer*)gesture
 {
-    [self prepareForRequestVoteDetailWithVoteid:[_voteByIDInfo voteID]];
+    [self performSegueWithIdentifier:@"mainViewShowVotePasswordViewSegue" sender:self];
 }
 
-- (void)prepareForRequestVoteDetailWithVoteid:(int)voteid
+#pragma mark - Segue relate
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //TODO::request vote detail from here
-    
+    if ([segue.identifier isEqualToString:@"mainViewShowVotePasswordViewSegue"]) {
+        PasswordEnterViewController *destViewController = segue.destinationViewController;
+        //NSLog(@"%@", _emailTextField.text);
+        if (_voteByLocationTableView.hidden == YES) {
+            //search by id
+            destViewController.voteid = _voteByIDInfo.voteID;
+            destViewController.colorIndex = _voteByIDInfo.colorIndex;
+            destViewController.initiatorName = _voteByIDInfo.initiator;
+        }else{
+            //search by location
+            Vote *voteInfo = [_voteByLocationArray objectAtIndex:_currentVoteByLocationSelectionIndex];
+            destViewController.voteid = voteInfo.voteID;
+            destViewController.colorIndex = voteInfo.colorIndex;
+            destViewController.initiatorName = voteInfo.initiator;
+        }
+    }
 }
 
 #pragma mark - Loading Relate
@@ -211,9 +228,11 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    Vote *voteInfo = [_voteByLocationArray objectAtIndex:indexPath.row];
-    
-    [self prepareForRequestVoteDetailWithVoteid:[voteInfo voteID]];
+    if(_voteByLocationArray.count != 0){
+        _currentVoteByLocationSelectionIndex = indexPath.row;
+        
+        [self performSegueWithIdentifier:@"mainViewShowVotePasswordViewSegue" sender:self];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -243,6 +262,7 @@
             cell.textLabel.frame = CGRectMake(0, 0, 320, 60);
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
             cell.textLabel.text  = @"No Vote avaiable near by.";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
     }else{
@@ -275,7 +295,7 @@
     
     //add arrow
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 5, 20, 20)];
-    imageView.image = [UIImage imageNamed:@"location_arrow.png"];
+    imageView.image = [UIImage imageNamed:@"LocationArrow"];
     [headView addSubview:imageView];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(60, 0, 250, 30)];

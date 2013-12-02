@@ -433,7 +433,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="f3o-wZ-8tB" kind="relationship" relationship="viewControllers" id="ZiP-vX-9VY"/>
-                        <segue destination="rRZ-pZ-Vwi" kind="relationship" relationship="viewControllers" id="9vW-DA-ZQv"/>
+                        <segue destination="aCt-Kc-JWt" kind="relationship" relationship="viewControllers" id="9vW-DA-ZQv"/>
                         <segue destination="Nt8-Sc-TU2" kind="relationship" relationship="viewControllers" id="dek-9d-A3b"/>
                     </connections>
                 </tabBarController>
@@ -461,14 +461,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" id="ubs-C4-DQc"/>
+                    <navigationItem key="navigationItem" id="oWR-Nm-XDq"/>
                     <connections>
                         <outlet property="voteSearchBar" destination="NOK-el-0hu" id="spL-hl-wnT"/>
+                        <segue destination="9E5-Rk-q8a" kind="push" identifier="mainViewShowVotePasswordViewSegue" id="j1A-cE-SqE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iB7-0d-bWd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3129" y="255"/>
+            <point key="canvasLocation" x="3655" y="255"/>
         </scene>
         <!--Password Enter View Controller-->
         <scene sceneID="v1F-xP-69V">
@@ -483,10 +484,11 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="kUq-Ni-cbV"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i2E-zD-O8a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3803" y="255"/>
+            <point key="canvasLocation" x="4329" y="255"/>
         </scene>
         <!--Attend Vote View Controller-->
         <scene sceneID="HQu-1K-SVX">
@@ -504,7 +506,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ue-dW-1PW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4340" y="247"/>
+            <point key="canvasLocation" x="4866" y="247"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Lo7-Ak-apR">
@@ -553,6 +555,25 @@
             </objects>
             <point key="canvasLocation" x="364" y="267"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="XBr-rK-MYR">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="aCt-Kc-JWt" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" id="ubs-C4-DQc"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9Uq-rh-ISS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="rRZ-pZ-Vwi" kind="relationship" relationship="rootViewController" id="1a9-oG-Zsy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i9g-Qz-rVP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3129" y="255"/>
+        </scene>
     </scenes>
     <resources>
         <image name="BlueSolidArrow" width="391" height="75"/>
@@ -564,7 +585,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="lbX-8c-sUK"/>
         <segue reference="2iS-F0-yxh"/>
+        <segue reference="pCz-Ul-wtn"/>
     </inferredMetricsTieBreakers>
 </document>

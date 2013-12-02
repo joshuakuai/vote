@@ -12,5 +12,8 @@
 @interface PasswordEnterViewController : BaseViewController<UITextFieldDelegate>
 
 @property (strong, nonatomic) UITextField *passwordTextField;
+@property (nonatomic, assign) int colorIndex;
+@property (nonatomic, strong) NSString *initiatorName;
+@property (nonatomic, assign) int voteid;
 
 @end
