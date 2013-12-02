@@ -128,6 +128,25 @@
     [_historySegment addTarget:self action:@selector(historySwitchAction:) forControlEvents:UIControlEventValueChanged];
     _historySegment.selectedSegmentIndex = 0;
     
+ 
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (attendedScrollView || initiatedScrollView) {
+        [attendedScrollView removeFromSuperview];
+        [initiatedScrollView removeFromSuperview];
+        attendedScrollView = nil;
+        initiatedScrollView = nil;
+    }
+    
     //共用数据
     GLfloat sizeOfIndexImage = 20;
     GLfloat leftMargin = 30;
@@ -144,7 +163,7 @@
     
     attendedScrollView = [[UIScrollView alloc] init];
     attendedScrollView.frame = CGRectMake(0, 170, 320, 349);
-  //  attendedScrollView.layer.borderWidth = 1;
+    //  attendedScrollView.layer.borderWidth = 1;
     attendedScrollView.hidden = NO;
     [self.view addSubview:attendedScrollView];
     
@@ -217,7 +236,7 @@
     numberOfAllInitiatedVotes = initiateVoteList.count;
     initiatedScrollView = [[UIScrollView alloc] init];
     initiatedScrollView.frame = CGRectMake(0, 170, 320, 349);
-   // initiatedScrollView.layer.borderWidth = 2;
+    // initiatedScrollView.layer.borderWidth = 2;
     initiatedScrollView.hidden = YES;
     [self.view addSubview:initiatedScrollView];
     initiatedScrollView.contentSize = CGSizeMake(320, (numberOfAllAttendedVotes - 1) * (heightOfeachVoteImageView + intervalBetweenEachVoteView) + heightOfeachVoteImageView);
@@ -281,12 +300,8 @@
         [eachVoteView addSubview:stateLabel];
     }
     initiatedArrowButtonArray = [[NSArray alloc] initWithArray:tempInitiatedArrowButtonArray];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    
+    
 }
 
 - (void)historySwitchAction:(UIButton *)sender

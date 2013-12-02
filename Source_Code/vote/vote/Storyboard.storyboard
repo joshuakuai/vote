@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="m22-r4-IDu">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Lgl-zr-IAZ">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
@@ -531,6 +531,24 @@
             </objects>
             <point key="canvasLocation" x="3129" y="1079"/>
         </scene>
+        <!--Vote Result View Controller-->
+        <scene sceneID="oAR-IC-JIl">
+            <objects>
+                <viewController id="aA6-FQ-eFz" customClass="VoteResultViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Jcw-fc-YMe"/>
+                        <viewControllerLayoutGuide type="bottom" id="haT-cu-aJP"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="BHp-dO-4OX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M5N-n9-0tj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3765" y="1080"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="N25-n0-tfp">
             <objects>
@@ -580,6 +598,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="2iS-F0-yxh"/>
-        <segue reference="pCz-Ul-wtn"/>
+        <segue reference="829-Ub-LCV"/>
     </inferredMetricsTieBreakers>
 </document>
