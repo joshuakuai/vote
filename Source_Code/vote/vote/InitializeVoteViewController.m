@@ -114,6 +114,12 @@
     
     int stepsHasBeenFinished;
     
+    UIButton *firstTimeButton;
+    UIButton *secondTimeButton;
+    UIButton *thirdTimeButton;
+    UIButton *fourthTimeButton;
+    int timeMinutes;
+    
     CLLocationManager *_locationManager;
 }
 
@@ -686,7 +692,7 @@
     [_sixthContainer addSubview:_sixthResponder];
     _sixthResponder.userInteractionEnabled = YES;
     
-    UIButton *firstTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    firstTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     firstTimeButton.frame = CGRectMake(leftMarginOfWords, (heightOfOneLineInResponder - heightOfButton) / 2, widthOfButton, heightOfButton);
     [firstTimeButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
     [firstTimeButton setImage:[UIImage imageNamed:redButtonBackground] forState:UIControlStateHighlighted];
@@ -700,7 +706,7 @@
     firstTimeLabel.text = @"5 min";
     [firstTimeButton addSubview:firstTimeLabel];
   
-    UIButton *secondTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    secondTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     secondTimeButton.frame = CGRectMake(leftMarginOfWords + widthOfButton + intervalBetweenTimeButtons, (heightOfOneLineInResponder - heightOfButton) / 2, widthOfButton, heightOfButton);
     [secondTimeButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
     [secondTimeButton setImage:[UIImage imageNamed:redButtonBackground] forState:UIControlStateHighlighted];
@@ -714,7 +720,7 @@
     secondTimeLabel.text = @"15 min";
     [secondTimeButton addSubview:secondTimeLabel];
     
-    UIButton *thirdTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    thirdTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     thirdTimeButton.frame = CGRectMake(leftMarginOfWords + 2 * (widthOfButton + intervalBetweenTimeButtons), (heightOfOneLineInResponder - heightOfButton) / 2, widthOfButton, heightOfButton);
     [thirdTimeButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
     [thirdTimeButton setImage:[UIImage imageNamed:redButtonBackground] forState:UIControlStateHighlighted];
@@ -728,7 +734,7 @@
     thirdTimeLabel.text = @"30 min";
     [thirdTimeButton addSubview:thirdTimeLabel];
     
-    UIButton *fourthTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    fourthTimeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     fourthTimeButton.frame = CGRectMake(leftMarginOfWords + 3 * (widthOfButton + intervalBetweenTimeButtons), (heightOfOneLineInResponder - heightOfButton) / 2, widthOfButton, heightOfButton);
     [fourthTimeButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
     [fourthTimeButton setImage:[UIImage imageNamed:redButtonBackground] forState:UIControlStateHighlighted];
@@ -1870,6 +1876,18 @@
     if (currentSelectedTimeButton) {
         [currentSelectedTimeButton setImage:[UIImage imageNamed:blueButtonBackground] forState:UIControlStateNormal];
     }
+    
+    if ([sender isEqual:firstTimeButton]) {
+        timeMinutes = 5;
+    }else if ([sender isEqual:secondTimeButton]){
+        timeMinutes = 15;
+    }else if([sender isEqual:thirdTimeButton]){
+        timeMinutes = 30;
+    }else{
+        timeMinutes = 60;
+    }
+    
+    
     [sender setImage:[UIImage imageNamed:redButtonBackground] forState:UIControlStateNormal];
     currentSelectedTimeButton = sender;
     [self calculateStepsHaveBeenFinished];
