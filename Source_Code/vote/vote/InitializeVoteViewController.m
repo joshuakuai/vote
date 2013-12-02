@@ -113,6 +113,8 @@
     BOOL timeSetIsDone;
     
     int stepsHasBeenFinished;
+    
+    CLLocationManager *_locationManager;
 }
 
 @end
@@ -516,7 +518,7 @@
     UILabel *minusLabel = [[UILabel alloc] init];
     minusLabel.frame = CGRectMake(0, 0, widthOfButton, heightOfButton);
     minusLabel.font = [UIFont systemFontOfSize:fontSizeOfInput];
-    minusLabel.textAlignment = UITextAlignmentCenter;
+    minusLabel.textAlignment = NSTextAlignmentCenter;
     minusLabel.text = @"minus";
     minusLabel.textColor = [UIColor whiteColor];
     [minusButton addSubview:minusLabel];
@@ -742,15 +744,41 @@
     doneLabel.textAlignment = UITextAlignmentCenter;
     doneLabel.text = @"Done";
     [_doneButton addSubview:doneLabel];
+    
+    _locationManager = nil;
+}
+
+- (void)dealloc
+{
+    _locationManager = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    //draw a arrow
+    [super viewWillAppear:animated];
     
+    //try to get the user's location,if the
+    if ([CLLocationManager locationServicesEnabled]) {
+        if (!_locationManager) {
+            _locationManager = [[CLLocationManager alloc] init];
+            _locationManager.delegate = self;
+        }
+        
+        [_locationManager startUpdatingLocation];
+    }
     
+    //set the plankton server's delegate
+    [[PLServer shareInstance] setDelegate:self];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [_locationManager stopUpdatingLocation];
+    [self dismissLoadingView];
+    [[PLServer shareInstance] closeConnection];
+}
 
 - (void)textViewDidChange:(UITextView *)textView
 {
@@ -1026,12 +1054,13 @@
     
     
     currentHeightOfCurrentResponder = _secondResponder.frame.size.height;
-    
+
+    [_subjectTextView becomeFirstResponder];
+
     //change the size of main container
     _mainContainer.contentSize = CGSizeMake(298, originalHeightOfMainContainerContentSize + currentHeightOfCurrentResponder );
     
     [_subjectTextView becomeFirstResponder];
-
 }
 
 
@@ -1930,12 +1959,81 @@
 
 - (void)doneWithAllSteps:(UIButton *)sender
 {
+    //prepare data
+    //get current location and prepare the data
+    CLLocationCoordinate2D location = _locationManager.location.coordinate;
     
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:InitialVote];
+    [dic setObject:_subjectTextView.text forKey:@"title"];
+    [dic setObject:[NSNumber numberWithInteger:[_numberOfPeopleTextField.text intValue]] forKey:@"maxvaliduser"];
+    [dic setObject:_passwordTextField.text forKey:@"password"];
+    //TODO:need end time
+    [dic setObject:[NSNumber numberWithInt:5] forKey:@"endtime"];
+    [dic setObject:[NSNumber numberWithInt:[[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"] integerValue]] forKey:@"userid"];
+    [dic setObject:[NSNumber numberWithInt:selectedColorIndex] forKey:@"color"];
+    [dic setObject:[NSNumber numberWithDouble:location.longitude] forKey:@"longitude"];
+    [dic setObject:[NSNumber numberWithDouble:location.latitude] forKey:@"latitude"];
+    
+    //add options
+    NSMutableArray *optionArray = [NSMutableArray arrayWithCapacity:3];
+    for (UITextField *textField in _optionTextfieldArray) {
+        [optionArray addObject:textField.text];
+    }
+    
+    [dic setObject:optionArray forKey:@"contents"];
+    
+    //NSLog(@"%@",[dic description]);
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
 }
 
 - (void)doneWithNumberPad
 {
     [currentTextfield resignFirstResponder];
+}
+
+#pragma mark - PLServer delegate
+- (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
+{
+    [self dismissLoadingView];
+    
+    NSDictionary *cacheDic = (NSDictionary*)jsonString;
+    BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
+    if (result) {
+        //check if is the refresh by location
+        VoteRequestType requetType = [cacheDic getRequestType];
+        
+        switch (requetType) {
+            case SearchVote:{
+                
+                break;
+            }
+                
+            default:
+                break;
+        }
+        
+    }else{
+        [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
+    }
+}
+
+- (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
+{
+    [self dismissLoadingView];
+    if (error) {
+        [self showErrorMessage:[error description]];
+    }else{
+        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
+    }
+}
+
+- (void)connectionClosed:(PLServer *)plServer
+{
+    if (isShowingLoadingView) {
+        [self dismissLoadingView];
+        [self showErrorMessage:@"Lost connection,check your internet connection."];
+    }
 }
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-#include <CoreLocation/CoreLocation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "EGORefreshTableHeaderView.h"
 #import "Vote.h"
 
