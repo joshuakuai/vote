@@ -115,9 +115,7 @@
     subjectLabel.font = [UIFont systemFontOfSize:16];
     subjectLabel.text = @"subject";
     [subjectView addSubview:subjectLabel];
-    
-    
-        
+
     UILabel *subjectContentLabel = [[UILabel alloc] init];
     subjectContentLabel.frame = CGRectMake(20, 20, 278, 150);
     subjectContentLabel.numberOfLines = 0;

@@ -132,7 +132,6 @@
     self = [super initWithCoder:aDecoder];
     
     if (self) {
-        self.title =@"Initiate";
         //set the tab bar item background
         [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"InitializeTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"InitializeTabBarNormal"]];
         

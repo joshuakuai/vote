@@ -29,14 +29,16 @@
 
 @implementation HistoryViewController
 
-
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:aDecoder];
+    
     if (self) {
-        // Custom initialization
+        //set the tab bar item background
+        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"HistoryTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"HistoryTabBarNormal"]];
+        self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, -0.5, -6, 0.5);
     }
+    
     return self;
 }
 
