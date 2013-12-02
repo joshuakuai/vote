@@ -12,7 +12,8 @@
 {
     GLfloat _lengthOfButton;
     NSString *_imageOfReturnButton;
-    NSArray *arrowImageArray;
+    NSArray *_arrowImageArray;
+    UILabel *_passwordTip;
 }
 
 @end
@@ -34,7 +35,7 @@
     
     _lengthOfButton = 25.0;
     _imageOfReturnButton = @"returnButton.png";
-    arrowImageArray = [[NSArray alloc] initWithObjects:@"GreenSolidArrow", @"BlueSolidArrow", @"YellowSolidArrow", @"RedSolidArrow", @"GraySolidArrow", nil];
+    _arrowImageArray = [[NSArray alloc] initWithObjects:@"GreenSolidArrow", @"BlueSolidArrow", @"YellowSolidArrow", @"RedSolidArrow", @"GraySolidArrow", nil];
     
     
 	// Do any additional setup after loading the view.
@@ -49,7 +50,7 @@
     titleView.frame = CGRectMake(11, 60, 298, 76);
     [self.view addSubview:titleView];
     
-    UIImageView *arrowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:arrowImageArray[1]]];
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_arrowImageArray[1]]];
     arrowImageView.frame = CGRectMake(19, 13, 260, 50);
     [titleView addSubview:arrowImageView];
     
@@ -70,8 +71,39 @@
     [self.view addSubview:passwordLabel];
     
     _passwordTextField = [[UITextField alloc] init];
-    _passwordTextField.frame = CGRectMake(20, 210, 280, 76);
+    _passwordTextField.frame = CGRectMake(20, 190, 280, 76);
+    _passwordTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _passwordTextField.font = [UIFont systemFontOfSize:30];
+    _passwordTextField.textAlignment = UITextAlignmentCenter;
+    _passwordTextField.delegate = self;
+    _passwordTextField.secureTextEntry = YES;
+    [self.view addSubview:_passwordTextField];
     
+    UIButton *doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    doneButton.frame = CGRectMake(82, 266, 156, 30);
+    [doneButton setImage:[UIImage imageNamed:_arrowImageArray[1]] forState:UIControlStateNormal];
+    [doneButton setImage:[UIImage imageNamed:_arrowImageArray[1]] forState:UIControlStateHighlighted];
+    [doneButton addTarget:self action:@selector(doneWithPassword:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:doneButton];
+    
+    UILabel *doneLabel = [[UILabel alloc] init];
+    doneLabel.frame = CGRectMake(-8, 0, 165, 30);
+    doneLabel.textColor = [UIColor whiteColor];
+    doneLabel.font = [UIFont systemFontOfSize:22];
+    doneLabel.textAlignment = NSTextAlignmentCenter;
+    doneLabel.text = @"Done";
+    [doneButton addSubview:doneLabel];
+    
+    _passwordTip = [[UILabel alloc] init];
+    _passwordTip.frame = CGRectMake(0, 300, 320, 30);
+    _passwordTip.textColor = [UIColor redColor];
+    _passwordTip.font = [UIFont systemFontOfSize:22];
+    _passwordTip.textAlignment = NSTextAlignmentCenter;
+    _passwordTip.text = @"Need six numbers!";
+    [self.view addSubview:_passwordTip];
+    _passwordTip.hidden = YES;
+    
+    [_passwordTextField becomeFirstResponder];
     
     
 }
@@ -86,5 +118,27 @@
 {
     
 }
+
+- (void)doneWithPassword:(UIButton *)sender
+{
+    int passwordInt = [_passwordTextField.text intValue];
+    if (passwordInt/100000) {
+        
+    }else{
+        _passwordTip.hidden = NO;
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    _passwordTip.hidden = YES;
+    if (range.location >= 6){
+        return NO;
+    }
+    
+    return  YES;
+}
+
+
 
 @end

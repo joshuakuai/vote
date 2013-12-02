@@ -126,10 +126,17 @@
     self = [super initWithCoder:aDecoder];
     
     if (self) {
+        // Custom initialization
+        self.tabBarItem.image = [UIImage imageNamed:@"greenCircle"];
+        
+        /*
         //set the tab bar item background
         [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"InitializeTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"InitializeTabBarNormal"]];
         
         self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+         */
+        
+        self.title =@"Initiate";
     }
     
     return self;
