@@ -55,7 +55,6 @@
     /*
     //模拟服务器传过来的数值
 
-    _subject = @"Eventually, the car she was in came to a stop with a thud. She managed to get off the train carrying her cell phone, its screen shattered but still working.";
     _optionsContent = [[NSArray alloc] initWithObjects:@"kobe", @"James", @"jodan", nil];
     _numberOfOptions = _optionsContent.count;
      */
@@ -116,14 +115,15 @@
     subjectLabel.font = [UIFont systemFontOfSize:16];
     subjectLabel.text = @"subject";
     [subjectView addSubview:subjectLabel];
-    
+        
     UILabel *subjectContentLabel = [[UILabel alloc] init];
     subjectContentLabel.frame = CGRectMake(20, 20, 278, 150);
     subjectContentLabel.numberOfLines = 0;
     subjectContentLabel.font = [UIFont systemFontOfSize:20];
     subjectContentLabel.text = _subject;
+    
     //resize the height of _subject view
-    CGSize expectedSize = [subjectLabel perfectLabelSizeWithMaxSize:CGSizeMake(278, 9999)];
+    CGSize expectedSize = [subjectContentLabel perfectLabelSizeWithMaxSize:CGSizeMake(278, 1000)];
     subjectContentLabel.frame = CGRectMake(20, 20, expectedSize.width, expectedSize.height);
     [subjectView addSubview:subjectContentLabel];
 
