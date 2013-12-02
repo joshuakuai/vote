@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface AttendVoteViewController : UIViewController
+@interface AttendVoteViewController : BaseViewController<PLServerDelegate>
 
 @property int indexOfColor;
 @property int leftMinutes;

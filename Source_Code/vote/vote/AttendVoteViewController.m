@@ -41,6 +41,16 @@
 
 @implementation AttendVoteViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
+    
+    //set the plankton server's delegate
+    [[PLServer shareInstance] setDelegate:self];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -208,12 +218,6 @@
     
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)tapOnIndexOfOption:(UIButton *)sender
 {
     for (int i=0; i < _numberOfOptions; i++) {
@@ -227,6 +231,64 @@
 
 - (void)doneWithVote:(UIButton *)sender
 {
+    //get the option id
+    VoteOption *option = [_optionArray objectAtIndex:voteIndex];
     
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:JoinVote];
+    [dic setObject:[NSNumber numberWithInt:option.voteOptionID] forKey:@"voteoptionid"];
+    [dic setObject:UserId forKey:@"userid"];
+    
+    //NSLog(@"%@",[dic description]);
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
+}
+
+#pragma mark - PLServer delegate
+- (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
+{
+    [self dismissLoadingView];
+    
+    NSDictionary *cacheDic = (NSDictionary*)jsonString;
+    
+    NSLog(@"%@",[cacheDic description]);
+    
+    BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
+    if (result) {
+        //check if is the refresh by location
+        VoteRequestType requetType = [cacheDic getRequestType];
+        
+        switch (requetType) {
+            case JoinVote:{
+                //success
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }
+                
+            default:
+                break;
+        }
+        
+    }else{
+        [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
+    }
+}
+
+- (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
+{
+    [self dismissLoadingView];
+    if (error) {
+        [self showErrorMessage:[error description]];
+    }else{
+        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
+    }
+}
+
+- (void)connectionClosed:(PLServer *)plServer
+{
+    if (isShowingLoadingView) {
+        [self dismissLoadingView];
+        [self showErrorMessage:@"Lost connection,check your internet connection."];
+    }
 }
 @end
