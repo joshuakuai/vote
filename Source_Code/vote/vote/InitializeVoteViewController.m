@@ -127,17 +127,20 @@
 
 @implementation InitializeVoteViewController
 
-
-
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super initWithCoder:aDecoder];
+    
     if (self) {
-        // Custom initialization
         self.title =@"Initiate";
-        self.tabBarItem.image = [UIImage imageNamed:@"greenCircle"];
 
+        //set the tab bar item background
+        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"InitializeTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"InitializeTabBarNormal"]];
+        
+        self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+        
     }
+    
     return self;
 }
 

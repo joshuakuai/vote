@@ -20,15 +20,6 @@
 
 @implementation PasswordEnterViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -50,7 +41,7 @@
     titleView.frame = CGRectMake(11, 60, 298, 76);
     [self.view addSubview:titleView];
     
-    UIImageView *arrowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_arrowImageArray[1]]];
+    UIImageView *arrowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_arrowImageArray[self.colorIndex]]];
     arrowImageView.frame = CGRectMake(19, 13, 260, 50);
     [titleView addSubview:arrowImageView];
     
@@ -59,7 +50,7 @@
     initiator.textAlignment = NSTextAlignmentCenter;
     initiator.textColor = [UIColor whiteColor];
     initiator.font = [UIFont systemFontOfSize:25];
-    initiator.text = [@"Initiator:" stringByAppendingString:@"Coach K"];
+    initiator.text = self.initiatorName;
     [titleView addSubview:initiator];
     
     UILabel *passwordLabel = [[UILabel alloc] init];
@@ -74,7 +65,7 @@
     _passwordTextField.frame = CGRectMake(20, 190, 280, 76);
     _passwordTextField.keyboardType = UIKeyboardTypeNumberPad;
     _passwordTextField.font = [UIFont systemFontOfSize:30];
-    _passwordTextField.textAlignment = UITextAlignmentCenter;
+    _passwordTextField.textAlignment = NSTextAlignmentCenter;
     _passwordTextField.delegate = self;
     _passwordTextField.secureTextEntry = YES;
     [self.view addSubview:_passwordTextField];
@@ -104,19 +95,17 @@
     _passwordTip.hidden = YES;
     
     [_passwordTextField becomeFirstResponder];
-    
-    
 }
 
-- (void)didReceiveMemoryWarning
+- (void)dealloc
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self.initiatorName = nil;
+    self.passwordTextField = nil;
 }
 
 - (void)returnToSearchPage:(UIButton *)sender
 {
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)doneWithPassword:(UIButton *)sender
@@ -138,7 +127,5 @@
     
     return  YES;
 }
-
-
 
 @end
