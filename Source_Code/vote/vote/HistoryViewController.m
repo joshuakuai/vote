@@ -140,6 +140,27 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    
+    
+    
+    
+    
+}
+
+- (void)historySwitchAction:(UIButton *)sender
+{
+    int selectedIndex = _historySegment.selectedSegmentIndex;
+    if (!selectedIndex) {
+        attendedScrollView.hidden = NO;
+        initiatedScrollView.hidden = YES;
+    }else{
+        attendedScrollView.hidden = YES;
+        initiatedScrollView.hidden = NO;
+    }
+}
+
+- (void)refresh
+{
     if (attendedScrollView || initiatedScrollView) {
         [attendedScrollView removeFromSuperview];
         [initiatedScrollView removeFromSuperview];
@@ -300,20 +321,5 @@
         [eachVoteView addSubview:stateLabel];
     }
     initiatedArrowButtonArray = [[NSArray alloc] initWithArray:tempInitiatedArrowButtonArray];
-    
-    
 }
-
-- (void)historySwitchAction:(UIButton *)sender
-{
-    int selectedIndex = _historySegment.selectedSegmentIndex;
-    if (!selectedIndex) {
-        attendedScrollView.hidden = NO;
-        initiatedScrollView.hidden = YES;
-    }else{
-        attendedScrollView.hidden = YES;
-        initiatedScrollView.hidden = NO;
-    }
-}
-
 @end
