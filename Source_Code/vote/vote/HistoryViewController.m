@@ -415,7 +415,7 @@
                                 NSDateFormatter *df = [[NSDateFormatter alloc] init];
                                 [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
                                 NSString *endTimeString = [voteDic objectForKey:@"endtime"];
-                                NSString *serverTimeString = [voteDic objectForKey:@"servercurrentime"];
+                                NSString *serverTimeString = [cacheDic objectForKey:@"servercurrentime"];
                                 
                                 NSDate *endTime = [df dateFromString:endTimeString];
                                 NSDate *serverCurrentTime = [df dateFromString:serverTimeString];
