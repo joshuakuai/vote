@@ -41,6 +41,13 @@
 
 @implementation AttendVoteViewController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBarHidden = YES;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -48,7 +55,6 @@
     /*
     //模拟服务器传过来的数值
 
-    _subject = @"Eventually, the car she was in came to a stop with a thud. She managed to get off the train carrying her cell phone, its screen shattered but still working.";
     _optionsContent = [[NSArray alloc] initWithObjects:@"kobe", @"James", @"jodan", nil];
     _numberOfOptions = _optionsContent.count;
      */
@@ -95,7 +101,7 @@
     _heightOfSubjectView = 100;
     UIView *subjectView = [[UIView alloc] init];
     subjectView.frame = CGRectMake(11, 180, 298, _heightOfSubjectView);
-    subjectView.layer.borderWidth = 1;
+    //subjectView.layer.borderWidth = 1;
     [self.view addSubview:subjectView];
     
     UIImageView *subjectImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"flowerImage"]];
@@ -109,29 +115,34 @@
     subjectLabel.font = [UIFont systemFontOfSize:16];
     subjectLabel.text = @"subject";
     [subjectView addSubview:subjectLabel];
-    
+
     UILabel *subjectContentLabel = [[UILabel alloc] init];
     subjectContentLabel.frame = CGRectMake(20, 20, 278, 150);
     subjectContentLabel.numberOfLines = 0;
     subjectContentLabel.font = [UIFont systemFontOfSize:20];
     subjectContentLabel.text = _subject;
+    
     //resize the height of _subject view
-    CGSize expectedSize = [subjectLabel perfectLabelSizeWithMaxSize:CGSizeMake(278, 9999)];
+    CGSize expectedSize = [subjectContentLabel perfectLabelSizeWithMaxSize:CGSizeMake(278, 1000)];
     subjectContentLabel.frame = CGRectMake(20, 20, expectedSize.width, expectedSize.height);
     [subjectView addSubview:subjectContentLabel];
+    
+    //recalculate the frame of subject view
+    _heightOfSubjectView = 30 + expectedSize.height;
+    subjectView.frame = CGRectMake(11, 180, 298, _heightOfSubjectView);
 
     //option part
     _widthOfOptionView = 278;
     _heightOfOptionView = 30;
     _intervalBetweenOptions = 5;
-    _firstOptionOriginalSize = CGRectMake(20, 30, _widthOfOptionView, _heightOfOptionView);
+    _firstOptionOriginalSize = CGRectMake(20, 30 , _widthOfOptionView, _heightOfOptionView);
     _indexSize = 28;
     _optionIndexImage = @"CellIndexCircle";
     
     CGFloat heightOfOptionView = _numberOfOptions * (_intervalBetweenOptions + _heightOfOptionView) + _indexSize;
     
     UIView *optionView = [[UIView alloc] init];
-    optionView.frame = CGRectMake(11, 280, 298, heightOfOptionView);
+    optionView.frame = CGRectMake(11, 180 + _heightOfSubjectView + 5, 298, heightOfOptionView);
     //optionView.layer.borderWidth = 2;
     [self.view addSubview:optionView];
 
@@ -208,12 +219,6 @@
     
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)tapOnIndexOfOption:(UIButton *)sender
 {
     for (int i=0; i < _numberOfOptions; i++) {
@@ -227,6 +232,65 @@
 
 - (void)doneWithVote:(UIButton *)sender
 {
+    //get the option id
+    VoteOption *option = [_optionArray objectAtIndex:voteIndex];
     
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:JoinVote];
+    [dic setObject:[NSNumber numberWithInt:option.voteOptionID] forKey:@"voteoptionid"];
+    [dic setObject:UserId forKey:@"userid"];
+    
+    //NSLog(@"%@",[dic description]);
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
+    
+    [self showLoadingView:@"" isWithCancelButton:NO];
 }
+
+#pragma mark - PLServer delegate
+- (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
+{
+    [self dismissLoadingView];
+    
+    NSDictionary *cacheDic = (NSDictionary*)jsonString;
+    
+    NSLog(@"%@",[cacheDic description]);
+    
+    BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
+    if (result) {
+        //check if is the refresh by location
+        VoteRequestType requetType = [cacheDic getRequestType];
+        
+        switch (requetType) {
+            case JoinVote:{
+                //success
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }
+                
+            default:
+                break;
+        }
+        
+    }else{
+        [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
+    }
+}
+
+- (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
+{
+    [self dismissLoadingView];
+    if (error) {
+        [self showErrorMessage:[error description]];
+    }else{
+        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
+    }
+}
+
+- (void)connectionClosed:(PLServer *)plServer
+{
+    if (isShowingLoadingView) {
+        [self dismissLoadingView];
+        [self showErrorMessage:@"Lost connection,check your internet connection."];
+    }
+}
+
 @end

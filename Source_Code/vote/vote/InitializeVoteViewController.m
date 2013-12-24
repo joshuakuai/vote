@@ -132,8 +132,6 @@
     self = [super initWithCoder:aDecoder];
     
     if (self) {
-        self.title =@"Initiate";
-
         //set the tab bar item background
         [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"InitializeTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"InitializeTabBarNormal"]];
         
@@ -789,9 +787,6 @@
         
         [_locationManager startUpdatingLocation];
     }
-    
-    //set the plankton server's delegate
-    [[PLServer shareInstance] setDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -799,8 +794,6 @@
     [super viewWillDisappear:animated];
     
     [_locationManager stopUpdatingLocation];
-    [self dismissLoadingView];
-    //[[PLServer shareInstance] closeConnection];
 }
 
 - (void)textViewDidChange:(UITextView *)textView

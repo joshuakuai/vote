@@ -31,7 +31,7 @@
         //set the tab bar item background
         [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"AttendTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"AttendTabBarNormal"]];
         
-        self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+        self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 1.5, -6, -1.5);
     }
     
     return self;
@@ -42,9 +42,6 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBarHidden = YES;
-    
-    //set the plankton server's delegate
-    [[PLServer shareInstance] setDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -52,9 +49,7 @@
     [super viewWillDisappear:animated];
     
     _isAutoScroll = NO;
-    [self dismissLoadingView];
     [_locationManager stopUpdatingLocation];
-    //[[PLServer shareInstance] closeConnection];
     [self doneLoadingVoteNearBy];
 }
 
@@ -109,8 +104,8 @@
     [_voteByIDResultView addGestureRecognizer:tapGesture];
     [self.view addSubview:_voteByIDResultView];
     
-    //hide the index label
-    _voteByIDResultView.indexCell.hidden = YES;
+    //index number always is one
+    [_voteByIDResultView.indexCell setNumber:1];
     
     //init the vote object which will store the result of searching by id
     self.voteByIDInfo = [[Vote alloc] init];
@@ -354,7 +349,7 @@
     }
     
     NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:SearchVote];
-    [dic setObject:[NSNumber numberWithInt:0] forKey:@"searchtype"];
+    [dic setObject:[NSNumber numberWithInt:1] forKey:@"searchtype"];
     [dic setObject:[NSNumber numberWithInt:[searchBar.text intValue]] forKey:@"voteid"];
     
     [[PLServer shareInstance] sendDataWithDic:dic];
@@ -409,17 +404,22 @@
                     [_voteByLocationTableView reloadData];
                 }else{
                     NSArray *result = [cacheDic objectForKey:@"votelist"];
-                    NSDictionary *voteDic = [result objectAtIndex:0];
                     
-                    self.voteByIDInfo.initiator = [voteDic objectForKey:@"initiator"];
-                    self.voteByIDInfo.voteID = [[voteDic objectForKey:@"voteid"] integerValue];
-                    self.voteByIDInfo.colorIndex = [[voteDic objectForKey:@"color"] intValue];
-                    
-                    _voteByIDResultView.initiatorLabel.text =[NSString stringWithFormat:@"Initiator: %@",_voteByIDInfo.initiator];
-                    _voteByIDResultView.arrowCorlor = _voteByIDInfo.colorIndex;
-                    
-                    //show the result
-                    _voteByIDResultView.hidden = NO;
+                    if (result.count != 0) {
+                        NSDictionary *voteDic = [result objectAtIndex:0];
+                        
+                        self.voteByIDInfo.initiator = [voteDic objectForKey:@"initiator"];
+                        self.voteByIDInfo.voteID = [[voteDic objectForKey:@"voteid"] integerValue];
+                        self.voteByIDInfo.colorIndex = [[voteDic objectForKey:@"color"] intValue];
+                        
+                        _voteByIDResultView.initiatorLabel.text =[NSString stringWithFormat:@"Initiator: %@",_voteByIDInfo.initiator];
+                        _voteByIDResultView.arrowCorlor = _voteByIDInfo.colorIndex;
+                        
+                        //show the result
+                        _voteByIDResultView.hidden = NO;
+                    }else{
+                        [self showErrorMessage:@"Sorry, there is no vote use this id..."];
+                    }
                 }
                 
                 break;

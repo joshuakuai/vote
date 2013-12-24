@@ -20,5 +20,7 @@
 #define ScreenHeigh  [UIScreen mainScreen].bounds.size.height
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
 
+#define UserId [NSNumber numberWithInt:[[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"] integerValue]]
+
 #define DevServerAdd @"192.168.1.13"
 #define RelServerAdd @"69.164.196.243"

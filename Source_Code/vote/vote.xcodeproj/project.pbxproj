@@ -57,6 +57,8 @@
 		E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E909B0A51829E8FE00360DB2 /* CodeViewController.m */; };
 		E97DCE69184C46B800E59F4A /* PasswordEnterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E97DCE68184C46B800E59F4A /* PasswordEnterViewController.m */; };
 		E97DCE6C184C73AB00E59F4A /* AttendVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E97DCE6B184C73AB00E59F4A /* AttendVoteViewController.m */; };
+		E97DCE70184CEC6B00E59F4A /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E97DCE6F184CEC6B00E59F4A /* HistoryViewController.m */; };
+		E97DCE73184D26D600E59F4A /* VoteResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E97DCE72184D26D600E59F4A /* VoteResultViewController.m */; };
 		E9D4849F184AF0F400CD5110 /* Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D4849E184AF0F400CD5110 /* Animations.m */; };
 		E9D484A2184AF10A00CD5110 /* InitializeVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9D484A1184AF10A00CD5110 /* InitializeVoteViewController.m */; };
 		E9D484AA184AFA3600CD5110 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9D484A4184AFA3600CD5110 /* libTestFlight.a */; };
@@ -156,6 +158,10 @@
 		E97DCE68184C46B800E59F4A /* PasswordEnterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PasswordEnterViewController.m; sourceTree = "<group>"; };
 		E97DCE6A184C73AB00E59F4A /* AttendVoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttendVoteViewController.h; sourceTree = "<group>"; };
 		E97DCE6B184C73AB00E59F4A /* AttendVoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttendVoteViewController.m; sourceTree = "<group>"; };
+		E97DCE6E184CEC6B00E59F4A /* HistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
+		E97DCE6F184CEC6B00E59F4A /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
+		E97DCE71184D26D600E59F4A /* VoteResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteResultViewController.h; sourceTree = "<group>"; };
+		E97DCE72184D26D600E59F4A /* VoteResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteResultViewController.m; sourceTree = "<group>"; };
 		E9D4849D184AF0F400CD5110 /* Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Animations.h; sourceTree = "<group>"; };
 		E9D4849E184AF0F400CD5110 /* Animations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Animations.m; sourceTree = "<group>"; };
 		E9D484A0184AF10A00CD5110 /* InitializeVoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitializeVoteViewController.h; sourceTree = "<group>"; };
@@ -268,6 +274,7 @@
 		AA3F8FDB1826B00C007ABF9B /* vote */ = {
 			isa = PBXGroup;
 			children = (
+				E97DCE6D184CEC3C00E59F4A /* Vote History */,
 				AADAE9181842B7C200DF1BD0 /* VoteHistoryControllers */,
 				AADAE9171842B7B400DF1BD0 /* InitializeVoteControllers */,
 				AA846833183849E500C9B632 /* Model */,
@@ -434,6 +441,17 @@
 			name = VoteHistoryControllers;
 			sourceTree = "<group>";
 		};
+		E97DCE6D184CEC3C00E59F4A /* Vote History */ = {
+			isa = PBXGroup;
+			children = (
+				E97DCE6E184CEC6B00E59F4A /* HistoryViewController.h */,
+				E97DCE6F184CEC6B00E59F4A /* HistoryViewController.m */,
+				E97DCE71184D26D600E59F4A /* VoteResultViewController.h */,
+				E97DCE72184D26D600E59F4A /* VoteResultViewController.m */,
+			);
+			name = "Vote History";
+			sourceTree = "<group>";
+		};
 		E9D484A3184AFA3600CD5110 /* TestFlightSDK2 */ = {
 			isa = PBXGroup;
 			children = (
@@ -573,6 +591,7 @@
 				AA4609DB184A3715002D398B /* CellIndexCircle.m in Sources */,
 				E97DCE6C184C73AB00E59F4A /* AttendVoteViewController.m in Sources */,
 				E9D4849F184AF0F400CD5110 /* Animations.m in Sources */,
+				E97DCE73184D26D600E59F4A /* VoteResultViewController.m in Sources */,
 				AA3F900B1826D7F7007ABF9B /* SignUpViewController.m in Sources */,
 				AA3F90241826EE61007ABF9B /* PLServer.m in Sources */,
 				E909B0A61829E8FE00360DB2 /* CodeViewController.m in Sources */,
@@ -584,6 +603,7 @@
 				AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */,
 				AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */,
 				AA4609D2184A2C49002D398B /* DuplicateVoteHandleViewController.m in Sources */,
+				E97DCE70184CEC6B00E59F4A /* HistoryViewController.m in Sources */,
 				AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
