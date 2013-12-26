@@ -324,43 +324,9 @@
                 
                 if (indexType == 1) {
                     //fullfill the data
-                    NSMutableArray *tempInitiateArray = [NSMutableArray arrayWithCapacity:3];
                     NSArray *historyDicArray = [cacheDic valueForKey:@"historylist"];
-                    
-                    if (historyDicArray.count != 0) {
-                        for (NSDictionary *voteDic in historyDicArray) {
-                            NSMutableDictionary *tmpDic  = [NSMutableDictionary dictionary];
-                            [tmpDic setObject:[voteDic valueForKey:@"color"] forKey:@"colorIndex"];
-                            [tmpDic setObject:[voteDic valueForKey:@"cteatetime"] forKey:@"time"];
-                            [tmpDic setObject:[voteDic valueForKey:@"initiator"] forKey:@"initiator"];
-                            
-                            int currentUser = [[voteDic objectForKey:@"currentvalidvote"] intValue];
-                            int maxValidUser = [[voteDic objectForKey:@"maxvaliduser"] intValue];
-                            
-                            if (currentUser == maxValidUser) {
-                                [tmpDic setObject:@"YES" forKey:@"state"];
-                            }else{
-                                NSDateFormatter *df = [[NSDateFormatter alloc] init];
-                                [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                                NSString *endTimeString = [voteDic objectForKey:@"endtime"];
-                                NSString *serverTimeString = [voteDic objectForKey:@"servercurrentime"];
-                                
-                                NSDate *endTime = [df dateFromString:endTimeString];
-                                NSDate *serverCurrentTime = [df dateFromString:serverTimeString];
-                                
-                                int intervall = (int) [endTime timeIntervalSinceDate: serverCurrentTime] / 60;
-                                
-                                if (intervall > 0) {
-                                    [tmpDic setObject:@"NO" forKey:@"state"];
-                                }else{
-                                    [tmpDic setObject:@"YES" forKey:@"state"];
-                                }
-                            }
-                            
-
-                            [tempInitiateArray addObject:tmpDic];
-                        }
-                    }
+                    NSString *serverTimeString = [cacheDic objectForKey:@"servercurrentime"];
+                    NSArray *tempInitiateArray = [self getTempArray:historyDicArray serverTimeString:serverTimeString];
                     
                     initiateVoteList = [[NSArray alloc] initWithArray:tempInitiateArray];
                     
@@ -374,43 +340,9 @@
                     [self showLoadingView:@"" isWithCancelButton:NO];
                 }else{
                     //refresh the scroll view
-                    NSMutableArray *tempAttendArray = [NSMutableArray arrayWithCapacity:3];
                     NSArray *historyDicArray = [cacheDic valueForKey:@"historylist"];
-                    
-                    if (historyDicArray.count != 0) {
-                        for (NSDictionary *voteDic in historyDicArray) {
-                            NSMutableDictionary *tmpDic  = [NSMutableDictionary dictionary];
-                            [tmpDic setObject:[voteDic valueForKey:@"color"] forKey:@"colorIndex"];
-                            [tmpDic setObject:[voteDic valueForKey:@"cteatetime"] forKey:@"time"];
-                            [tmpDic setObject:[voteDic valueForKey:@"initiator"] forKey:@"initiator"];
-                            
-                            int currentUser = [[voteDic objectForKey:@"currentvalidvote"] intValue];
-                            int maxValidUser = [[voteDic objectForKey:@"maxvaliduser"] intValue];
-                            
-                            if (currentUser == maxValidUser) {
-                                [tmpDic setObject:@"YES" forKey:@"state"];
-                            }else{
-                                NSDateFormatter *df = [[NSDateFormatter alloc] init];
-                                [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                                NSString *endTimeString = [voteDic objectForKey:@"endtime"];
-                                NSString *serverTimeString = [cacheDic objectForKey:@"servercurrentime"];
-                                
-                                NSDate *endTime = [df dateFromString:endTimeString];
-                                NSDate *serverCurrentTime = [df dateFromString:serverTimeString];
-                                
-                                int intervall = (int) [endTime timeIntervalSinceDate: serverCurrentTime] / 60;
-                                
-                                if (intervall > 0) {
-                                    [tmpDic setObject:@"NO" forKey:@"state"];
-                                }else{
-                                    [tmpDic setObject:@"YES" forKey:@"state"];
-                                }
-                            }
-                            
-                            
-                            [tempAttendArray addObject:tmpDic];
-                        }
-                    }
+                    NSString *serverTimeString = [cacheDic objectForKey:@"servercurrentime"];
+                    NSArray *tempAttendArray = [self getTempArray:historyDicArray serverTimeString:serverTimeString];
                     
                     attendedVoteList = [[NSArray alloc] initWithArray:tempAttendArray];
                     
@@ -427,6 +359,46 @@
     }else{
         [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
     }
+}
+
+- (NSArray*)getTempArray:(NSArray*)historyDicArray serverTimeString:(NSString*)serverTimeString
+{
+    NSMutableArray *tempAttendArray = [NSMutableArray arrayWithCapacity:3];
+    
+    if (historyDicArray.count != 0) {
+        for (NSDictionary *voteDic in historyDicArray) {
+            NSMutableDictionary *tmpDic  = [NSMutableDictionary dictionary];
+            [tmpDic setObject:[voteDic valueForKey:@"color"] forKey:@"colorIndex"];
+            [tmpDic setObject:[voteDic valueForKey:@"createtime"] forKey:@"time"];
+            [tmpDic setObject:[voteDic valueForKey:@"initiator"] forKey:@"initiator"];
+            
+            int currentUser = [[voteDic objectForKey:@"currentvalidvote"] intValue];
+            int maxValidUser = [[voteDic objectForKey:@"maxvaliduser"] intValue];
+            
+            if (currentUser == maxValidUser) {
+                [tmpDic setObject:@"YES" forKey:@"state"];
+            }else{
+                NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                NSString *endTimeString = [voteDic objectForKey:@"endtime"];
+                
+                NSDate *endTime = [df dateFromString:endTimeString];
+                NSDate *serverCurrentTime = [df dateFromString:serverTimeString];
+                
+                int intervall = (int) [endTime timeIntervalSinceDate: serverCurrentTime] / 60;
+                
+                if (intervall > 0) {
+                    [tmpDic setObject:@"NO" forKey:@"state"];
+                }else{
+                    [tmpDic setObject:@"YES" forKey:@"state"];
+                }
+            }
+            
+            [tempAttendArray addObject:tmpDic];
+        }
+    }
+    
+    return tempAttendArray;
 }
 
 - (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
