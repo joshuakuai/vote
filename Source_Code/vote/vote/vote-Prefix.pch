@@ -20,6 +20,8 @@
 #define ScreenHeigh  [UIScreen mainScreen].bounds.size.height
 #define ScreenWidth  [UIScreen mainScreen].bounds.size.width
 
+#define RGBColor(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+
 #define UserId [NSNumber numberWithInt:[[[NSUserDefaults standardUserDefaults] valueForKey:@"userid"] integerValue]]
 
 #define DevServerAdd @"192.168.1.13"

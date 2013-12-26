@@ -8,6 +8,7 @@
 
 #import "HistoryViewController.h"
 #import "Vote.h"
+#import "OptionView.h"
 
 @interface HistoryViewController ()
 {
@@ -24,6 +25,9 @@
     //模拟需要
     NSArray *attendedVoteList;
     NSArray *initiateVoteList;
+    
+    UIView *historyContentView;
+    OptionView *optionView;
 }
 
 @end
@@ -47,6 +51,10 @@
 {
     [super viewDidLoad];
     
+    historyContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeigh)];
+    historyContentView.backgroundColor = [UIColor whiteColor];
+    optionView = [[OptionView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeigh)];
+    
     indexImage = @"CellIndexCircle";
     
     attendedVoteList = [[NSArray alloc] initWithObjects: nil];
@@ -54,53 +62,13 @@
     
     attendArrowButtonArray = [[NSArray alloc] initWithObjects: nil];
     initiatedArrowButtonArray = [[NSArray alloc] initWithObjects: nil];
-
-    /*
-    //模拟服务器传回的数据
-    _emailAddress = @"@shineamnys@gmail.com";
-    NSMutableArray *tempAttendVoteArray = [[NSMutableArray alloc] initWithArray:attendedVoteList];
-    NSMutableArray *tempInitiateArray = [[NSMutableArray alloc] initWithArray:initiateVoteList];
-    NSString *voteTime = @"2013/12/2 12:30";
-    NSString *voteInitiator = @"Shuai Zhai";
-    NSString *finishedState = @"YES";
-    NSString *inProgressState = @"NO";
-    
-    for (int i = 0; i<5; i++) {
-        NSMutableDictionary *tempDicitionary = [NSMutableDictionary dictionary];
-        [tempDicitionary setObject:[NSString stringWithFormat:@"%d" ,i] forKey:@"colorIndex"];
-        [tempDicitionary setObject:voteTime forKey:@"time"];
-        [tempDicitionary setObject:voteInitiator forKey:@"initiator"];
-        if (i < 2) {
-            [tempDicitionary setObject:inProgressState forKey:@"state"];
-        }else{
-            [tempDicitionary setObject:finishedState forKey:@"state"];
-        }
-        [tempAttendVoteArray addObject:tempDicitionary];
-    }
-    
-    attendedVoteList = [[NSArray alloc] initWithArray:tempAttendVoteArray];
-    
-    for (int i = 0; i<5; i++) {
-        NSMutableDictionary *tempDicitionary = [NSMutableDictionary dictionary];
-        [tempDicitionary setObject:[NSString stringWithFormat:@"%d" ,4 - i] forKey:@"colorIndex"];
-        [tempDicitionary setObject:voteTime forKey:@"time"];
-        [tempDicitionary setObject:voteInitiator forKey:@"initiator"];
-        if (i < 2) {
-            [tempDicitionary setObject:inProgressState forKey:@"state"];
-        }else{
-            [tempDicitionary setObject:finishedState forKey:@"state"];
-        }
-        [tempInitiateArray addObject:tempDicitionary];
-    }
-    initiateVoteList = [[NSArray alloc] initWithArray:tempInitiateArray];
-    */
     
     solidArrowImage = [[NSArray alloc] initWithObjects:@"GreenSolidArrow", @"BlueSolidArrow", @"YellowSolidArrow", @"RedSolidArrow", @"GraySolidArrow", nil];
 	// Do any additional setup after loading the view.
     _titleImage = @"titleImage";
     UIImageView *titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_titleImage]];
     titleImageView.frame = CGRectMake(60, 10, 200, 100);
-    [self.view addSubview:titleImageView];
+    [historyContentView addSubview:titleImageView];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.frame = CGRectMake(0, 0, 200, 100);
@@ -117,8 +85,7 @@
     emailLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
     emailLabel.font = [UIFont systemFontOfSize:14];
     emailLabel.text = _emailAddress;
-    [self.view addSubview:emailLabel];
-    
+    [historyContentView addSubview:emailLabel];
     
     _historySegment = [ [ UISegmentedControl alloc ] initWithItems: nil ];
     _historySegment.segmentedControlStyle = UISegmentedControlStyleBar;
@@ -126,18 +93,29 @@
     _historySegment.frame = CGRectMake(0, 130, 320, 30);
     [ _historySegment insertSegmentWithTitle:@"Attended" atIndex: 0 animated: NO ];
     [_historySegment insertSegmentWithTitle:@"Initiated" atIndex: 1 animated: NO ];
-    [self.view addSubview:_historySegment];
+    [historyContentView addSubview:_historySegment];
     [_historySegment addTarget:self action:@selector(historySwitchAction:) forControlEvents:UIControlEventValueChanged];
     _historySegment.selectedSegmentIndex = 0;
     
- 
+    //More option button
+    UIButton *moreButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    moreButton.center = CGPointMake(300, 10);
+    [moreButton addTarget:self action:@selector(showOptionView:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [historyContentView addSubview:moreButton];
+    
+    //Add option view
+    [self.view addSubview:optionView];
+
+    [self.view addSubview:historyContentView];
+    
+    [self.view sendSubviewToBack:optionView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    //TODO:add refresh
     //get the data from server, initia first
     NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:IndexHistory];
     [dic setObject:[NSNumber numberWithInt:1] forKey:@"indextype"];
@@ -177,7 +155,7 @@
     attendedScrollView.frame = CGRectMake(0, 170, 320, 349);
     //  attendedScrollView.layer.borderWidth = 1;
     attendedScrollView.hidden = NO;
-    [self.view addSubview:attendedScrollView];
+    [historyContentView addSubview:attendedScrollView];
     
     attendedScrollView.contentSize = CGSizeMake(320, (numberOfAllAttendedVotes - 1) * (heightOfeachVoteImageView + intervalBetweenEachVoteView) + heightOfeachVoteImageView);
     
@@ -250,7 +228,7 @@
     initiatedScrollView.frame = CGRectMake(0, 170, 320, 349);
     // initiatedScrollView.layer.borderWidth = 2;
     initiatedScrollView.hidden = YES;
-    [self.view addSubview:initiatedScrollView];
+    [historyContentView addSubview:initiatedScrollView];
     initiatedScrollView.contentSize = CGSizeMake(320, (numberOfAllAttendedVotes - 1) * (heightOfeachVoteImageView + intervalBetweenEachVoteView) + heightOfeachVoteImageView);
     
     NSMutableArray *tempInitiatedArrowButtonArray = [[NSMutableArray alloc] initWithArray:initiatedArrowButtonArray];
@@ -334,7 +312,7 @@
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     
-    NSLog(@"%@",cacheDic);
+    //NSLog(@"%@",cacheDic);
     
     if (result) {
         //check if is the refresh by location
@@ -466,6 +444,19 @@
     if (isShowingLoadingView) {
         [self dismissLoadingView];
         [self showErrorMessage:@"Lost connection,check your internet connection."];
+    }
+}
+
+- (void)showOptionView:(id)sender
+{
+    if (historyContentView.frame.origin.x==0) {
+        [UIView animateWithDuration:0.2 animations:^(void){
+            historyContentView.frame = CGRectMake(-160, 0, 320, ScreenHeigh);
+        }];
+    }else{
+        [UIView animateWithDuration:0.2 animations:^(void){
+            historyContentView.frame = CGRectMake(0, 0, 320, ScreenHeigh);
+        }];
     }
 }
 

@@ -45,6 +45,7 @@
 		AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F0182EBE5E00D9B9A5 /* BaseViewController.m */; };
 		AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */; };
 		AA58D3F818301A0B00D9B9A5 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA58D3F718301A0B00D9B9A5 /* SignInViewController.m */; };
+		AA5BEDDF186A45D400F66B2F /* OptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA5BEDDE186A45D400F66B2F /* OptionView.m */; };
 		AA846832183839AC00C9B632 /* VoteSearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = AA846831183839AC00C9B632 /* VoteSearchResultCell.m */; };
 		AA84683618384A5600C9B632 /* Vote.m in Sources */ = {isa = PBXBuildFile; fileRef = AA84683518384A5600C9B632 /* Vote.m */; };
 		AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */; };
@@ -137,6 +138,8 @@
 		AA58D3F4182EBF5300D9B9A5 /* ProccessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProccessView.m; sourceTree = "<group>"; };
 		AA58D3F618301A0B00D9B9A5 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		AA58D3F718301A0B00D9B9A5 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		AA5BEDDD186A45D400F66B2F /* OptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionView.h; sourceTree = "<group>"; };
+		AA5BEDDE186A45D400F66B2F /* OptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionView.m; sourceTree = "<group>"; };
 		AA846830183839AC00C9B632 /* VoteSearchResultCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteSearchResultCell.h; sourceTree = "<group>"; };
 		AA846831183839AC00C9B632 /* VoteSearchResultCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteSearchResultCell.m; sourceTree = "<group>"; };
 		AA84683418384A5600C9B632 /* Vote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vote.h; sourceTree = "<group>"; };
@@ -448,6 +451,8 @@
 				E97DCE6F184CEC6B00E59F4A /* HistoryViewController.m */,
 				E97DCE71184D26D600E59F4A /* VoteResultViewController.h */,
 				E97DCE72184D26D600E59F4A /* VoteResultViewController.m */,
+				AA5BEDDD186A45D400F66B2F /* OptionView.h */,
+				AA5BEDDE186A45D400F66B2F /* OptionView.m */,
 			);
 			name = "Vote History";
 			sourceTree = "<group>";
@@ -601,6 +606,7 @@
 				AAAB4151183079BC00A968EA /* NSDictionary+PLPackage.m in Sources */,
 				AA3A288218314641004B8791 /* EGORefreshTableFooterView.m in Sources */,
 				AA58D3F5182EBF5300D9B9A5 /* ProccessView.m in Sources */,
+				AA5BEDDF186A45D400F66B2F /* OptionView.m in Sources */,
 				AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */,
 				AA4609D2184A2C49002D398B /* DuplicateVoteHandleViewController.m in Sources */,
 				E97DCE70184CEC6B00E59F4A /* HistoryViewController.m in Sources */,
