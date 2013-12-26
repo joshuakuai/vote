@@ -40,20 +40,27 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    if (!self.delegate ||
+        ![self.delegate respondsToSelector:@selector(signoutButtonTapped)] ||
+        ![self.delegate respondsToSelector:@selector(setPasswordButtonTapped)] ||
+        ![self.delegate respondsToSelector:@selector(aboutButtonTapped)]) {
+        return;
+    }
+    
     switch (indexPath.row) {
         case 0:
             //Set password
-            
+            [self.delegate setPasswordButtonTapped];
             break;
             
         case 1:
             //Sign Out
-            
+            [self.delegate signoutButtonTapped];
             break;
             
         case 2:
             //About page
-            
+            [self.delegate aboutButtonTapped];
             break;
             
         default:

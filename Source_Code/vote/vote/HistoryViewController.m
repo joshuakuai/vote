@@ -54,6 +54,7 @@
     historyContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeigh)];
     historyContentView.backgroundColor = [UIColor whiteColor];
     optionView = [[OptionView alloc] initWithFrame:CGRectMake(0, 0, 320, ScreenHeigh)];
+    optionView.delegate = self;
     
     indexImage = @"CellIndexCircle";
     
@@ -110,6 +111,11 @@
     [self.view addSubview:historyContentView];
     
     [self.view sendSubviewToBack:optionView];
+}
+
+- (void)dealloc
+{
+    self.historySegment = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -289,6 +295,7 @@
         }
         [eachVoteView addSubview:stateLabel];
     }
+    
     initiatedArrowButtonArray = [[NSArray alloc] initWithArray:tempInitiatedArrowButtonArray];
 }
 
@@ -302,6 +309,28 @@
         attendedScrollView.hidden = YES;
         initiatedScrollView.hidden = NO;
     }
+}
+
+#pragma mark - Option View delegate
+- (void)signoutButtonTapped
+{
+    //set the user id as 0
+    [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"userid"];
+    
+    //dismiss the tab bar controller
+    [self.tabBarController dismissViewControllerAnimated:YES completion:^(void){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserLogout" object:nil];
+    }];
+}
+
+- (void)setPasswordButtonTapped
+{
+    //show set password controller view
+}
+
+- (void)aboutButtonTapped
+{
+    //show about controller view
 }
 
 #pragma mark - PLServer delegate
@@ -322,12 +351,13 @@
             case IndexHistory:{
                 int indexType = [[cacheDic valueForKey:@"indextype"] intValue];
                 
+                NSArray *historyDicArray = [cacheDic valueForKey:@"historylist"];
+                NSString *serverTimeString = [cacheDic objectForKey:@"servercurrentime"];
+                
                 if (indexType == 1) {
                     //fullfill the data
-                    NSArray *historyDicArray = [cacheDic valueForKey:@"historylist"];
-                    NSString *serverTimeString = [cacheDic objectForKey:@"servercurrentime"];
+
                     NSArray *tempInitiateArray = [self getTempArray:historyDicArray serverTimeString:serverTimeString];
-                    
                     initiateVoteList = [[NSArray alloc] initWithArray:tempInitiateArray];
                     
                     //request the particiapant
@@ -340,8 +370,6 @@
                     [self showLoadingView:@"" isWithCancelButton:NO];
                 }else{
                     //refresh the scroll view
-                    NSArray *historyDicArray = [cacheDic valueForKey:@"historylist"];
-                    NSString *serverTimeString = [cacheDic objectForKey:@"servercurrentime"];
                     NSArray *tempAttendArray = [self getTempArray:historyDicArray serverTimeString:serverTimeString];
                     
                     attendedVoteList = [[NSArray alloc] initWithArray:tempAttendArray];

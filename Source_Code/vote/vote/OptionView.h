@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol OptionViewDelegate <NSObject>
+
+- (void)signoutButtonTapped;
+- (void)setPasswordButtonTapped;
+- (void)aboutButtonTapped;
+
+@end
+
 @interface OptionView : UIView<UITableViewDataSource,UITableViewDelegate>
+
+@property (nonatomic,weak) id<OptionViewDelegate> delegate;
 
 @end
