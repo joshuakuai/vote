@@ -753,7 +753,7 @@ bool LLLogicVote::getHistoryVoteList(int userid, int requestType,
 		arrayItem["title"] = voteList[i].title;
 		arrayItem["color"] = voteList[i].colorIndex;
 		arrayItem["maxvaliduser"] = voteList[i].maxValidUser;
-		arrayItem["cteatetime"] = Converter::time_t_to_mysql_datetime_string(
+		arrayItem["createtime"] = Converter::time_t_to_mysql_datetime_string(
 				voteList[i].createTime);
 		arrayItem["endtime"] = Converter::time_t_to_mysql_datetime_string(
 				voteList[i].endTime);
