@@ -85,6 +85,8 @@
         cell.backgroundColor =  RGBColor(80, 130, 227, 1);
         
         CellIndexCircle *indexCircle = [[CellIndexCircle alloc] initWithNumber:indexPath.row+1 location:CGPointMake(7, 7)];
+        [indexCircle setCircleColorWhile];
+        indexCircle.indexLabel.textColor = [UIColor whiteColor];
         [cell addSubview:indexCircle];
         
         UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, 116, 44)];

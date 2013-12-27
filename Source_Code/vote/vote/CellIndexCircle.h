@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CellIndexCircle : UIImageView{
-    UILabel *_indexLabel;
-}
+@interface CellIndexCircle : UIImageView
 
+@property (nonatomic,strong) UILabel *indexLabel;
+
+//default as gray circle and black
 - (id)initWithNumber:(int)number location:(CGPoint)location;
 - (void)setNumber:(int)number;
+- (void)setCircleColorWhile;
 
 @end
