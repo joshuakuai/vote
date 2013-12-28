@@ -8,7 +8,6 @@
 
 #import "HistoryViewController.h"
 #import "Vote.h"
-#import "OptionView.h"
 
 @interface HistoryViewController ()
 {
@@ -356,7 +355,6 @@
                 
                 if (indexType == 1) {
                     //fullfill the data
-
                     NSArray *tempInitiateArray = [self getTempArray:historyDicArray serverTimeString:serverTimeString];
                     initiateVoteList = [[NSArray alloc] initWithArray:tempInitiateArray];
                     
