@@ -8,12 +8,13 @@
 
 #import "HistoryViewController.h"
 #import "Vote.h"
+#import "HistoryResultCell.h"
 
 @interface HistoryViewController ()
 {
     NSString *_titleImage;
-    UIScrollView *attendedScrollView;
-    UIScrollView *initiatedScrollView;
+    UITableView *attendedTableView;
+    UITableView *initiatedTableView;
     int numberOfAllAttendedVotes;
     int numberOfAllInitiatedVotes;
     NSArray *solidArrowImage;
@@ -21,9 +22,14 @@
     NSArray *attendArrowButtonArray;
     NSArray *initiatedArrowButtonArray;
     
+    
     //模拟需要
     NSArray *attendedVoteList;
     NSArray *initiateVoteList;
+    
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    BOOL _reloading;
+    
 }
 
 @end
@@ -54,8 +60,9 @@
     
     attendArrowButtonArray = [[NSArray alloc] initWithObjects: nil];
     initiatedArrowButtonArray = [[NSArray alloc] initWithObjects: nil];
-
-    /*
+    
+    
+/*
     //模拟服务器传回的数据
     _emailAddress = @"@shineamnys@gmail.com";
     NSMutableArray *tempAttendVoteArray = [[NSMutableArray alloc] initWithArray:attendedVoteList];
@@ -93,7 +100,12 @@
         [tempInitiateArray addObject:tempDicitionary];
     }
     initiateVoteList = [[NSArray alloc] initWithArray:tempInitiateArray];
-    */
+    
+ */
+    
+    
+    
+    
     
     solidArrowImage = [[NSArray alloc] initWithObjects:@"GreenSolidArrow", @"BlueSolidArrow", @"YellowSolidArrow", @"RedSolidArrow", @"GraySolidArrow", nil];
 	// Do any additional setup after loading the view.
@@ -130,7 +142,33 @@
     [_historySegment addTarget:self action:@selector(historySwitchAction:) forControlEvents:UIControlEventValueChanged];
     _historySegment.selectedSegmentIndex = 0;
     
+    CGRect tableFrame = CGRectMake(0, 170, 320, 349);
+        
+    attendedTableView = [[UITableView alloc] init];
+    attendedTableView.frame = tableFrame;
+    [attendedTableView setDelegate:self];
+    [attendedTableView setDataSource:self];
+    attendedTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:attendedTableView];
+    
+    initiatedTableView = [[UITableView alloc] init];
+    initiatedTableView.frame = tableFrame;
+    [initiatedTableView setDelegate:self];
+    [initiatedTableView setDataSource:self];
+    initiatedTableView.hidden = YES;
+    initiatedTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:initiatedTableView];
  
+    numberOfAllAttendedVotes = attendedVoteList.count;
+    numberOfAllInitiatedVotes = initiateVoteList.count;
+    
+    if (_refreshHeaderView == nil) {
+        
+        _refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableFrame.size.height, tableFrame.size.width, tableFrame.size.height)];
+        _refreshHeaderView.delegate = self;
+        [attendedTableView addSubview:_refreshHeaderView];
+    }
+    [_refreshHeaderView refreshLastUpdatedDate];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -150,6 +188,7 @@
     [self showLoadingView:@"" isWithCancelButton:NO];
 }
 
+/*
 - (void)refresh
 {
     if (attendedScrollView || initiatedScrollView) {
@@ -167,23 +206,21 @@
     GLfloat heightOfStateLabel = 15;
     GLfloat intervalBetweenEachVoteView = 5;
     
-#pragma attended part
+#pragma mark attended part
     //初始化数据
     numberOfAllAttendedVotes = attendedVoteList.count;
     CGRect firstVoteViewFrame = CGRectMake(11, 0, 298, 70);
     CGFloat heightOfeachVoteImageView = heightOftimeLabel + heightOfArrowButton + heightOfStateLabel;
     
-    attendedScrollView = [[UIScrollView alloc] init];
-    attendedScrollView.frame = CGRectMake(0, 170, 320, 349);
-    //  attendedScrollView.layer.borderWidth = 1;
-    attendedScrollView.hidden = NO;
-    [self.view addSubview:attendedScrollView];
-    
-    attendedScrollView.contentSize = CGSizeMake(320, (numberOfAllAttendedVotes - 1) * (heightOfeachVoteImageView + intervalBetweenEachVoteView) + heightOfeachVoteImageView);
+
+     
+ 
+
+
     
     NSMutableArray *tempAttendArrowButtonArray = [[NSMutableArray alloc] initWithArray:attendArrowButtonArray];
+    
     for (int i = 0 ; i < numberOfAllAttendedVotes; i++) {
-        
         
         NSDictionary *tempDictionary = attendedVoteList[i];
         UIView *eachVoteView = [[UIView alloc] init];
@@ -248,7 +285,7 @@
     numberOfAllInitiatedVotes = initiateVoteList.count;
     initiatedScrollView = [[UIScrollView alloc] init];
     initiatedScrollView.frame = CGRectMake(0, 170, 320, 349);
-    // initiatedScrollView.layer.borderWidth = 2;
+    //initiatedScrollView.layer.borderWidth = 2;
     initiatedScrollView.hidden = YES;
     [self.view addSubview:initiatedScrollView];
     initiatedScrollView.contentSize = CGSizeMake(320, (numberOfAllAttendedVotes - 1) * (heightOfeachVoteImageView + intervalBetweenEachVoteView) + heightOfeachVoteImageView);
@@ -313,16 +350,42 @@
     }
     initiatedArrowButtonArray = [[NSArray alloc] initWithArray:tempInitiatedArrowButtonArray];
 }
+*/
+
 
 - (void)historySwitchAction:(UIButton *)sender
 {
     int selectedIndex = _historySegment.selectedSegmentIndex;
     if (!selectedIndex) {
-        attendedScrollView.hidden = NO;
-        initiatedScrollView.hidden = YES;
+        attendedTableView.hidden = NO;
+        initiatedTableView.hidden = YES;
     }else{
-        attendedScrollView.hidden = YES;
-        initiatedScrollView.hidden = NO;
+        attendedTableView.hidden = YES;
+        initiatedTableView.hidden = NO;
+    }
+}
+
+- (VoteArrowColor)getColor:(int)indexOfColor{
+    switch (indexOfColor) {
+        case 0:
+            return greenArrow;
+            break;
+        case 1:
+            return blueArrow;
+            break;
+        case 2:
+            return yellowArrow;
+            break;
+        case 3:
+            return redArrow;
+            break;
+        case 4:
+            return grayArrow;
+            break;
+            
+        default:
+            return greenArrow;
+            break;
     }
 }
 
@@ -330,7 +393,7 @@
 - (void)plServer:(PLServer *)plServer didReceivedJSONString:(id)jsonString
 {
     [self dismissLoadingView];
-    
+
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     
@@ -436,7 +499,7 @@
                     
                     attendedVoteList = [[NSArray alloc] initWithArray:tempAttendArray];
                     
-                    [self refresh];
+                   // [self refresh];
                 }
                 
                 break;
@@ -467,6 +530,171 @@
         [self dismissLoadingView];
         [self showErrorMessage:@"Lost connection,check your internet connection."];
     }
+}
+
+ 
+#pragma mark table view setting
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if ([tableView isEqual:attendedTableView]) {
+        if (numberOfAllAttendedVotes) {
+            return numberOfAllAttendedVotes;
+        } else {
+            return 1;
+        }
+        
+    } else {
+        if (numberOfAllInitiatedVotes) {
+            return numberOfAllInitiatedVotes;
+        } else {
+            return 1;
+        }
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    GLfloat heightOftimeLabel = 15;
+    GLfloat heightOfArrowButton = 50;
+    GLfloat heightOfStateLabel = 15;
+    return heightOftimeLabel + heightOfArrowButton + heightOfStateLabel;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = nil;
+    
+    static NSString* emptyIdentifier = @"EmptyHistory";
+    static NSString* cellIdentifier = @"History";
+    
+    NSDictionary *tempDictionary;
+    NSInteger tempNumberOfVotes;
+    NSString *emptyTips;
+    
+    NSString *textOutput;
+    
+    if ([tableView isEqual:attendedTableView]) {
+       // tempDictionary = attendedVoteList[indexPath.row];
+        tempNumberOfVotes = attendedVoteList.count;
+        emptyTips = @"No attended vote history";
+        textOutput = @"attended table";
+    } else{
+        //tempDictionary = initiateVoteList[indexPath.row];
+        tempNumberOfVotes = initiateVoteList.count;
+        emptyTips = @"No initiated vote history";
+        textOutput = @"initiated table";
+    }
+    
+    if (!tempNumberOfVotes) {
+        cell = [tableView dequeueReusableCellWithIdentifier:emptyIdentifier];
+        
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:emptyIdentifier];
+            cell.textLabel.frame = CGRectMake(11, 0, 298, 70);
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            cell.textLabel.text = emptyTips;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+    } else {
+        if ([tableView isEqual:attendedTableView]) {
+            tempDictionary = attendedVoteList[indexPath.row];
+        } else{
+            tempDictionary = initiateVoteList[indexPath.row];
+        }
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+        }
+        
+        HistoryResultCell *tempCell = [[HistoryResultCell alloc] init];
+        
+        //index number
+        tempCell.indexNumber = indexPath.row;
+        
+        //set time
+        tempCell.timeLabel.text = [tempDictionary objectForKey:@"time"];
+        
+        //set arrow color
+        int indexOfcolor = [[tempDictionary objectForKey:@"colorIndex"] intValue];
+        tempCell.arrowCorlor = [self getColor:indexOfcolor];
+        
+        //set initiator's name
+        tempCell.initiatorLabel.text = [@"Initiator:" stringByAppendingString:[tempDictionary objectForKey:@"initiator"]];
+        
+        //set state label
+        NSString *stateString = [tempDictionary objectForKey:@"state"];
+        if ([stateString isEqualToString:@"YES"]) {
+            tempCell.stateLabel.text = @"This vote is finished";
+        }else{
+            tempCell.stateLabel.text = @"This vote is in progress";
+        }
+        
+        [cell addSubview:tempCell];
+    }
+    
+    return cell;
+}
+
+#pragma mark Data Source Loading / Reloading Methods
+- (void)reloadTableViewDataSource{
+    
+    //  should be calling your tableviews data source model to reload
+    //  put here just for demo
+    _reloading = YES;
+    
+}
+
+- (void)doneLoadingTableViewData{
+    
+    //  model should call this when its done loading
+    _reloading = NO;
+    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:attendedTableView];
+    
+}
+
+#pragma mark UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
+    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    
+    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    
+}
+
+#pragma mark EGORefreshTableHeaderDelegate Methods
+
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
+    
+    [self reloadTableViewDataSource];
+    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
+    
+}
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
+    
+    return _reloading; // should return if data source model is reloading
+    
+}
+
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
+    
+    return [NSDate date]; // should return date data source was last changed
+    
 }
 
 @end

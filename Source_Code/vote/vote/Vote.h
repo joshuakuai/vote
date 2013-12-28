@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum{greenArrow = 0,blueArrow,redArrow,yellowArrow,grayArrow}VoteArrowColor;
+typedef enum{greenArrow = 0,blueArrow,yellowArrow,redArrow,grayArrow}VoteArrowColor;
 
 @interface Vote : NSObject
 

@@ -270,7 +270,7 @@
             VoteSearchResultCell *tmpCellView = [[VoteSearchResultCell alloc] init];
         
             tmpCellView.indexNumber = indexPath.row;
-        
+            
             //get the vote object
             Vote *tmpVote = [_voteByLocationArray objectAtIndex:indexPath.row];
             tmpCellView.arrowCorlor = tmpVote.colorIndex;

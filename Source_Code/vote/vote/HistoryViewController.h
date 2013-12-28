@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "EGORefreshTableHeaderView.h"
 
-@interface HistoryViewController : BaseViewController
+@interface HistoryViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, EGORefreshTableDelegate>
 
 @property NSString *emailAddress;
 @property (strong, nonatomic) UISegmentedControl *historySegment;
