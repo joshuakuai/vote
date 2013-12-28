@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
+#import "OptionView.h"
 
-@interface HistoryViewController : BaseViewController
+@interface HistoryViewController : BaseViewController<OptionViewDelegate>
 
 @property NSString *emailAddress;
 @property (strong, nonatomic) UISegmentedControl *historySegment;

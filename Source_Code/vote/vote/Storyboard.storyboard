@@ -420,10 +420,10 @@
             </objects>
             <point key="canvasLocation" x="3129" y="-619"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Root Tab Bar Controller-->
         <scene sceneID="RGc-2N-CTc">
             <objects>
-                <tabBarController definesPresentationContext="YES" id="iAs-DH-6sZ" sceneMemberID="viewController">
+                <tabBarController definesPresentationContext="YES" id="iAs-DH-6sZ" customClass="RootTabBarController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Gln-Wr-BlU"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="MXd-yY-1TK">
@@ -647,7 +647,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="2iS-F0-yxh"/>
         <segue reference="829-Ub-LCV"/>
+        <segue reference="2iS-F0-yxh"/>
     </inferredMetricsTieBreakers>
 </document>

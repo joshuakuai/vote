@@ -29,4 +29,21 @@
     }
 }
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignOut) name:@"UserLogout" object:nil];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)userSignOut
+{
+    [self.navigationController popToRootViewControllerAnimated:NO];
+}
+
 @end

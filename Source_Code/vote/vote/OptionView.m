@@ -39,6 +39,33 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (!self.delegate ||
+        ![self.delegate respondsToSelector:@selector(signoutButtonTapped)] ||
+        ![self.delegate respondsToSelector:@selector(setPasswordButtonTapped)] ||
+        ![self.delegate respondsToSelector:@selector(aboutButtonTapped)]) {
+        return;
+    }
+    
+    switch (indexPath.row) {
+        case 0:
+            //Set password
+            [self.delegate setPasswordButtonTapped];
+            break;
+            
+        case 1:
+            //Sign Out
+            [self.delegate signoutButtonTapped];
+            break;
+            
+        case 2:
+            //About page
+            [self.delegate aboutButtonTapped];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -58,6 +85,8 @@
         cell.backgroundColor =  RGBColor(80, 130, 227, 1);
         
         CellIndexCircle *indexCircle = [[CellIndexCircle alloc] initWithNumber:indexPath.row+1 location:CGPointMake(7, 7)];
+        [indexCircle setCircleColorWhile];
+        indexCircle.indexLabel.textColor = [UIColor whiteColor];
         [cell addSubview:indexCircle];
         
         UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, 116, 44)];
