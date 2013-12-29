@@ -18,12 +18,12 @@
         self.image = [UIImage imageNamed:@"CellIndexCircle"];
         
         //add this label to the circle
-        _indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(2, 2, 26, 26)];
-        _indexLabel.font = [UIFont systemFontOfSize:12];
-        _indexLabel.textAlignment = NSTextAlignmentCenter;
-        _indexLabel.text = [NSString stringWithFormat:@"%d",number];
+        self.indexLabel = [[UILabel alloc] initWithFrame:CGRectMake(2, 2, 26, 26)];
+        self.indexLabel.font = [UIFont systemFontOfSize:12];
+        self.indexLabel.textAlignment = NSTextAlignmentCenter;
+        self.indexLabel.text = [NSString stringWithFormat:@"%d",number];
         
-        [self addSubview:_indexLabel];
+        [self addSubview:self.indexLabel];
     }
     
     return self;
@@ -31,12 +31,17 @@
 
 - (void)dealloc
 {
-    _indexLabel = nil;
+    self.indexLabel = nil;
 }
 
 - (void)setNumber:(int)number
 {
-    _indexLabel.text = [NSString stringWithFormat:@"%ld",(long)number];
+    self.indexLabel.text = [NSString stringWithFormat:@"%ld",(long)number];
+}
+
+- (void)setCircleColorWhile
+{
+    self.image = [UIImage imageNamed:@"CellIndexCircleWhile"];
 }
 
 @end

@@ -9,12 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 #import "EGORefreshTableHeaderView.h"
+#import "OptionView.h"
 
-@interface HistoryViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, EGORefreshTableDelegate>
+@interface HistoryViewController : BaseViewController<UITableViewDataSource, UITableViewDelegate, EGORefreshTableDelegate,OptionViewDelegate>
 
 @property NSString *emailAddress;
 @property (strong, nonatomic) UISegmentedControl *historySegment;
 @property NSArray *voteHistoryArray;
-
 
 @end

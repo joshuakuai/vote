@@ -31,7 +31,7 @@
         //set the tab bar item background
         [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"AttendTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"AttendTabBarNormal"]];
         
-        self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 1.5, -6, -1.5);
+        self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
     }
     
     return self;

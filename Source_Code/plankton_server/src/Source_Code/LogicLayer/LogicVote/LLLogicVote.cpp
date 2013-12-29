@@ -169,10 +169,11 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 		}
 		case IndexHistory: {
 			int userid = receivedValue["userid"].asInt();
-			int requestType = receivedValue["requestType"].asInt();
-			sendValue["success"] = this->getHistoryVoteList(userid, requestType,
+			int indexType = receivedValue["indextype"].asInt();
+			cout << "IndexType is " << indexType << endl;
+			sendValue["success"] = this->getHistoryVoteList(userid, indexType,
 					sendValue);
-			sendValue["requestType"] = requestType;
+			sendValue["indextype"] = indexType;
 			break;
 		}
 		case ViewHistoryVote: {
@@ -752,18 +753,23 @@ bool LLLogicVote::getHistoryVoteList(int userid, int requestType,
 		arrayItem["title"] = voteList[i].title;
 		arrayItem["color"] = voteList[i].colorIndex;
 		arrayItem["maxvaliduser"] = voteList[i].maxValidUser;
-		arrayItem["cteatetime"] = Converter::time_t_to_mysql_datetime_string(
+		arrayItem["createtime"] = Converter::time_t_to_mysql_datetime_string(
 				voteList[i].createTime);
 		arrayItem["endtime"] = Converter::time_t_to_mysql_datetime_string(
 				voteList[i].endTime);
 		arrayItem["voteid"] = voteList[i].voteid;
 		arrayItem["initiatorid"] = voteList[i].initiatorid;
+		User tmpUser(this->database);
+		tmpUser.userid = voteList[i].initiatorid;
+		tmpUser.getUserByID();
+		arrayItem["initiator"] = tmpUser.firstName + " " + tmpUser.lastName;
 		arrayItem["currentvalidvote"] = voteList[i].currentValidNumber();
 
 		arrayValue.append(arrayItem);
 	}
 
 	sendValue["historylist"] = arrayValue;
+	sendValue["servercurrentime"] = Converter::time_t_to_mysql_datetime_string(time(NULL));
 
 	return true;
 }

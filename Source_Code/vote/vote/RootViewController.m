@@ -32,11 +32,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userSignOut) name:@"UserLogout" object:nil];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)dealloc
 {
-    [super didReceiveMemoryWarning];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)userSignOut
+{
+    [self.navigationController popToRootViewControllerAnimated:NO];
 }
 
 @end

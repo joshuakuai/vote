@@ -17,6 +17,8 @@
     //Hide the status bar
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     
+    [[UITabBar appearance] setSelectedImageTintColor:[UIColor redColor]];
+    
     //set the test flight
     [TestFlight takeOff:@"773a0aab-1730-4c9d-ae56-9b25276f6b94"];
     

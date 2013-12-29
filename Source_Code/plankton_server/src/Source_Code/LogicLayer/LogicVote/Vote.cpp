@@ -434,7 +434,7 @@ vector<Vote> Vote::getVoteHistoryWithInitiatorID() {
 vector<Vote> Vote::getVoteHistoryWithParticipantsID(int participantID) {
 	std::ostringstream stringStream;
 	stringStream
-			<< "SELECT vote.idvote,vote.idinitiator,vote.title,vote.max_valid_user,vote.password,vote.longitude,vote.latitude,vote.create_time,vote.end_time,vote.is_finished,vote.color_index"
+			<< "SELECT vote.idvote,vote.idinitiator,vote.title,vote.max_valid_user,vote.password,vote.longitude,vote.latitude,vote.create_time,vote.end_time,vote.is_finish,vote.color_index"
 			<< " FROM vote,voteOption,voteSelection,user WHERE user.iduser="
 			<< participantID
 			<< " AND user.iduser=voteSelection.iduser AND voteSelection.idvoteOption=voteOption.idvoteOption AND voteOption.idvote=vote.idvote;";
