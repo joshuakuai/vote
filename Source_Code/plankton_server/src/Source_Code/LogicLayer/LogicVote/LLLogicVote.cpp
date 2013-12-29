@@ -183,6 +183,13 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 					sendValue);
 			break;
 		}
+		case SetPassword: {
+			int userid = receivedValue["userid"].asInt();
+			string newPass = receivedValue["newpass"].asString();
+			string oldPass = receivedValue["oldpass"].asString();
+			sendValue["success"] = this->setPassword(userid,oldPass,newPass);
+			break;
+		}
 		default: {
 			return "{\"msg\":\"Invalid request type\",\"success\":false}";
 			break;
@@ -192,7 +199,7 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 		return "{\"msg\":\"Invalid jsonString\",\"success\":false}";
 	}
 
-	if (!sendValue["msg"].asBool()) {
+	if (!sendValue["success"].asBool()) {
 		sendValue["msg"] = this->errorString;
 	}
 
@@ -721,7 +728,8 @@ bool LLLogicVote::viewProcessingVote(int voteid, string password,
 				tmpVote.createTime);
 		sendValue["endtime"] = Converter::time_t_to_mysql_datetime_string(
 				tmpVote.endTime);
-		sendValue["servercurrentime"] = Converter::time_t_to_mysql_datetime_string(time(NULL));
+		sendValue["servercurrentime"] =
+				Converter::time_t_to_mysql_datetime_string(time(NULL));
 
 		return true;
 	} else {
@@ -769,7 +777,8 @@ bool LLLogicVote::getHistoryVoteList(int userid, int requestType,
 	}
 
 	sendValue["historylist"] = arrayValue;
-	sendValue["servercurrentime"] = Converter::time_t_to_mysql_datetime_string(time(NULL));
+	sendValue["servercurrentime"] = Converter::time_t_to_mysql_datetime_string(
+			time(NULL));
 
 	return true;
 }
@@ -817,4 +826,30 @@ bool LLLogicVote::viewHistoryVoteDetial(int voteid, int userid,
 	sendValue["userselection"] = userSelectionValue;
 
 	return true;
+}
+
+bool LLLogicVote::setPassword(int userid, string oldPass, string newPass) {
+	User tmpUser(this->database);
+	tmpUser.userid = userid;
+	tmpUser.getUserByID();
+	if(!tmpUser.password.empty()){
+		MD5 md5(oldPass);
+		string md5OldPassword = md5.md5();
+		if(md5OldPassword.compare(tmpUser.password) != 0){
+			this->errorString = "Old Password does not match!";
+			return false;
+		}
+	}
+
+	//if the user don't have any password or the password confirmed
+	MD5 md5(newPass);
+	tmpUser.password = md5.md5();
+	int result = tmpUser.updateUser();
+
+	if(!result){
+		this->errorString = "Failed to change password.";
+		return false;
+	}else{
+		return true;
+	}
 }

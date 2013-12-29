@@ -41,7 +41,8 @@ public:
 		JoinVote,
 		ViewProcessingVote,
 		IndexHistory,
-		ViewHistoryVote
+		ViewHistoryVote,
+		SetPassword
 	} VoteRequestType;
 
 	LLLogicVote() {
@@ -138,6 +139,10 @@ private:
 
 	//view the history vote detial
 	bool viewHistoryVoteDetial(int voteid, int userid, Json::Value &sendValue);
+
+	//set password
+	bool setPassword(int userid, string oldPass, string newPass);
+
 	//登录
 	//bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);
 };
