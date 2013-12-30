@@ -190,6 +190,11 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			sendValue["success"] = this->setPassword(userid,oldPass,newPass);
 			break;
 		}
+		case AutoPassword:{
+			int userid = receivedValue["userid"].asInt();
+			sendValue["success"] = this->generateAutoPassword(userid);
+			break;
+		}
 		default: {
 			return "{\"msg\":\"Invalid request type\",\"success\":false}";
 			break;
@@ -833,6 +838,11 @@ bool LLLogicVote::setPassword(int userid, string oldPass, string newPass) {
 	tmpUser.userid = userid;
 	tmpUser.getUserByID();
 	if(!tmpUser.password.empty()){
+		if(oldPass.empty() || oldPass.compare("") == 0){
+			this->errorString = "Old Password can't be nil.";
+			return false;
+		}
+
 		MD5 md5(oldPass);
 		string md5OldPassword = md5.md5();
 		if(md5OldPassword.compare(tmpUser.password) != 0){
@@ -884,7 +894,7 @@ bool LLLogicVote::generateAutoPassword(int userid)
 		randomPassword += (char)ranNum;
 	}
 
-	if(this->setPassword(userid,NULL,randomPassword)){
+	if(this->setPassword(userid,"",randomPassword)){
 		User tmpUser(this->database);
 		tmpUser.userid = userid;
 		tmpUser.getUserByID();
