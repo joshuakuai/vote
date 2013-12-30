@@ -142,30 +142,14 @@
             [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasPassword"];
         }
         
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         //get the token
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert)];
         
         [self performSegueWithIdentifier:@"codeViewShowMainViewSegue" sender:self];
     }else{
         [self showErrorMessage:[cacheDic valueForKey:@"msg"]];
-    }
-}
-
-- (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
-{
-    [self dismissLoadingView];
-    if (error) {
-        [self showErrorMessage:[error description]];
-    }else{
-        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
-    }
-}
-
-- (void)connectionClosed:(PLServer *)plServer
-{
-    if (isShowingLoadingView) {
-        [self dismissLoadingView];
-        [self showErrorMessage:@"Lost connection,check your internet connection."];
     }
 }
 

@@ -22,7 +22,6 @@
     NSArray *attendArrowButtonArray;
     NSArray *initiatedArrowButtonArray;
     
-    
     //模拟需要
     NSArray *attendedVoteList;
     NSArray *initiateVoteList;
@@ -399,6 +398,7 @@
 {
     //set the user id as 0
     [[NSUserDefaults standardUserDefaults] setInteger:0 forKey:@"userid"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     //dismiss the tab bar controller
     [self.tabBarController dismissViewControllerAnimated:YES completion:^(void){
@@ -409,6 +409,7 @@
 - (void)setPasswordButtonTapped
 {
     //show set password controller view
+    [self performSegueWithIdentifier:@"historyViewShowSetPasswordViewSegue" sender:self];
 }
 
 - (void)aboutButtonTapped
@@ -424,7 +425,7 @@
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     
-    NSLog(@"%@",cacheDic);
+    //NSLog(@"%@",cacheDic);
     
     if (result) {
         //check if is the refresh by location
@@ -510,25 +511,6 @@
     
     return tempAttendArray;
 }
-
-- (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
-{
-    [self dismissLoadingView];
-    if (error) {
-        [self showErrorMessage:[error description]];
-    }else{
-        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
-    }
-}
-
-- (void)connectionClosed:(PLServer *)plServer
-{
-    if (isShowingLoadingView) {
-        [self dismissLoadingView];
-        [self showErrorMessage:@"Lost connection,check your internet connection."];
-    }
-}
-
 
  
 #pragma mark table view setting

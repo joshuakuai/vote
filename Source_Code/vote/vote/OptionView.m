@@ -83,18 +83,18 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
         cell.backgroundColor =  RGBColor(80, 130, 227, 1);
-        
-        CellIndexCircle *indexCircle = [[CellIndexCircle alloc] initWithNumber:indexPath.row+1 location:CGPointMake(7, 7)];
-        [indexCircle setCircleColorWhile];
-        indexCircle.indexLabel.textColor = [UIColor whiteColor];
-        [cell addSubview:indexCircle];
-        
-        UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, 116, 44)];
-        cellLabel.textColor = [UIColor whiteColor];
-        cellLabel.text = [selectionTitleArray objectAtIndex:indexPath.row];
-        cellLabel.font = [UIFont systemFontOfSize:10];
-        [cell addSubview:cellLabel];
     }
+    
+    CellIndexCircle *indexCircle = [[CellIndexCircle alloc] initWithNumber:indexPath.row+1 location:CGPointMake(7, 7)];
+    [indexCircle setCircleColorWhile];
+    indexCircle.indexLabel.textColor = [UIColor whiteColor];
+    [cell addSubview:indexCircle];
+    
+    UILabel *cellLabel = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, 116, 44)];
+    cellLabel.textColor = [UIColor whiteColor];
+    cellLabel.text = [selectionTitleArray objectAtIndex:indexPath.row];
+    cellLabel.font = [UIFont systemFontOfSize:13];
+    [cell addSubview:cellLabel];
     
     return cell;
 }

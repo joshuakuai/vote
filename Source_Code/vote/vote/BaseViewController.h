@@ -22,4 +22,8 @@
 - (void)loadingViewDidUnload;
 - (void)showErrorMessage:(NSString*)content;
 
+//PLServer delegate methods
+- (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error;
+- (void)connectionClosed:(PLServer *)plServer;
+
 @end

@@ -436,22 +436,14 @@
 
 - (void)plServer:(PLServer *)plServer failedWithError:(NSError *)error
 {
-    [self dismissLoadingView];
+    [super plServer:plServer failedWithError:error];
     [self doneLoadingVoteNearBy];
-    if (error) {
-        [self showErrorMessage:[error description]];
-    }else{
-        [self showErrorMessage:@"We're experiencing some technique problems, please try again later."];
-    }
 }
 
 - (void)connectionClosed:(PLServer *)plServer
 {
-    if (isShowingLoadingView) {
-        [self dismissLoadingView];
-        [self doneLoadingVoteNearBy];
-        [self showErrorMessage:@"Lost connection,check your internet connection."];
-    }
+    [self doneLoadingVoteNearBy];
+    [super connectionClosed:plServer];
 }
 
 
