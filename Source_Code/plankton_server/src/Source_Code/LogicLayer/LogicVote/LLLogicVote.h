@@ -42,7 +42,8 @@ public:
 		ViewProcessingVote,
 		IndexHistory,
 		ViewHistoryVote,
-		SetPassword
+		SetPassword,
+		AutoPassword
 	} VoteRequestType;
 
 	LLLogicVote() {
@@ -142,6 +143,9 @@ private:
 
 	//set password
 	bool setPassword(int userid, string oldPass, string newPass);
+
+	//will send Email after generate auto password.
+	bool generateAutoPassword(int userid);
 
 	//登录
 	//bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);

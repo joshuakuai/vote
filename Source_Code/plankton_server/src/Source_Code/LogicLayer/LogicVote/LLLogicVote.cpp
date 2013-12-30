@@ -853,3 +853,49 @@ bool LLLogicVote::setPassword(int userid, string oldPass, string newPass) {
 		return true;
 	}
 }
+
+bool LLLogicVote::generateAutoPassword(int userid)
+{
+	//auto generate password
+	time_t timeTmp = time(NULL);
+
+	//8 digital
+	string randomPassword = "";
+
+	srand((unsigned) timeTmp);
+	for (short i = 0; i < 8; i++) {
+		int ranNum;
+		if((rand() % 10) > 5){
+			//number
+			ranNum = rand() % 10;
+			ranNum += 48;
+		}else{
+			ranNum = rand() % 26;
+			//char
+			if((rand() % 10) > 5){
+				//up letter
+				ranNum += 65;
+			}else{
+				//low case letter
+				ranNum += 97;
+			}
+		}
+
+		randomPassword += (char)ranNum;
+	}
+
+	if(this->setPassword(userid,NULL,randomPassword)){
+		User tmpUser(this->database);
+		tmpUser.userid = userid;
+		tmpUser.getUserByID();
+		//send the password to the email
+		string mailContent =
+				"Dear voter,\n\nYour new password is " + randomPassword
+						+ ".\nPlease use your new password to login next time.\n\nThank you.\nRampageworks";
+		mailManager->sendMail(mailContent, tmpUser.email, "[Vote]Your new Password");
+
+		return true;
+	}else{
+		return false;
+	}
+}
