@@ -51,6 +51,7 @@
 		AA92B1D9186DC73200F70241 /* RootTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA92B1D8186DC73200F70241 /* RootTabBarController.m */; };
 		AA92B1DD1871327B00F70241 /* SettingPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA92B1DC1871327B00F70241 /* SettingPasswordViewController.m */; };
 		AA92B1E018725EC100F70241 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA92B1DF18725EC100F70241 /* AboutViewController.m */; };
+		AA92B1E818731D3000F70241 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA92B1E718731D3000F70241 /* AMBlurView.m */; };
 		AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */; };
 		AAAB414E183065B000A968EA /* searchVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB414D183065B000A968EA /* searchVoteViewController.m */; };
 		AAAB4151183079BC00A968EA /* NSDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */; };
@@ -153,6 +154,8 @@
 		AA92B1DC1871327B00F70241 /* SettingPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingPasswordViewController.m; sourceTree = "<group>"; };
 		AA92B1DE18725EC100F70241 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		AA92B1DF18725EC100F70241 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		AA92B1E618731D3000F70241 /* AMBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBlurView.h; sourceTree = "<group>"; };
+		AA92B1E718731D3000F70241 /* AMBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBlurView.m; sourceTree = "<group>"; };
 		AA9B75FE1829BBA800970739 /* NSMutableDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+PLPackage.h"; sourceTree = "<group>"; };
 		AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+PLPackage.m"; sourceTree = "<group>"; };
 		AAAB414C183065B000A968EA /* searchVoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchVoteViewController.h; sourceTree = "<group>"; };
@@ -355,6 +358,7 @@
 		AA3F90171826EE61007ABF9B /* libs */ = {
 			isa = PBXGroup;
 			children = (
+				AA92B1E518731D3000F70241 /* AMBLurView */,
 				E9D484A3184AFA3600CD5110 /* TestFlightSDK2 */,
 				AA3A287C18314641004B8791 /* EGO */,
 				AA3F90181826EE61007ABF9B /* PlanktonServerSDK */,
@@ -432,6 +436,15 @@
 				AA92B1DF18725EC100F70241 /* AboutViewController.m */,
 			);
 			name = VoteOption;
+			sourceTree = "<group>";
+		};
+		AA92B1E518731D3000F70241 /* AMBLurView */ = {
+			isa = PBXGroup;
+			children = (
+				AA92B1E618731D3000F70241 /* AMBlurView.h */,
+				AA92B1E718731D3000F70241 /* AMBlurView.m */,
+			);
+			path = AMBLurView;
 			sourceTree = "<group>";
 		};
 		AAAB41541830955200A968EA /* UserManagementControllers */ = {
@@ -603,6 +616,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA3A288318314641004B8791 /* EGORefreshTableHeaderView.m in Sources */,
+				AA92B1E818731D3000F70241 /* AMBlurView.m in Sources */,
 				AA4609D8184A3486002D398B /* TitleView.m in Sources */,
 				AA58D3F1182EBE5E00D9B9A5 /* BaseViewController.m in Sources */,
 				AA58D3BE182EB94900D9B9A5 /* AsyncSocket.m in Sources */,
