@@ -438,11 +438,13 @@
                     <connections>
                         <outlet property="voteSearchBar" destination="NOK-el-0hu" id="spL-hl-wnT"/>
                         <segue destination="9E5-Rk-q8a" kind="push" identifier="mainViewShowVotePasswordViewSegue" id="j1A-cE-SqE"/>
+                        <segue destination="09o-P6-fgf" kind="modal" identifier="searchViewShowSetPasswordViewSegue" id="lV4-dE-BMN"/>
+                        <segue destination="x7I-BJ-tfv" kind="modal" identifier="searchViewShowAboutViewSegue" id="8YX-5I-Z7C"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iB7-0d-bWd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3655" y="255"/>
+            <point key="canvasLocation" x="3695" y="267"/>
         </scene>
         <!--Password Enter View Controller-->
         <scene sceneID="v1F-xP-69V">
@@ -718,8 +720,6 @@
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="rRZ-pZ-Vwi" kind="relationship" relationship="rootViewController" id="1a9-oG-Zsy"/>
-                        <segue destination="09o-P6-fgf" kind="modal" identifier="searchViewShowSetPasswordViewSegue" id="HQm-gg-BH9"/>
-                        <segue destination="x7I-BJ-tfv" kind="modal" identifier="searchViewShowAboutViewSegue" id="WYj-3B-i8P"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i9g-Qz-rVP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -776,7 +776,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="2iS-F0-yxh"/>
         <segue reference="pCz-Ul-wtn"/>
-        <segue reference="DRN-sA-Ps4"/>
-        <segue reference="o0q-HP-ZSD"/>
+        <segue reference="8YX-5I-Z7C"/>
+        <segue reference="lV4-dE-BMN"/>
     </inferredMetricsTieBreakers>
 </document>
