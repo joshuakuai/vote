@@ -520,6 +520,37 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="I4N-9b-Z5k">
+                                <rect key="frame" x="91" y="290" width="139" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Done" backgroundImage="BlueSolidArrow">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setPassword:" destination="LWx-pm-Aa2" eventType="touchUpInside" id="La9-9Z-Hwp"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" id="CmK-Be-lSf">
+                                <rect key="frame" x="0.0" y="335" width="320" height="74"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Or we can automatically generate a password for you and send it to your Email address." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jF9-bh-ut8">
+                                        <rect key="frame" x="58" y="6" width="247" height="61"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlackCheckMark" id="fT3-K7-kay">
+                                        <rect key="frame" x="20" y="22" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="xGn-lp-QBY" appends="YES" id="WGz-8w-HGg"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -531,8 +562,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="automaticGeneratePasswordView" destination="CmK-Be-lSf" id="XAl-gu-mmu"/>
                         <outlet property="confirmNewPasswordLabel" destination="7EN-3L-NGZ" id="uc9-l6-pSX"/>
                         <outlet property="confrimNewPasswordTextField" destination="TiS-qB-vtZ" id="j32-25-QRc"/>
+                        <outlet property="doneButton" destination="I4N-9b-Z5k" id="xcm-Zb-xC3"/>
                         <outlet property="oldPasswordLabel" destination="r3a-ze-vj2" id="sb2-RP-5rx"/>
                         <outlet property="oldPasswordTextField" destination="IsV-tL-dDb" id="xf8-5K-bVE"/>
                         <outlet property="theNewPasswordLabel" destination="kNv-Hp-nub" id="YhS-nE-iv3"/>
@@ -540,6 +573,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T0i-ao-OAw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="xGn-lp-QBY">
+                    <connections>
+                        <action selector="automaticGeneratePassword:" destination="LWx-pm-Aa2" id="sSw-GE-FH6"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3017" y="1090"/>
         </scene>
@@ -682,6 +720,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="BlackCheckMark" width="45" height="46"/>
         <image name="BlueSolidArrow" width="391" height="75"/>
         <image name="CellIndexCircle" width="51" height="51"/>
     </resources>
