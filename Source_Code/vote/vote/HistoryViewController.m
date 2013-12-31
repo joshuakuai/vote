@@ -22,7 +22,6 @@
     NSArray *attendArrowButtonArray;
     NSArray *initiatedArrowButtonArray;
     
-    //模拟需要
     NSArray *attendedVoteList;
     NSArray *initiateVoteList;
     
@@ -73,7 +72,7 @@
     
     
     solidArrowImage = [[NSArray alloc] initWithObjects:@"GreenSolidArrow", @"BlueSolidArrow", @"YellowSolidArrow", @"RedSolidArrow", @"GraySolidArrow", nil];
-	// Do any additional setup after loading the view.
+
     _titleImage = @"titleImage";
     UIImageView *titleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:_titleImage]];
     titleImageView.frame = CGRectMake(60, 10, 200, 100);
@@ -127,20 +126,15 @@
     numberOfAllAttendedVotes = attendedVoteList.count;
     numberOfAllInitiatedVotes = initiateVoteList.count;
     
-    if (_refreshHeaderViewAttended == nil) {
-        
-        _refreshHeaderViewAttended = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableFrame.size.height, tableFrame.size.width, tableFrame.size.height)];
-        _refreshHeaderViewAttended.delegate = self;
-        [attendedTableView addSubview:_refreshHeaderViewAttended];
-    }
+    _refreshHeaderViewAttended = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableFrame.size.height, tableFrame.size.width, tableFrame.size.height)];
+    _refreshHeaderViewAttended.delegate = self;
+    [attendedTableView addSubview:_refreshHeaderViewAttended];
     [_refreshHeaderViewAttended refreshLastUpdatedDate];
     _reloadAttendedData = NO;
     
-    if (_refreshHeaderViewInitiated == nil) {
-        _refreshHeaderViewInitiated = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableFrame.size.height, tableFrame.size.width, tableFrame.size.height)];
-        _refreshHeaderViewInitiated.delegate = self;
-        [initiatedTableView addSubview:_refreshHeaderViewInitiated];
-    }
+    _refreshHeaderViewInitiated = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - tableFrame.size.height, tableFrame.size.width, tableFrame.size.height)];
+    _refreshHeaderViewInitiated.delegate = self;
+    [initiatedTableView addSubview:_refreshHeaderViewInitiated];
     [_refreshHeaderViewInitiated refreshLastUpdatedDate];
     _reloadInitiatedData = NO;
     
@@ -162,198 +156,14 @@
 - (void)dealloc
 {
     self.historySegment = nil;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    //get the data from server, initia first
-    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:IndexHistory];
-    [dic setObject:[NSNumber numberWithInt:1] forKey:@"indextype"];
-    [dic setObject:UserId forKey:@"userid"];
-    
-    //NSLog(@"%@",[dic description]);
-    
-    [[PLServer shareInstance] sendDataWithDic:dic];
-    
-    [self showLoadingView:@"" isWithCancelButton:NO];
+    self.voteHistoryArray = nil;
+    self.emailAddress = nil;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [attendedTableView setContentOffset:CGPointMake(0, -70) animated:YES];
 }
-
-/*
-- (void)refresh
-{
-    if (attendedScrollView || initiatedScrollView) {
-        [attendedScrollView removeFromSuperview];
-        [initiatedScrollView removeFromSuperview];
-        attendedScrollView = nil;
-        initiatedScrollView = nil;
-    }
-    
-    //共用数据
-    GLfloat sizeOfIndexImage = 20;
-    GLfloat leftMargin = 30;
-    GLfloat heightOftimeLabel = 15;
-    GLfloat heightOfArrowButton = 50;
-    GLfloat heightOfStateLabel = 15;
-    GLfloat intervalBetweenEachVoteView = 5;
-    
-#pragma mark attended part
-    //初始化数据
-    numberOfAllAttendedVotes = attendedVoteList.count;
-    CGRect firstVoteViewFrame = CGRectMake(11, 0, 298, 70);
-    CGFloat heightOfeachVoteImageView = heightOftimeLabel + heightOfArrowButton + heightOfStateLabel;
-    
-
-    attendedScrollView = [[UIScrollView alloc] init];
-    attendedScrollView.frame = CGRectMake(0, 170, 320, 349);
-    //  attendedScrollView.layer.borderWidth = 1;
-    attendedScrollView.hidden = NO;
-    [historyContentView addSubview:attendedScrollView];
-    
-    attendedScrollView.contentSize = CGSizeMake(320, (numberOfAllAttendedVotes - 1) * (heightOfeachVoteImageView + intervalBetweenEachVoteView) + heightOfeachVoteImageView);
-
-    
-    NSMutableArray *tempAttendArrowButtonArray = [[NSMutableArray alloc] initWithArray:attendArrowButtonArray];
-    
-    for (int i = 0 ; i < numberOfAllAttendedVotes; i++) {
-        
-        NSDictionary *tempDictionary = attendedVoteList[i];
-        UIView *eachVoteView = [[UIView alloc] init];
-        eachVoteView.frame = CGRectMake(firstVoteViewFrame.origin.x, firstVoteViewFrame.origin.y + i * (heightOfeachVoteImageView + intervalBetweenEachVoteView), firstVoteViewFrame.size.width, firstVoteViewFrame.size.height);
-        //eachVoteView.layer.borderWidth = 2;
-        [attendedScrollView addSubview:eachVoteView];
-        
-        UIImageView *indexImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:indexImage]];
-        indexImageView.frame = CGRectMake(0, (heightOfeachVoteImageView - sizeOfIndexImage) /2, sizeOfIndexImage, sizeOfIndexImage);
-        [eachVoteView addSubview:indexImageView];
-        
-        UILabel *indexLabel = [[UILabel alloc] init];
-        indexLabel.frame = CGRectMake(0, 0, sizeOfIndexImage, sizeOfIndexImage);
-        indexLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
-        indexLabel.textAlignment = NSTextAlignmentCenter;
-        indexLabel.text = [NSString stringWithFormat:@"%d", i+1];
-        [indexImageView addSubview:indexLabel];
-        
-        UILabel *timeLabel = [[UILabel alloc] init];
-        timeLabel.frame = CGRectMake(leftMargin, 0, 200, heightOftimeLabel);
-        timeLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
-        timeLabel.font = [UIFont systemFontOfSize:12];
-        timeLabel.text = [tempDictionary objectForKey:@"time"];
-        [eachVoteView addSubview:timeLabel];
-        
-        int indexOfcolor = [[tempDictionary objectForKey:@"colorIndex"] intValue];
-        NSString *arrowImage = solidArrowImage[indexOfcolor];
-        
-        UIButton *arrowButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        arrowButton.frame = CGRectMake(leftMargin, heightOftimeLabel, 298 - leftMargin, heightOfArrowButton);
-        [arrowButton setImage:[UIImage imageNamed:arrowImage]  forState:UIControlStateNormal];
-        [arrowButton setImage:[UIImage imageNamed:arrowImage]  forState:UIControlStateHighlighted];
-        [eachVoteView addSubview:arrowButton];
-        
-        [tempAttendArrowButtonArray addObject:arrowButton];
-        
-        UILabel *initiatorLabel = [[UILabel alloc] init];
-        initiatorLabel.frame = CGRectMake(0, 0, 298 - leftMargin, heightOfArrowButton);
-        initiatorLabel.textColor = [UIColor whiteColor];
-        initiatorLabel.textAlignment = NSTextAlignmentCenter;
-        initiatorLabel.text = [@"Initiator:" stringByAppendingString:[tempDictionary objectForKey:@"initiator"]];
-        [arrowButton addSubview:initiatorLabel];
-        
-        NSString *stateString = [tempDictionary objectForKey:@"state"];
-        UILabel *stateLabel = [[UILabel alloc] init];
-        stateLabel.frame = CGRectMake(leftMargin, heightOftimeLabel + heightOfArrowButton, 298 - leftMargin, heightOfStateLabel);
-        stateLabel.font = [UIFont systemFontOfSize:12];
-        stateLabel.textAlignment = NSTextAlignmentCenter;
-        timeLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
-        if ([stateString isEqualToString:@"YES"]) {
-            stateLabel.text = @"This vote is finished";
-        }else{
-            stateLabel.text = @"This vote is in progress";
-        }
-        [eachVoteView addSubview:stateLabel];
-        
-    }
-    attendArrowButtonArray = [[NSArray alloc] initWithArray:tempAttendArrowButtonArray];
-    
-    
-#pragma initiated part
-    numberOfAllInitiatedVotes = initiateVoteList.count;
-    initiatedScrollView = [[UIScrollView alloc] init];
-    initiatedScrollView.frame = CGRectMake(0, 170, 320, 349);
-    //initiatedScrollView.layer.borderWidth = 2;
-    initiatedScrollView.hidden = YES;
-    [historyContentView addSubview:initiatedScrollView];
-    initiatedScrollView.contentSize = CGSizeMake(320, (numberOfAllAttendedVotes - 1) * (heightOfeachVoteImageView + intervalBetweenEachVoteView) + heightOfeachVoteImageView);
-    
-    NSMutableArray *tempInitiatedArrowButtonArray = [[NSMutableArray alloc] initWithArray:initiatedArrowButtonArray];
-    
-    for (int i = 0; i < numberOfAllInitiatedVotes; i++) {
-        NSDictionary *tempDictionary = initiateVoteList[i];
-        UIView *eachVoteView = [[UIView alloc] init];
-        eachVoteView.frame = CGRectMake(firstVoteViewFrame.origin.x, firstVoteViewFrame.origin.y + i * (heightOfeachVoteImageView + intervalBetweenEachVoteView), firstVoteViewFrame.size.width, firstVoteViewFrame.size.height);
-        //eachVoteView.layer.borderWidth = 2;
-        [initiatedScrollView addSubview:eachVoteView];
-        
-        UIImageView *indexImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:indexImage]];
-        indexImageView.frame = CGRectMake(0, (heightOfeachVoteImageView - sizeOfIndexImage) /2, sizeOfIndexImage, sizeOfIndexImage);
-        [eachVoteView addSubview:indexImageView];
-        
-        UILabel *indexLabel = [[UILabel alloc] init];
-        indexLabel.frame = CGRectMake(0, 0, sizeOfIndexImage, sizeOfIndexImage);
-        indexLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
-        indexLabel.textAlignment = NSTextAlignmentCenter;
-        indexLabel.text = [NSString stringWithFormat:@"%d", i+1];
-        [indexImageView addSubview:indexLabel];
-        
-        UILabel *timeLabel = [[UILabel alloc] init];
-        timeLabel.frame = CGRectMake(leftMargin, 0, 200, heightOftimeLabel);
-        timeLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
-        timeLabel.font = [UIFont systemFontOfSize:12];
-        timeLabel.text = [tempDictionary objectForKey:@"time"];
-        [eachVoteView addSubview:timeLabel];
-        
-        int indexOfcolor = [[tempDictionary objectForKey:@"colorIndex"] intValue];
-        NSString *arrowImage = solidArrowImage[indexOfcolor];
-        
-        UIButton *arrowButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        arrowButton.frame = CGRectMake(leftMargin, heightOftimeLabel, 298 - leftMargin, heightOfArrowButton);
-        [arrowButton setImage:[UIImage imageNamed:arrowImage]  forState:UIControlStateNormal];
-        [arrowButton setImage:[UIImage imageNamed:arrowImage]  forState:UIControlStateHighlighted];
-        [eachVoteView addSubview:arrowButton];
-        
-        [tempAttendArrowButtonArray addObject:arrowButton];
-        
-        UILabel *initiatorLabel = [[UILabel alloc] init];
-        initiatorLabel.frame = CGRectMake(0, 0, 298 - leftMargin, heightOfArrowButton);
-        initiatorLabel.textColor = [UIColor whiteColor];
-        initiatorLabel.textAlignment = NSTextAlignmentCenter;
-        initiatorLabel.text = [@"Initiator:" stringByAppendingString:[tempDictionary objectForKey:@"initiator"]];
-        [arrowButton addSubview:initiatorLabel];
-        
-        NSString *stateString = [tempDictionary objectForKey:@"state"];
-        UILabel *stateLabel = [[UILabel alloc] init];
-        stateLabel.frame = CGRectMake(leftMargin, heightOftimeLabel + heightOfArrowButton, 298 - leftMargin, heightOfStateLabel);
-        stateLabel.font = [UIFont systemFontOfSize:12];
-        stateLabel.textAlignment = NSTextAlignmentCenter;
-        timeLabel.textColor = [UIColor colorWithRed:0.0 green:0.443 blue:0.737 alpha:1.0];
-        if ([stateString isEqualToString:@"YES"]) {
-            stateLabel.text = @"This vote is finished";
-        }else{
-            stateLabel.text = @"This vote is in progress";
-        }
-        [eachVoteView addSubview:stateLabel];
-    }
-    
-    initiatedArrowButtonArray = [[NSArray alloc] initWithArray:tempInitiatedArrowButtonArray];
-}
-*/
-
 
 - (void)historySwitchAction:(UIButton *)sender
 {
@@ -440,26 +250,18 @@
                 NSString *serverTimeString = [cacheDic objectForKey:@"servercurrentime"];
                 
                 if (indexType == 1) {
-                    //fullfill the data
                     NSArray *tempInitiateArray = [self getTempArray:historyDicArray serverTimeString:serverTimeString];
                     initiateVoteList = [[NSArray alloc] initWithArray:tempInitiateArray];
                     
-                    //request the particiapant
-                    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:IndexHistory];
-                    [dic setObject:[NSNumber numberWithInt:2] forKey:@"indextype"];
-                    [dic setObject:UserId forKey:@"userid"];
-                    
-                    [[PLServer shareInstance] sendDataWithDic:dic];
-                    
-                    [self showLoadingView:@"" isWithCancelButton:NO];
+                    [initiatedTableView reloadData];
                 }else{
-                    //refresh the scroll view
                     NSArray *tempAttendArray = [self getTempArray:historyDicArray serverTimeString:serverTimeString];
-                    
                     attendedVoteList = [[NSArray alloc] initWithArray:tempAttendArray];
                     
-                   // [self refresh];
+                    [attendedTableView reloadData];
                 }
+                
+                [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:1];
                 
                 break;
             }
@@ -513,12 +315,13 @@
     return tempAttendArray;
 }
 
+#pragma - mark Table view delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
  
 #pragma mark table view setting
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if ([tableView isEqual:attendedTableView]) {
         if (numberOfAllAttendedVotes) {
@@ -542,11 +345,6 @@
     GLfloat heightOfArrowButton = 50;
     GLfloat heightOfStateLabel = 15;
     return heightOftimeLabel + heightOfArrowButton + heightOfStateLabel;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -616,7 +414,7 @@
             tempCell.stateLabel.text = @"This vote is in progress";
         }
         
-        [cell addSubview:tempCell];
+        [cell.contentView addSubview:tempCell];
     }
     
     return cell;
@@ -624,29 +422,31 @@
 
 #pragma mark Data Source Loading / Reloading Methods
 - (void)reloadTableViewDataSource{
-    
-    //  should be calling your tableviews data source model to reload
-    //  put here just for demo
     _reloading = YES;
+    
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:IndexHistory];
+    [dic setObject:UserId forKey:@"userid"];
+    
     if (_reloadAttendedData) {
-        [attendedTableView reloadData];
+        //get the data from server, initia first
+        [dic setObject:[NSNumber numberWithInt:2] forKey:@"indextype"];
     }
     
     if (_reloadInitiatedData) {
-        [initiatedTableView reloadData];
+        [dic setObject:[NSNumber numberWithInt:1] forKey:@"indextype"];
     }
     
+    //NSLog(@"%@",[dic description]);
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
 }
 
 - (void)doneLoadingTableViewData{
-    
-    //  model should call this when its done loading
     _reloading = NO;
     _reloadAttendedData = NO;
     _reloadInitiatedData = NO;
     [_refreshHeaderViewAttended egoRefreshScrollViewDataSourceDidFinishedLoading:attendedTableView];
     [_refreshHeaderViewInitiated egoRefreshScrollViewDataSourceDidFinishedLoading:initiatedTableView];
-    
 }
 
 #pragma mark UIScrollViewDelegate Methods
@@ -660,17 +460,15 @@
         [_refreshHeaderViewInitiated egoRefreshScrollViewDidScroll:scrollView];
         _reloadInitiatedData = YES;
     }
-
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
     if ([scrollView isEqual:attendedTableView]) {
         [_refreshHeaderViewAttended egoRefreshScrollViewDidEndDragging:scrollView];
     } else {
         [_refreshHeaderViewInitiated egoRefreshScrollViewDidEndDragging:scrollView];
     }
-    
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
@@ -680,28 +478,16 @@
     } else {
         [_refreshHeaderViewInitiated egoRefreshScrollViewDidEndDragging:scrollView];
     }
-    
 }
 
 #pragma mark EGORefreshTableHeaderDelegate Methods
 - (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos
 {
     [self reloadTableViewDataSource];
-    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:1];
 }
 
-/*
-- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-    
-    [self reloadTableViewDataSource];
-    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:3.0];
-    
-}
-*/
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-    
     return _reloading; // should return if data source model is reloading
-    
 }
 
 - (NSDate*)egoRefreshTableDataSourceLastUpdated:(UIView*)view

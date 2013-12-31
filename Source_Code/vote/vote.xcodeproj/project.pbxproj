@@ -52,6 +52,7 @@
 		AA92B1DD1871327B00F70241 /* SettingPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA92B1DC1871327B00F70241 /* SettingPasswordViewController.m */; };
 		AA92B1E018725EC100F70241 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA92B1DF18725EC100F70241 /* AboutViewController.m */; };
 		AA92B1E818731D3000F70241 /* AMBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA92B1E718731D3000F70241 /* AMBlurView.m */; };
+		AA92B1EB18733E3C00F70241 /* VoteResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AA92B1EA18733E3C00F70241 /* VoteResultViewController.m */; };
 		AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */; };
 		AAAB414E183065B000A968EA /* searchVoteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB414D183065B000A968EA /* searchVoteViewController.m */; };
 		AAAB4151183079BC00A968EA /* NSDictionary+PLPackage.m in Sources */ = {isa = PBXBuildFile; fileRef = AAAB4150183079BC00A968EA /* NSDictionary+PLPackage.m */; };
@@ -156,6 +157,8 @@
 		AA92B1DF18725EC100F70241 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		AA92B1E618731D3000F70241 /* AMBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMBlurView.h; sourceTree = "<group>"; };
 		AA92B1E718731D3000F70241 /* AMBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMBlurView.m; sourceTree = "<group>"; };
+		AA92B1E918733E3C00F70241 /* VoteResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteResultViewController.h; sourceTree = "<group>"; };
+		AA92B1EA18733E3C00F70241 /* VoteResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteResultViewController.m; sourceTree = "<group>"; };
 		AA9B75FE1829BBA800970739 /* NSMutableDictionary+PLPackage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+PLPackage.h"; sourceTree = "<group>"; };
 		AA9B75FF1829BBA800970739 /* NSMutableDictionary+PLPackage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+PLPackage.m"; sourceTree = "<group>"; };
 		AAAB414C183065B000A968EA /* searchVoteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchVoteViewController.h; sourceTree = "<group>"; };
@@ -290,7 +293,6 @@
 			isa = PBXGroup;
 			children = (
 				AA92B1DA1871326200F70241 /* VoteOption */,
-				E97DCE6D184CEC3C00E59F4A /* Vote History */,
 				AADAE9181842B7C200DF1BD0 /* VoteHistoryControllers */,
 				AADAE9171842B7B400DF1BD0 /* InitializeVoteControllers */,
 				AA846833183849E500C9B632 /* Model */,
@@ -474,23 +476,18 @@
 		AADAE9181842B7C200DF1BD0 /* VoteHistoryControllers */ = {
 			isa = PBXGroup;
 			children = (
-				AA4609D0184A2C49002D398B /* DuplicateVoteHandleViewController.h */,
-				AA4609D1184A2C49002D398B /* DuplicateVoteHandleViewController.m */,
-				AA4609D3184A2D8F002D398B /* DuplicateListView.h */,
-				AA4609D4184A2D8F002D398B /* DuplicateListView.m */,
-			);
-			name = VoteHistoryControllers;
-			sourceTree = "<group>";
-		};
-		E97DCE6D184CEC3C00E59F4A /* Vote History */ = {
-			isa = PBXGroup;
-			children = (
 				E97DCE6E184CEC6B00E59F4A /* HistoryViewController.h */,
 				E97DCE6F184CEC6B00E59F4A /* HistoryViewController.m */,
 				E9C5DAAB186A57BC004D4EA7 /* HistoryResultCell.h */,
 				E9C5DAAC186A57BC004D4EA7 /* HistoryResultCell.m */,
+				AA4609D0184A2C49002D398B /* DuplicateVoteHandleViewController.h */,
+				AA4609D1184A2C49002D398B /* DuplicateVoteHandleViewController.m */,
+				AA4609D3184A2D8F002D398B /* DuplicateListView.h */,
+				AA4609D4184A2D8F002D398B /* DuplicateListView.m */,
+				AA92B1E918733E3C00F70241 /* VoteResultViewController.h */,
+				AA92B1EA18733E3C00F70241 /* VoteResultViewController.m */,
 			);
-			name = "Vote History";
+			name = VoteHistoryControllers;
 			sourceTree = "<group>";
 		};
 		E9D484A3184AFA3600CD5110 /* TestFlightSDK2 */ = {
@@ -647,6 +644,7 @@
 				AA3F90221826EE61007ABF9B /* JSONKit.m in Sources */,
 				AA4609D2184A2C49002D398B /* DuplicateVoteHandleViewController.m in Sources */,
 				AA92B1D9186DC73200F70241 /* RootTabBarController.m in Sources */,
+				AA92B1EB18733E3C00F70241 /* VoteResultViewController.m in Sources */,
 				AA92B1E018725EC100F70241 /* AboutViewController.m in Sources */,
 				E97DCE70184CEC6B00E59F4A /* HistoryViewController.m in Sources */,
 				AA9B76001829BBA800970739 /* NSMutableDictionary+PLPackage.m in Sources */,
