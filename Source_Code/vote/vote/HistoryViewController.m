@@ -415,6 +415,7 @@
 - (void)aboutButtonTapped
 {
     //show about controller view
+    [self performSegueWithIdentifier:@"historyViewShowAboutViewSegue" sender:self];
 }
 
 #pragma mark - PLServer delegate
