@@ -46,7 +46,7 @@
     
     if (self) {
         //set the tab bar item background
-        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"HistoryTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"HistoryTabBarNormal"]];
+        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"history_navigation_icon_blue"] withFinishedUnselectedImage:[UIImage imageNamed:@"history_navigation_icon_gray"]];
         self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
     }
     
