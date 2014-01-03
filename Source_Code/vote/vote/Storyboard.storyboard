@@ -657,7 +657,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" id="op4-vg-1UK">
-                                <rect key="frame" x="0.0" y="140" width="320" height="41"/>
+                                <rect key="frame" x="0.0" y="218" width="320" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flowerImage" id="Quz-q4-qOk">
@@ -681,7 +681,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="0RK-0g-xlo">
-                                <rect key="frame" x="0.0" y="189" width="320" height="21"/>
+                                <rect key="frame" x="0.0" y="267" width="320" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Options" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7E4-qc-Alm">
@@ -698,7 +698,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" id="9o7-B9-nQK">
-                                <rect key="frame" x="0.0" y="218" width="320" height="125"/>
+                                <rect key="frame" x="0.0" y="296" width="320" height="125"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CellIndexCircle" id="Pw0-iB-0JN">
@@ -758,6 +758,17 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlueCheckMark" id="bAb-5u-gpZ">
+                                <rect key="frame" x="47" y="140" width="21" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your vote is included!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="JeC-pk-WAQ">
+                                <rect key="frame" x="76" y="140" width="169" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -891,23 +902,16 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BlueCheckMark" id="SB3-TO-ohX">
-                                <rect key="frame" x="47" y="128" width="21" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your vote is included!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aJ4-WF-nhU">
-                                <rect key="frame" x="76" y="128" width="169" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="Bh1-8q-Aj8"/>
                     <connections>
+                        <outlet property="lefttimeLabel" destination="RNx-q7-AMe" id="Iei-L9-pcP"/>
+                        <outlet property="optionView" destination="XSn-4b-3Yl" id="3Ma-aF-bCJ"/>
                         <outlet property="pollNumberLabel" destination="BwK-hY-zfn" id="Lco-md-rnw"/>
+                        <outlet property="subjectLabel" destination="mpp-0j-65U" id="ayj-iC-Y51"/>
+                        <outlet property="subjectView" destination="CtP-9U-Q7j" id="eag-Ph-Blf"/>
                         <outlet property="userOptionImageView" destination="hUz-aj-Xh8" id="cvV-4t-OlP"/>
                         <outlet property="voteInfoView" destination="ovM-JO-Xnh" id="bID-s5-u15"/>
                         <outlet property="voteidLabel" destination="pbs-xP-DeW" id="9ds-kf-B83"/>
