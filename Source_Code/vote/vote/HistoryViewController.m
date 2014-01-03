@@ -8,7 +8,7 @@
 
 #import "HistoryViewController.h"
 #import "Vote.h"
-#import "HistoryResultCell.h"
+#import "ProcessingVoteViewController.h"
 
 @interface HistoryViewController ()
 {
@@ -19,8 +19,6 @@
     int numberOfAllInitiatedVotes;
     NSArray *solidArrowImage;
     NSString *indexImage;
-    NSArray *attendArrowButtonArray;
-    NSArray *initiatedArrowButtonArray;
     
     NSArray *attendedVoteList;
     NSArray *initiateVoteList;
@@ -34,6 +32,8 @@
     
     UIView *historyContentView;
     OptionView *optionView;
+    
+    NSDictionary *_cahcheVoteInfoDic;
 }
 
 @end
@@ -63,13 +63,10 @@
     optionView.delegate = self;
     
     indexImage = @"CellIndexCircle";
+    _cahcheVoteInfoDic = nil;
     
     attendedVoteList = [[NSArray alloc] initWithObjects: nil];
     initiateVoteList = [[NSArray alloc] initWithObjects: nil];
-    
-    attendArrowButtonArray = [[NSArray alloc] initWithObjects: nil];
-    initiatedArrowButtonArray = [[NSArray alloc] initWithObjects: nil];
-    
     
     solidArrowImage = [[NSArray alloc] initWithObjects:@"GreenSolidArrow", @"BlueSolidArrow", @"YellowSolidArrow", @"RedSolidArrow", @"GraySolidArrow", nil];
 
@@ -203,6 +200,37 @@
     }
 }
 
+//prepare the data, transfer to the next scene
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"historyViewShowProcessingVoteViewSegue"]) {
+        ProcessingVoteViewController *destViewController = segue.destinationViewController;
+        destViewController.voteid = [[_cahcheVoteInfoDic objectForKey:@"voteid"] integerValue];
+        destViewController.subjectString = [_cahcheVoteInfoDic objectForKey:@"subject"];
+        destViewController.userSelectedOptionID = [[[_cahcheVoteInfoDic objectForKey:@"userselection"] objectForKey:@"voteoptionid"] integerValue];
+        destViewController.optionDictionaryArray = [_cahcheVoteInfoDic objectForKey:@"selectionlist"];
+        
+        int pollNumber = 0;
+        for (NSDictionary *optionDic in destViewController.optionDictionaryArray) {
+            pollNumber += [[optionDic objectForKey:@"pollnumber"] integerValue];
+        }
+        destViewController.pollNumber = pollNumber;
+        
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *endTimeString = [_cahcheVoteInfoDic objectForKey:@"endtime"];
+        
+        NSDate *endTime = [df dateFromString:endTimeString];
+        NSDate *serverCurrentTime = [df dateFromString:[_cahcheVoteInfoDic objectForKey:@"servercurrentime"]];
+        
+        int intervall = (int) [endTime timeIntervalSinceDate: serverCurrentTime] / 60;
+        
+        destViewController.leftSeconds = intervall;
+
+    }else if([segue.identifier isEqualToString:@"historyViewShowVoteResultViewSegue"]){
+        
+    }
+}
+
 #pragma mark - Option View delegate
 - (void)signoutButtonTapped
 {
@@ -236,7 +264,7 @@
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     
-    //NSLog(@"%@",cacheDic);
+    NSLog(@"%@",cacheDic);
     
     if (result) {
         //check if is the refresh by location
@@ -266,6 +294,19 @@
                 break;
             }
                 
+            case ViewHistoryVote:{
+                //check if this vote has finished
+                BOOL isFinished = [[cacheDic objectForKey:@"isfinished"] boolValue];
+                
+                _cahcheVoteInfoDic = cacheDic;
+                
+                if (isFinished) {
+                    [self performSegueWithIdentifier:@"historyViewShowVoteResultViewSegue" sender:self];
+                }else{
+                    [self performSegueWithIdentifier:@"historyViewShowProcessingVoteViewSegue" sender:self];
+                }
+            }
+                
             default:
                 break;
         }
@@ -285,6 +326,7 @@
             [tmpDic setObject:[voteDic valueForKey:@"color"] forKey:@"colorIndex"];
             [tmpDic setObject:[voteDic valueForKey:@"createtime"] forKey:@"time"];
             [tmpDic setObject:[voteDic valueForKey:@"initiator"] forKey:@"initiator"];
+            [tmpDic setObject:[voteDic valueForKey:@"voteid"] forKey:@"voteid"];
             
             int currentUser = [[voteDic objectForKey:@"currentvalidvote"] intValue];
             int maxValidUser = [[voteDic objectForKey:@"maxvaliduser"] intValue];
@@ -315,13 +357,13 @@
     return tempAttendArray;
 }
 
-#pragma - mark Table view delegate
+#pragma mark - Table view delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
 }
  
-#pragma mark table view setting
+#pragma mark - table view setting
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if ([tableView isEqual:attendedTableView]) {
         if (numberOfAllAttendedVotes) {
@@ -389,9 +431,12 @@
         
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
         HistoryResultCell *tempCell = [[HistoryResultCell alloc] init];
+        
+        tempCell.delegate = self;
         
         //index number
         tempCell.indexNumber = indexPath.row;
@@ -420,7 +465,7 @@
     return cell;
 }
 
-#pragma mark Data Source Loading / Reloading Methods
+#pragma mark - Data Source Loading / Reloading Methods
 - (void)reloadTableViewDataSource{
     _reloading = YES;
     
@@ -449,7 +494,7 @@
     [_refreshHeaderViewInitiated egoRefreshScrollViewDataSourceDidFinishedLoading:initiatedTableView];
 }
 
-#pragma mark UIScrollViewDelegate Methods
+#pragma mark - UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
@@ -480,7 +525,7 @@
     }
 }
 
-#pragma mark EGORefreshTableHeaderDelegate Methods
+#pragma mark - EGORefreshTableHeaderDelegate Methods
 - (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos
 {
     [self reloadTableViewDataSource];
@@ -506,6 +551,28 @@
             historyContentView.frame = CGRectMake(0, 0, 320, ScreenHeigh);
         }];
     }
+}
+
+#pragma mark - History Result Cell delegate
+- (void)historyResultCellArrowButtonTapped:(HistoryResultCell*)historyCell
+{
+    NSDictionary *tempDictionary = nil;
+    if (self.historySegment.selectedSegmentIndex == 0) {
+        //attend table view
+        tempDictionary = attendedVoteList[historyCell.indexNumber];
+    }else{
+        //initiated table view
+        tempDictionary = initiateVoteList[historyCell.indexNumber];
+    }
+    
+    //request the vote data
+    NSMutableDictionary *dic = [NSMutableDictionary getRequestDicWithRequestType:ViewHistoryVote];
+    [dic setObject:UserId forKey:@"userid"];
+    [dic setObject:[tempDictionary objectForKey:@"voteid"] forKey:@"voteid"];
+    
+    //NSLog(@"%@",[dic description]);
+    
+    [[PLServer shareInstance] sendDataWithDic:dic];
 }
 
 @end

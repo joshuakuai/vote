@@ -10,8 +10,17 @@
 #import "Vote.h"
 #import "CellIndexCircle.h"
 
+@class HistoryResultCell;
+
+@protocol HistoryResultCellDelegate <NSObject>
+
+- (void)historyResultCellArrowButtonTapped:(HistoryResultCell*)historyCell;
+
+@end
+
 @interface HistoryResultCell : UIView
 
+@property(nonatomic, weak)id<HistoryResultCellDelegate> delegate;
 @property(nonatomic, assign)NSInteger indexNumber;
 @property(nonatomic, assign)VoteArrowColor arrowCorlor;
 @property(nonatomic, strong)UILabel *timeLabel;;
