@@ -24,8 +24,8 @@
         selectionTitleArray = [NSArray arrayWithObjects:@"Password Setting",@"Sign Out",@"About",nil];
         
         UITableView *selectionTableView = [[UITableView alloc] initWithFrame:CGRectMake(160, 0, 160, ScreenHeigh) style:UITableViewStylePlain];
-        selectionTableView.backgroundColor = RGBColor(80, 130, 227, 1);
-        selectionTableView.separatorColor = RGBColor(80, 130, 227, 1);
+        selectionTableView.backgroundColor = RGBColor(116, 192, 252, 1);
+        selectionTableView.separatorColor = RGBColor(116, 192, 252, 1);
         selectionTableView.dataSource = self;
         selectionTableView.delegate = self;
         selectionTableView.scrollEnabled = NO;
@@ -82,7 +82,7 @@
     
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-        cell.backgroundColor =  RGBColor(80, 130, 227, 1);
+        cell.backgroundColor =  RGBColor(116, 192, 252, 1);
     }
     
     CellIndexCircle *indexCircle = [[CellIndexCircle alloc] initWithNumber:indexPath.row+1 location:CGPointMake(7, 7)];
@@ -102,7 +102,7 @@
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 160, 80)];
-    headView.backgroundColor =  RGBColor(80, 130, 227, 1);
+    headView.backgroundColor =  RGBColor(116, 192, 252, 1);
     
     return headView;
 }
