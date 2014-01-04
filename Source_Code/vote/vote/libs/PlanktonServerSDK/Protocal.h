@@ -38,7 +38,9 @@ typedef enum _VoteRequestType {
     JoinVote,
     ViewProcessingVote,
     IndexHistory,
-    ViewHistoryVote
+    ViewHistoryVote,
+    SetPassword,
+    AutoPassword
 } VoteRequestType;
 
 #endif

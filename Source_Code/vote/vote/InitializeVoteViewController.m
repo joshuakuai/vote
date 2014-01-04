@@ -133,7 +133,7 @@
     
     if (self) {
         //set the tab bar item background
-        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"InitializeTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"InitializeTabBarNormal"]];
+        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"initiate_navigation_icon_blue"] withFinishedUnselectedImage:[UIImage imageNamed:@"initiate_navigation_icon_gray"]];
         
         self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
     }

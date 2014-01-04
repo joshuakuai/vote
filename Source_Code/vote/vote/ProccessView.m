@@ -15,17 +15,16 @@
 {
     self = [super init];
     if (self) {
-        [self setFrame:CGRectMake(115, (ScreenHeigh-90)/2, 90, 90)];
-        self.backgroundColor = [UIColor blackColor];
+        [self setFrame:CGRectMake(100, (ScreenHeigh-120)/2, 120, 120)];
         self.layer.cornerRadius = 8;
-        [self setAlpha:0.6];
+        [self setBlurTintColor:nil];
         
-        activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(5, 10, 80, 80)];
-        [activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake(20, 10, 80, 80)];
+        [activityIndicatorView setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleGray];
         [activityIndicatorView setBackgroundColor:[UIColor clearColor]];
         [self addSubview:activityIndicatorView];
         
-        UILabel *tittleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 90, 30)];
+        UILabel *tittleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 90, 120, 30)];
         tittleLabel.textAlignment = NSTextAlignmentCenter;
         tittleLabel.text = tittle;
         tittleLabel.textColor = [UIColor whiteColor];

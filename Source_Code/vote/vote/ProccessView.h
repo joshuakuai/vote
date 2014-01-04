@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AMBlurView.h"
 
-@interface ProccessView : UIView{
+@interface ProccessView : AMBlurView{
     UIActivityIndicatorView *activityIndicatorView;
 }
 

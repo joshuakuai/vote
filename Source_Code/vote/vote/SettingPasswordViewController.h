@@ -15,7 +15,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *oldPasswordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *theNewPasswordTextField;
 @property (weak, nonatomic) IBOutlet UITextField *confrimNewPasswordTextField;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIView *automaticGeneratePasswordView;
 
 
 - (IBAction)doneButtonTapped:(id)sender;
+- (IBAction)setPassword:(id)sender;
+- (IBAction)automaticGeneratePassword:(id)sender;
 @end

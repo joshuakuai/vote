@@ -58,6 +58,7 @@
         //arrow button-- the main part
         _arrowButton = [UIButton buttonWithType:UIButtonTypeCustom];
         _arrowButton.frame = CGRectMake(_leftMargin, _heightOftimeLabel, 298 - _leftMargin, _heightOfArrowButton);
+        [_arrowButton addTarget:self action:@selector(arrowButtonHandel) forControlEvents:UIControlEventTouchUpInside];
         self.arrowCorlor = greenArrow;
         [_cellContentView addSubview:_arrowButton];
         
@@ -80,15 +81,6 @@
     }
     return self;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 - (void)setIndexNumber:(NSInteger)indexNumber
 {
@@ -156,4 +148,12 @@
 {
     _stateLabel.text = stateString;
 }
+
+- (void)arrowButtonHandel
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(historyResultCellArrowButtonTapped:)]) {
+        [self.delegate historyResultCellArrowButtonTapped:self];
+    }
+}
+
 @end

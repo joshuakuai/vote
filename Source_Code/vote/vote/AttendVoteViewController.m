@@ -52,12 +52,6 @@
 {
     [super viewDidLoad];
     
-    /*
-    //模拟服务器传过来的数值
-
-    _optionsContent = [[NSArray alloc] initWithObjects:@"kobe", @"James", @"jodan", nil];
-    _numberOfOptions = _optionsContent.count;
-     */
     _optionsContent = [NSMutableArray arrayWithCapacity:3];
     
     for (VoteOption *voteOption in self.optionArray) {
@@ -168,7 +162,6 @@
         
         NSMutableArray *tempButtonArray = [[NSMutableArray alloc] initWithArray:buttonArray];
         
-        
         UIButton *indexButton = [UIButton buttonWithType:UIButtonTypeCustom];
         indexButton.frame = CGRectMake(0, (_heightOfOptionView - _indexSize ) / 2 + eachOptionView.frame.size.height - _heightOfOptionView, _indexSize, _indexSize);
         [indexButton setImage:[UIImage imageNamed:_optionIndexImage] forState:UIControlStateNormal];
@@ -196,11 +189,11 @@
         [eachOptionView addSubview:optionContent];
     }
     
-
     _heightOfButton = 30;
     _widthOfButton = _heightOfButton *176 /97;
     _blueButtonBackground = @"BlueTitleBackground";
     _redButtonBackground = @"RedTitleBackground";
+    
     //Done button
     _doneButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _doneButton.frame = CGRectMake(11, 280 + heightOfOptionView + 30, _widthOfButton, _heightOfButton );
@@ -253,7 +246,7 @@
     
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     
-    NSLog(@"%@",[cacheDic description]);
+    //NSLog(@"%@",[cacheDic description]);
     
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     if (result) {

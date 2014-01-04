@@ -29,7 +29,7 @@
     
     if (self) {
         //set the tab bar item background
-        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"AttendTabBarHighlight"] withFinishedUnselectedImage:[UIImage imageNamed:@"AttendTabBarNormal"]];
+        [self.tabBarItem setFinishedSelectedImage:[UIImage imageNamed:@"Attend_navigation_icon_blue_choice2"] withFinishedUnselectedImage:[UIImage imageNamed:@"Attend_navigation_icon_gray"]];
         
         self.tabBarItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
     }
@@ -289,7 +289,7 @@
     headView.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0];
     
     //add arrow
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 5, 20, 20)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(30, 5, 20, 20)];
     imageView.image = [UIImage imageNamed:@"LocationArrow"];
     [headView addSubview:imageView];
     
