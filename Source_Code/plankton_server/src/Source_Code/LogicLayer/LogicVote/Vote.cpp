@@ -45,15 +45,17 @@ vector<Vote*> Vote::indexVoteNearByLocation() {
 
 	//get the vote in the same location and available
 	std::ostringstream stringStream;
-	stringStream << "SELECT vote.idvote,user.first_name,user.last_name,vote.color_index,vote.longitude,vote.latitude FROM vote,user WHERE vote.idinitiator=user.iduser AND (" << longitudeString << "-vote.longitude"<< ")<1 AND (" << latitudeString
-			<< "-vote.latitude)<1 AND end_time>'" << timeString
-			<< "' AND is_Finish=false;";
+	stringStream
+			<< "SELECT vote.idvote,user.first_name,user.last_name,vote.color_index,vote.longitude,vote.latitude FROM vote,user WHERE vote.idinitiator=user.iduser AND ("
+			<< longitudeString << "-vote.longitude" << ")<1 AND ("
+			<< latitudeString << "-vote.latitude)<1 AND end_time>'"
+			<< timeString << "' AND is_Finish=false;";
 
 	string queryString = stringStream.str();
 
 	vector<vector<string> > sqlResult = this->database->querySQL(queryString);
 
-	cout<<"The vote near by number:" <<sqlResult.size() << endl;
+	cout << "The vote near by number:" << sqlResult.size() << endl;
 
 	//form the result
 	vector<Vote*> result;
@@ -71,7 +73,7 @@ vector<Vote*> Vote::indexVoteNearByLocation() {
 		double distance = LocationCalculator::calculateDistance(vote->longitude,
 				vote->latitude, this->longitude, this->latitude);
 
-		cout<< "The distance is about " << distance << endl;
+		cout << "The distance is about " << distance << endl;
 		if (distance < 1) {
 			result.push_back(vote);
 		} else {
@@ -113,7 +115,9 @@ bool Vote::getVoteByID() {
 
 bool Vote::getVoteByInitiatorIDAndCreateTime() {
 	string queryString = "SELECT * FROM vote WHERE idinitiator="
-			+ Converter::int_to_string(this->initiatorid) + " AND create_time='" + Converter::time_t_to_mysql_datetime_string(this->createTime) + "';" ;
+			+ Converter::int_to_string(this->initiatorid) + " AND create_time='"
+			+ Converter::time_t_to_mysql_datetime_string(this->createTime)
+			+ "';";
 
 	vector<vector<string> > result = this->database->querySQL(queryString);
 
@@ -268,7 +272,6 @@ vector<vector<string> > Vote::getDuplicateNameList() {
 	}
 
 	//add those has overlap to the result
-
 	for (unsigned int i = 0; i < tmpNameList.size(); i++) {
 		if (tmpNameList[i].size() > 2) {
 			result.push_back(tmpNameList[i]);
@@ -467,6 +470,66 @@ vector<Vote> Vote::getVoteListBySQLResult(vector<vector<string> > sqlResult) {
 
 		result.push_back(tmpVote);
 	}
+
+	return result;
+}
+
+vector<string> Vote::getAllValidParticipants() {
+	vector<string> result;
+
+	if (this->voteid == -1) {
+		this->errorMessage = "Invalid voteID.";
+		return result;
+	}
+
+	//get vote's all selection
+	VoteOption tmpVoteOption(this->database);
+	tmpVoteOption.idvote = this->voteid;
+
+	vector<VoteOption*> optionList = tmpVoteOption.getVoteOptionsByVoteid();
+
+	if (optionList.size() == 0) {
+		this->errorMessage = "This vote does not have any option.";
+		return result;
+	}
+
+	vector<VoteSelection*> selectionList;
+
+	//get all valid selection of each option
+	for (unsigned int i = 0; i < optionList.size(); i++) {
+		//get the option id
+		int voteOptionID = optionList[i]->idvoteOption;
+
+		VoteSelection tmpSelection(this->database);
+		tmpSelection.idvoteOption = voteOptionID;
+
+		//get the selection list
+		vector<VoteSelection*> tmpSelectionList =
+				tmpSelection.getSelectionByVoteOptionID();
+
+		for (unsigned int j = 0; j < tmpSelectionList.size(); j++) {
+			if(tmpSelectionList[j]->state == 1){
+				selectionList.push_back(tmpSelectionList[j]);
+			}else{
+				delete tmpSelectionList[j];
+			}
+		}
+
+		delete optionList[i];
+	}
+
+	optionList.clear();
+
+	//get all selection's user name
+	for(unsigned int j = 0;j< selectionList.size(); j++){
+		User tmpUser(this->database);
+		tmpUser.getUserByID(selectionList[j]->iduser);
+		result.push_back(tmpUser.firstName + " " +tmpUser.lastName);
+		delete selectionList[j];
+		selectionList[j] = NULL;
+	}
+
+	selectionList.clear();
 
 	return result;
 }

@@ -46,6 +46,7 @@ public:
 	bool newVote();
 	bool checkPassword();
 	int getPendingSelectionNumber();
+	vector<string> getAllValidParticipants();
 
 	vector<Vote*> getAllUnfinishedVote();
 

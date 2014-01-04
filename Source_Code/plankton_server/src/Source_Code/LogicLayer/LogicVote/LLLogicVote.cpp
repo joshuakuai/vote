@@ -187,12 +187,17 @@ string LLLogicVote::excuteRequest(string requestString, short version,
 			int userid = receivedValue["userid"].asInt();
 			string newPass = receivedValue["newpass"].asString();
 			string oldPass = receivedValue["oldpass"].asString();
-			sendValue["success"] = this->setPassword(userid,oldPass,newPass);
+			sendValue["success"] = this->setPassword(userid, oldPass, newPass);
 			break;
 		}
-		case AutoPassword:{
+		case AutoPassword: {
 			int userid = receivedValue["userid"].asInt();
 			sendValue["success"] = this->generateAutoPassword(userid);
+			break;
+		}
+		case GetParticipants: {
+			int voteid = receivedValue["voteid"].asInt();
+			sendValue["success"] = this->getParticipants(voteid,sendValue);
 			break;
 		}
 		default: {
@@ -791,10 +796,25 @@ bool LLLogicVote::getHistoryVoteList(int userid, int requestType,
 bool LLLogicVote::viewHistoryVoteDetial(int voteid, int userid,
 		Json::Value &sendValue) {
 	//get the vote
-	VoteOption tmpVoteOption(this->database);
-	tmpVoteOption.idvote = voteid;
+	Vote tmpVote(this->database);
+	tmpVote.voteid = voteid;
+	if (tmpVote.getVoteByID()) {
+		//set the vote  content
+		sendValue["voteid"] = voteid;
+		sendValue["subject"] = tmpVote.title;
+		sendValue["isfinished"] = tmpVote.isFnished;
+		sendValue["endtime"] = Converter::time_t_to_mysql_datetime_string(
+				tmpVote.endTime);
+		sendValue["servercurrentime"] =
+				Converter::time_t_to_mysql_datetime_string(time(NULL));
+	} else {
+		this->errorString = tmpVote.errorMessage;
+		return false;
+	}
 
 	//get all option
+	VoteOption tmpVoteOption(this->database);
+	tmpVoteOption.idvote = voteid;
 	vector<VoteOption*> tmpOptionList = tmpVoteOption.getVoteOptionsByVoteid();
 
 	//establish the array in send value
@@ -837,15 +857,15 @@ bool LLLogicVote::setPassword(int userid, string oldPass, string newPass) {
 	User tmpUser(this->database);
 	tmpUser.userid = userid;
 	tmpUser.getUserByID();
-	if(!tmpUser.password.empty()){
-		if(oldPass.empty() || oldPass.compare("") == 0){
+	if (!tmpUser.password.empty()) {
+		if (oldPass.empty() || oldPass.compare("") == 0) {
 			this->errorString = "Old Password can't be nil.";
 			return false;
 		}
 
 		MD5 md5(oldPass);
 		string md5OldPassword = md5.md5();
-		if(md5OldPassword.compare(tmpUser.password) != 0){
+		if (md5OldPassword.compare(tmpUser.password) != 0) {
 			this->errorString = "Old Password does not match!";
 			return false;
 		}
@@ -856,16 +876,15 @@ bool LLLogicVote::setPassword(int userid, string oldPass, string newPass) {
 	tmpUser.password = md5.md5();
 	int result = tmpUser.updateUser();
 
-	if(!result){
+	if (!result) {
 		this->errorString = "Failed to change password.";
 		return false;
-	}else{
+	} else {
 		return true;
 	}
 }
 
-bool LLLogicVote::generateAutoPassword(int userid)
-{
+bool LLLogicVote::generateAutoPassword(int userid) {
 	//auto generate password
 	time_t timeTmp = time(NULL);
 
@@ -875,26 +894,26 @@ bool LLLogicVote::generateAutoPassword(int userid)
 	srand((unsigned) timeTmp);
 	for (short i = 0; i < 8; i++) {
 		int ranNum;
-		if((rand() % 10) > 5){
+		if ((rand() % 10) > 5) {
 			//number
 			ranNum = rand() % 10;
 			ranNum += 48;
-		}else{
+		} else {
 			ranNum = rand() % 26;
 			//char
-			if((rand() % 10) > 5){
+			if ((rand() % 10) > 5) {
 				//up letter
 				ranNum += 65;
-			}else{
+			} else {
 				//low case letter
 				ranNum += 97;
 			}
 		}
 
-		randomPassword += (char)ranNum;
+		randomPassword += (char) ranNum;
 	}
 
-	if(this->setPassword(userid,"",randomPassword)){
+	if (this->setPassword(userid, "", randomPassword)) {
 		User tmpUser(this->database);
 		tmpUser.userid = userid;
 		tmpUser.getUserByID();
@@ -902,10 +921,32 @@ bool LLLogicVote::generateAutoPassword(int userid)
 		string mailContent =
 				"Dear voter,\n\nYour new password is " + randomPassword
 						+ ".\nPlease use your new password to login next time.\n\nThank you.\nRampageworks";
-		mailManager->sendMail(mailContent, tmpUser.email, "[Vote]Your new Password");
+		mailManager->sendMail(mailContent, tmpUser.email,
+				"[Vote]Your new Password");
 
 		return true;
-	}else{
+	} else {
 		return false;
 	}
+}
+
+bool LLLogicVote::getParticipants(int voteid, Json::Value &sendValue) {
+	Vote tmpVote(this->database);
+	tmpVote.voteid = voteid;
+
+	vector<string> participantsList = tmpVote.getAllValidParticipants();
+
+	Json::Value arrayValue(Json::arrayValue);
+
+	for (unsigned int i = 0; i < participantsList.size(); i++) {
+		Json::Value stringValue;
+
+		stringValue["name"] = participantsList[i];
+
+		arrayValue.append(stringValue);
+	}
+
+	sendValue["participatorlist"] = arrayValue;
+
+	return true;
 }

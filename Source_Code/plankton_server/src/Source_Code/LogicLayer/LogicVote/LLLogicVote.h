@@ -43,7 +43,8 @@ public:
 		IndexHistory,
 		ViewHistoryVote,
 		SetPassword,
-		AutoPassword
+		AutoPassword,
+		GetParticipants
 	} VoteRequestType;
 
 	LLLogicVote() {
@@ -146,6 +147,9 @@ private:
 
 	//will send Email after generate auto password.
 	bool generateAutoPassword(int userid);
+
+	//get all participants of a vote
+	bool getParticipants(int voteid, Json::Value &sendValue);
 
 	//登录
 	//bool login(string name,string password,string tokenString,string appName,unsigned int sessionID);
