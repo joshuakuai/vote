@@ -285,7 +285,7 @@ bool Vote::setVoteFinish() {
 
 	string voteString = Converter::int_to_string(this->voteid);
 
-	string queryString = "UPDATE vote SET is_finish=true WHERE idvote="
+	string queryString = "UPDATE vote SET is_finish=1 WHERE idvote="
 			+ voteString + ";";
 
 	if (this->database->executeSQL(queryString)) {
@@ -353,28 +353,29 @@ bool Vote::hasReachMaxValidNumber() {
 	}
 }
 
-vector<Vote*> Vote::getAllUnfinishedVote() {
+vector<Vote> Vote::getAllUnfinishedVote() {
 	//get all unfinished votes
-	string queryString = "SELECT * FROM vote WHERE is_finish=false";
+	string queryString = "SELECT * FROM vote WHERE is_finish=0";
 
 	vector<vector<string> > sqlResult = this->database->querySQL(queryString);
 
-	vector<Vote*> result;
+	vector<Vote> result;
 	for (unsigned int i = 0; i < sqlResult.size(); i++) {
-		Vote *tmpVote = new Vote(this->database);
+		Vote tmpVote(this->database);
 
-		tmpVote->initiatorid = Converter::string_to_int(sqlResult[i][1]);
-		tmpVote->title = sqlResult[i][2];
-		tmpVote->maxValidUser = Converter::string_to_int(sqlResult[i][3]);
-		tmpVote->password = sqlResult[i][4];
-		tmpVote->longitude = Converter::string_to_double(sqlResult[i][5]);
-		tmpVote->latitude = Converter::string_to_double(sqlResult[i][6]);
-		tmpVote->createTime = Converter::mysql_datetime_string_to_time_t(
+		tmpVote.voteid = Converter::string_to_int(sqlResult[i][0]);
+		tmpVote.initiatorid = Converter::string_to_int(sqlResult[i][1]);
+		tmpVote.title = sqlResult[i][2];
+		tmpVote.maxValidUser = Converter::string_to_int(sqlResult[i][3]);
+		tmpVote.password = sqlResult[i][4];
+		tmpVote.longitude = Converter::string_to_double(sqlResult[i][5]);
+		tmpVote.latitude = Converter::string_to_double(sqlResult[i][6]);
+		tmpVote.createTime = Converter::mysql_datetime_string_to_time_t(
 				sqlResult[i][7]);
-		tmpVote->endTime = Converter::mysql_datetime_string_to_time_t(
+		tmpVote.endTime = Converter::mysql_datetime_string_to_time_t(
 				sqlResult[i][8]);
-		tmpVote->isFnished = Converter::string_to_int(sqlResult[i][9]);
-		tmpVote->colorIndex = Converter::string_to_int(sqlResult[i][10]);
+		tmpVote.isFnished = Converter::string_to_int(sqlResult[i][9]);
+		tmpVote.colorIndex = Converter::string_to_int(sqlResult[i][10]);
 
 		result.push_back(tmpVote);
 	}
@@ -384,7 +385,7 @@ vector<Vote*> Vote::getAllUnfinishedVote() {
 
 int Vote::getPendingSelectionNumber() {
 	string queryString =
-			"SELECT * FROM vote,voteOption,voteSelection WHERE vote.idvote=voteOption.idvote AND voteOption.idvoteOption = voteSelection.idvoteOption AND voteSelection.state=0";
+			"SELECT * FROM vote,voteOption,voteSelection WHERE vote.idvote=" + Converter::int_to_string(this->voteid) +" AND vote.idvote=voteOption.idvote AND voteOption.idvoteOption = voteSelection.idvoteOption AND voteSelection.state=0";
 
 	vector<vector<string> > result = this->database->querySQL(queryString);
 

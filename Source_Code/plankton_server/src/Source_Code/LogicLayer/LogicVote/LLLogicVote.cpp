@@ -222,28 +222,34 @@ void *LLLogicVote::autoScanFinishedVote(void *msg) {
 	//分离此线程，保证线程结束后系统能回收线程资源
 	pthread_detach(pthread_self());
 
+	PLog::logHint("LogicVote- Launch auto-scan");
+
 	DLDatabase *database = PLDataLayer::Instance()->getDatabaseByName("Vote");
 
 	//Execute this every 600 seconds
 	while (1) {
-		Vote tmpVote(database);
-		vector<Vote*> unfinishedVoteList = tmpVote.getAllUnfinishedVote();
+		PLog::logHint("LogicVote- Begin auto-scan");
 
+		Vote tmpVote(database);
+		vector<Vote> unfinishedVoteList = tmpVote.getAllUnfinishedVote();
+
+		int handleNumber = 0;
 		for (unsigned int i = 0; i < unfinishedVoteList.size(); i++) {
-			Vote* vote = unfinishedVoteList[i];
+			Vote vote = unfinishedVoteList[i];
 
 			//check if the vote has pass the end time
 			time_t timeTmp = time(NULL);
 			double timeSpan = difftime(timeTmp, tmpVote.endTime);
 			if (timeSpan > 0) {
 				//check there if there is no pending selection
-				if (vote->getPendingSelectionNumber() == 0) {
-					vote->setVoteFinish();
+				if (vote.getPendingSelectionNumber() == 0) {
+					vote.setVoteFinish();
+					handleNumber++;
 				}
 			}
-
-			delete vote;
 		}
+
+		PLog::logHint("LogicVote- End auto-scan, finished " + Converter::int_to_string(handleNumber) + " votes, begin sleep.");
 
 		sleep(600);
 	}

@@ -48,7 +48,7 @@ public:
 	int getPendingSelectionNumber();
 	vector<string> getAllValidParticipants();
 
-	vector<Vote*> getAllUnfinishedVote();
+	vector<Vote> getAllUnfinishedVote();
 
 private:
 	//数据库
