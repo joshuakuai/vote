@@ -18,4 +18,6 @@
 @property (strong, nonatomic) UISegmentedControl *historySegment;
 @property NSArray *voteHistoryArray;
 
+- (IBAction)showOptionView:(id)sender;
+
 @end
