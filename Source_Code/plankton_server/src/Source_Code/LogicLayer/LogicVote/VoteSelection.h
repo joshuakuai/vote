@@ -27,7 +27,7 @@ public:
 
 	string errorMessage;
 
-	vector<VoteSelection*> getSelectionByVoteOptionID();
+	vector<VoteSelection> getSelectionByVoteOptionID();
 	//set user id first
 	bool getVoteSelection(vector<int> optionIDList);
 	bool newSelection();

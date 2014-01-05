@@ -24,7 +24,7 @@ public:
 	string content;
 	int idvote;
 
-	vector<VoteOption*> getVoteOptionsByVoteid();
+	vector<VoteOption> getVoteOptionsByVoteid();
 	//get the number of this selection been chosen
 	int getPollNumber();
 	bool newVoteOption();

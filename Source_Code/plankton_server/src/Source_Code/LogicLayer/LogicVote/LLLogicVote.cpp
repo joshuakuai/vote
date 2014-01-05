@@ -712,7 +712,7 @@ bool LLLogicVote::viewProcessingVote(int voteid, string password,
 		//get all option
 		VoteOption tmpOption(this->database);
 		tmpOption.idvote = voteid;
-		vector<VoteOption*> optionList = tmpOption.getVoteOptionsByVoteid();
+		vector<VoteOption> optionList = tmpOption.getVoteOptionsByVoteid();
 
 		//establish the array in send value
 		Json::Value arrayValue(Json::arrayValue);
@@ -721,12 +721,10 @@ bool LLLogicVote::viewProcessingVote(int voteid, string password,
 		for (unsigned int i = 0; i < optionList.size(); i++) {
 			Json::Value arrayItem;
 
-			arrayItem["content"] = optionList[i]->content;
-			arrayItem["voteoptionid"] = optionList[i]->idvoteOption;
+			arrayItem["content"] = optionList[i].content;
+			arrayItem["voteoptionid"] = optionList[i].idvoteOption;
 
 			arrayValue.append(arrayItem);
-
-			delete optionList[i];
 		}
 
 		optionList.clear();
@@ -815,7 +813,7 @@ bool LLLogicVote::viewHistoryVoteDetial(int voteid, int userid,
 	//get all option
 	VoteOption tmpVoteOption(this->database);
 	tmpVoteOption.idvote = voteid;
-	vector<VoteOption*> tmpOptionList = tmpVoteOption.getVoteOptionsByVoteid();
+	vector<VoteOption> tmpOptionList = tmpVoteOption.getVoteOptionsByVoteid();
 
 	//establish the array in send value
 	Json::Value arrayValue(Json::arrayValue);
@@ -824,14 +822,12 @@ bool LLLogicVote::viewHistoryVoteDetial(int voteid, int userid,
 	for (unsigned int i = 0; i < tmpOptionList.size(); i++) {
 		Json::Value arrayItem;
 
-		arrayItem["content"] = tmpOptionList[i]->content;
-		arrayItem["pollnumber"] = tmpOptionList[i]->getPollNumber();
-		arrayItem["voteoptionid"] = tmpOptionList[i]->idvoteOption;
-		optionIDList.push_back(tmpOptionList[i]->idvoteOption);
+		arrayItem["content"] = tmpOptionList[i].content;
+		arrayItem["pollnumber"] = tmpOptionList[i].getPollNumber();
+		arrayItem["voteoptionid"] = tmpOptionList[i].idvoteOption;
+		optionIDList.push_back(tmpOptionList[i].idvoteOption);
 
 		arrayValue.append(arrayItem);
-
-		delete tmpOptionList[i];
 	}
 	tmpOptionList.clear();
 

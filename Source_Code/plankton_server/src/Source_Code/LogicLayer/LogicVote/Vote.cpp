@@ -204,49 +204,45 @@ vector<vector<string> > Vote::getDuplicateNameList() {
 	VoteOption tmpVoteOption(this->database);
 	tmpVoteOption.idvote = this->voteid;
 
-	vector<VoteOption*> optionList = tmpVoteOption.getVoteOptionsByVoteid();
+	vector<VoteOption> optionList = tmpVoteOption.getVoteOptionsByVoteid();
 
 	if (optionList.size() == 0) {
 		this->errorMessage = "This vote does not have any option.";
 		return result;
 	}
 
-	vector<VoteSelection*> selectionList;
+	vector<VoteSelection> selectionList;
 
 	//get all selection of each option
 	for (unsigned int i = 0; i < optionList.size(); i++) {
 		//get the option id
-		int voteOptionID = optionList[i]->idvoteOption;
+		int voteOptionID = optionList[i].idvoteOption;
 
 		VoteSelection tmpSelection(this->database);
 		tmpSelection.idvoteOption = voteOptionID;
 
 		//get the selection list
-		vector<VoteSelection*> tmpSelectionList =
+		vector<VoteSelection> tmpSelectionList =
 				tmpSelection.getSelectionByVoteOptionID();
 
 		for (unsigned int j = 0; j < tmpSelectionList.size(); j++) {
 			selectionList.push_back(tmpSelectionList[j]);
 		}
-
-		delete optionList[i];
 	}
-
-	optionList.clear();
 
 	//check if there is any duplicate
 	vector<vector<string> > tmpNameList;
 
 	for (unsigned int i = 0; i < selectionList.size(); i++) {
 		//check if this selection is pending
-		if (selectionList[i]->state != 0) {
+		if (selectionList[i].state != 0) {
 			//confirmed or canceled
 			continue;
 		}
 
 		//get the user name
 		User tmpUser(this->database);
-		tmpUser.userid = selectionList[i]->iduser;
+		tmpUser.userid = selectionList[i].iduser;
 		tmpUser.getUserByID();
 
 		string userFullName = tmpUser.firstName + " " + tmpUser.lastName;
@@ -486,47 +482,47 @@ vector<string> Vote::getAllValidParticipants() {
 	VoteOption tmpVoteOption(this->database);
 	tmpVoteOption.idvote = this->voteid;
 
-	vector<VoteOption*> optionList = tmpVoteOption.getVoteOptionsByVoteid();
+	vector<VoteOption> optionList = tmpVoteOption.getVoteOptionsByVoteid();
 
 	if (optionList.size() == 0) {
 		this->errorMessage = "This vote does not have any option.";
 		return result;
 	}
 
-	vector<VoteSelection*> selectionList;
+	//cout<<"optionList.size:"<<optionList.size()<<endl;
+
+	vector<VoteSelection> selectionList;
 
 	//get all valid selection of each option
 	for (unsigned int i = 0; i < optionList.size(); i++) {
 		//get the option id
-		int voteOptionID = optionList[i]->idvoteOption;
+		int voteOptionID = optionList[i].idvoteOption;
+
+		cout<<"Vote option id :"<<optionList[i].idvoteOption<<endl;
 
 		VoteSelection tmpSelection(this->database);
 		tmpSelection.idvoteOption = voteOptionID;
 
 		//get the selection list
-		vector<VoteSelection*> tmpSelectionList =
+		vector<VoteSelection> tmpSelectionList =
 				tmpSelection.getSelectionByVoteOptionID();
 
+		//cout<<"tmpSelectionList.size:"<<tmpSelectionList.size()<<endl;
+
 		for (unsigned int j = 0; j < tmpSelectionList.size(); j++) {
-			if(tmpSelectionList[j]->state == 1){
+			if(tmpSelectionList[j].state == 1){
 				selectionList.push_back(tmpSelectionList[j]);
-			}else{
-				delete tmpSelectionList[j];
 			}
 		}
-
-		delete optionList[i];
 	}
 
-	optionList.clear();
+	//cout<<"selectionList.size:"<<selectionList.size()<<endl;
 
 	//get all selection's user name
 	for(unsigned int j = 0;j< selectionList.size(); j++){
 		User tmpUser(this->database);
-		tmpUser.getUserByID(selectionList[j]->iduser);
+		tmpUser.getUserByID(selectionList[j].iduser);
 		result.push_back(tmpUser.firstName + " " +tmpUser.lastName);
-		delete selectionList[j];
-		selectionList[j] = NULL;
 	}
 
 	selectionList.clear();

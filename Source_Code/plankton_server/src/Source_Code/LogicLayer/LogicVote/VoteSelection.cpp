@@ -19,28 +19,31 @@ VoteSelection::~VoteSelection() {
 	this->database = NULL;
 }
 
-vector<VoteSelection*> VoteSelection::getSelectionByVoteOptionID() {
+vector<VoteSelection> VoteSelection::getSelectionByVoteOptionID() {
 	string queryString = "SELECT * FROM voteSelection WHERE idvoteOption="
 			+ Converter::int_to_string(this->idvoteOption);
 
 	vector<vector<string> > voteSelectionList = this->database->querySQL(
 			queryString);
 
-	vector<VoteSelection*> result;
+	//cout<<queryString<<endl;
+	//cout<<"voteSelectionList.size:"<<voteSelectionList.size()<<endl;
 
-	if (voteSelectionList.size()) {
+	vector<VoteSelection> result;
+
+	if (voteSelectionList.size() == 0) {
 		this->errorMessage = "This option does not have any selection";
 		return result;
 	}
 
 	for (unsigned int i = 0; i < voteSelectionList.size(); i++) {
-		VoteSelection *tmpSelection = new VoteSelection(this->database);
+		VoteSelection tmpSelection(this->database);
 
-		tmpSelection->idvoteOption = Converter::string_to_int(
+		tmpSelection.idvoteOption = Converter::string_to_int(
 				voteSelectionList[i][0]);
-		tmpSelection->iduser = Converter::string_to_int(
+		tmpSelection.iduser = Converter::string_to_int(
 				voteSelectionList[i][1]);
-		tmpSelection->state = Converter::string_to_int(voteSelectionList[i][2]);
+		tmpSelection.state = Converter::string_to_int(voteSelectionList[i][2]);
 
 		result.push_back(tmpSelection);
 	}

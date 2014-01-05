@@ -20,8 +20,8 @@ VoteOption::~VoteOption() {
 	this->database = NULL;
 }
 
-vector<VoteOption*> VoteOption::getVoteOptionsByVoteid() {
-	vector<VoteOption*> result;
+vector<VoteOption> VoteOption::getVoteOptionsByVoteid() {
+	vector<VoteOption> result;
 
 	if (this->idvote == -1) {
 		this->errorMessage = "VoteID invalid!";
@@ -35,12 +35,12 @@ vector<VoteOption*> VoteOption::getVoteOptionsByVoteid() {
 			queryString);
 
 	for (unsigned int i = 0; i < voteOptionResult.size(); i++) {
-		VoteOption *tmpOption = new VoteOption(this->database);
+		VoteOption tmpOption(this->database);
 
-		tmpOption->idvoteOption = Converter::string_to_int(
+		tmpOption.idvoteOption = Converter::string_to_int(
 				voteOptionResult[i][0]);
-		tmpOption->content = voteOptionResult[i][1];
-		tmpOption->idvote = Converter::string_to_int(voteOptionResult[i][2]);
+		tmpOption.content = voteOptionResult[i][1];
+		tmpOption.idvote = Converter::string_to_int(voteOptionResult[i][2]);
 
 		result.push_back(tmpOption);
 	}
