@@ -9,6 +9,7 @@
 #import "HistoryViewController.h"
 #import "Vote.h"
 #import "ProcessingVoteViewController.h"
+#import "VoteResultViewController.h"
 
 @interface HistoryViewController ()
 {
@@ -34,6 +35,9 @@
     OptionView *optionView;
     
     NSDictionary *_cahcheVoteInfoDic;
+    
+    NSInteger _selectedVoteIndex;
+    BOOL _selectedVoteTypeIsAttend;
 }
 
 @end
@@ -227,7 +231,28 @@
         destViewController.leftSeconds = intervall;
 
     }else if([segue.identifier isEqualToString:@"historyViewShowVoteResultViewSegue"]){
+        VoteResultViewController *destViewController = segue.destinationViewController;
+        destViewController.voteid = [[_cahcheVoteInfoDic objectForKey:@"voteid"] integerValue];
+        destViewController.subjectString = [_cahcheVoteInfoDic objectForKey:@"subject"];
+        destViewController.userSelectedOptionID = [[[_cahcheVoteInfoDic objectForKey:@"userselection"] objectForKey:@"voteoptionid"] integerValue];
+        destViewController.optionDictionaryArray = [_cahcheVoteInfoDic objectForKey:@"selectionlist"];
+        destViewController.userSelectionOptionState = [[[_cahcheVoteInfoDic objectForKey:@"userselection"] objectForKey:@"state"]
+                                                       integerValue];
+        int pollNumber = 0;
+        for (NSDictionary *optionDic in destViewController.optionDictionaryArray) {
+            pollNumber += [[optionDic objectForKey:@"pollnumber"] integerValue];
+        }
+        destViewController.pollNumber = pollNumber;
         
+        //set initiator
+        NSDictionary *tmpVoteInfoDic = nil;
+        if (_selectedVoteTypeIsAttend) {
+            tmpVoteInfoDic = attendedVoteList[_selectedVoteIndex];
+        }else{
+            tmpVoteInfoDic = initiateVoteList[_selectedVoteIndex];
+        }
+        
+        destViewController.initiator = [tmpVoteInfoDic objectForKey:@"initiator"];
     }
 }
 
@@ -300,11 +325,15 @@
                 
                 _cahcheVoteInfoDic = cacheDic;
                 
+                [self performSegueWithIdentifier:@"historyViewShowVoteResultViewSegue" sender:self];
+                
+                /*
                 if (isFinished) {
                     [self performSegueWithIdentifier:@"historyViewShowVoteResultViewSegue" sender:self];
                 }else{
                     [self performSegueWithIdentifier:@"historyViewShowProcessingVoteViewSegue" sender:self];
                 }
+                 */
             }
                 
             default:
@@ -557,12 +586,16 @@
 - (void)historyResultCellArrowButtonTapped:(HistoryResultCell*)historyCell
 {
     NSDictionary *tempDictionary = nil;
+    _selectedVoteIndex = historyCell.indexNumber;
+
     if (self.historySegment.selectedSegmentIndex == 0) {
         //attend table view
         tempDictionary = attendedVoteList[historyCell.indexNumber];
+        _selectedVoteTypeIsAttend = YES;
     }else{
         //initiated table view
         tempDictionary = initiateVoteList[historyCell.indexNumber];
+        _selectedVoteTypeIsAttend = NO;
     }
     
     //request the vote data
