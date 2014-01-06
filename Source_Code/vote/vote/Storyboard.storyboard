@@ -625,7 +625,13 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Yyq-2o-JsW"/>
+                    <navigationItem key="navigationItem" id="Yyq-2o-JsW">
+                        <barButtonItem key="rightBarButtonItem" title="More" id="xJH-3S-xjZ">
+                            <connections>
+                                <action selector="showOptionView:" destination="Nt8-Sc-TU2" id="ODQ-U7-J9o"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="09o-P6-fgf" kind="modal" identifier="historyViewShowSetPasswordViewSegue" id="TRd-0F-Zaq"/>
                         <segue destination="x7I-BJ-tfv" kind="modal" identifier="historyViewShowAboutViewSegue" id="gJD-JL-tWJ"/>

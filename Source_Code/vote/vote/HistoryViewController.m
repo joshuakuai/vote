@@ -139,13 +139,6 @@
     [_refreshHeaderViewInitiated refreshLastUpdatedDate];
     _reloadInitiatedData = NO;
     
-    //More option button
-    UIButton *moreButton = [UIButton buttonWithType:UIButtonTypeContactAdd];
-    moreButton.center = CGPointMake(300, 10);
-    [moreButton addTarget:self action:@selector(showOptionView:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [historyContentView addSubview:moreButton];
-    
     //Add option view
     [self.view addSubview:optionView];
 
@@ -289,7 +282,7 @@
     NSDictionary *cacheDic = (NSDictionary*)jsonString;
     BOOL result = [[cacheDic valueForKey:@"success"] boolValue];
     
-    NSLog(@"%@",cacheDic);
+    //NSLog(@"%@",cacheDic);
     
     if (result) {
         //check if is the refresh by location
@@ -569,7 +562,7 @@
     return [NSDate date];
 }
 
-- (void)showOptionView:(id)sender
+- (IBAction)showOptionView:(id)sender
 {
     if (historyContentView.frame.origin.x==0) {
         [UIView animateWithDuration:0.2 animations:^(void){
