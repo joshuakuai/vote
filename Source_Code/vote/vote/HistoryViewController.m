@@ -318,15 +318,11 @@
                 
                 _cahcheVoteInfoDic = cacheDic;
                 
-                [self performSegueWithIdentifier:@"historyViewShowVoteResultViewSegue" sender:self];
-                
-                /*
                 if (isFinished) {
                     [self performSegueWithIdentifier:@"historyViewShowVoteResultViewSegue" sender:self];
                 }else{
                     [self performSegueWithIdentifier:@"historyViewShowProcessingVoteViewSegue" sender:self];
                 }
-                 */
             }
                 
             default:
