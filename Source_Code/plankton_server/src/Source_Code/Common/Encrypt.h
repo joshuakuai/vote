@@ -10,39 +10,31 @@
 
 #include <string>
 #include <string.h>
-#include "ConfigureManager.h"
+#include <iostream>
+#include <cstdlib>
+#include "cryptopp/osrng.h"
+#include "cryptopp/cryptlib.h"
+#include "cryptopp/hex.h"
+#include "cryptopp/filters.h"
+#include "cryptopp/aes.h"
+#include "cryptopp/modes.h"
 
 using namespace std;
+using namespace CryptoPP;
 
 //加密器
 class Encrypt {
 public:
 	//指定KEY
-	Encrypt(char *key){
-		strcpy(this->key,key);
-	};
-
-	//从配置中读取KEY
-	Encrypt(){
-		strcpy(this->key,ConfigureManager::Instance()->encryptKey.c_str());
-	}
+	Encrypt(string key);
 
 	virtual ~Encrypt(){};
 
-	//加密最高支持1024长度
 	string encrypt(string encryptContent);
 	string decrypt(string decryptContent);
 
 private:
-	char key[16+1];  //加密Key,不超过16个字节
-	//加密核心函数
-	int Do_DES(char* strSrc, char* strKey, char* strDest, char flag);
-	//加密容器长度计算
-	int caculateEncryptLength(string content);
-	//对输入的字节串作BCD编码扩展
-	int ByteToBCD(unsigned char* bytes, int count,unsigned char* strBCD);
-	//把输入的BCD编码串还原成字节串
-	int BCDToByte(unsigned char* strBCD, int count, unsigned char* bytes);
+	byte key[AES::DEFAULT_KEYLENGTH];
 };
 
 #endif /* ENCRYPT_H_ */

@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lpthread -lssl -lcrypto -lmysqlclient
+LIBS := -lpthread -lssl -lmysqlclient -lcryptopp
 

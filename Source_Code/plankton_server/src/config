@@ -1,6 +1,6 @@
 {
-   "Encrypt" : false,
-   "EncryptKey" : "",
+   "Encrypt" : true,
+   "EncryptKey" : "5AFCB1E615360483465E64EE44FD0F68",
    "MaxUserNumber" : 100,
    "PLogLevel" : 2,
    "ServerPort" : 13145,
@@ -11,6 +11,6 @@
    "DatabaseUserName" : "root",
    "DatabasePassword" : "123456",
    "DatabaseAddress" : "localhost",
-   "PushCertificateFileName" : "pushCertificate.pem",
+   "PushCertificateFileName" : "apns-dev.pem",
    "isPushSandbox" : true
 }

@@ -17,6 +17,7 @@
 #include "../Common/PLog.h"
 #include "CMLPackage.h"
 #include "../Common/Encrypt.h"
+#include "../Common/ConfigureManager.h"
 
 using namespace std;
 
@@ -112,8 +113,9 @@ void CMLSession::startSession(){
 			//检查是否加密过
 			if(head->isEncrypt){
 				//解密包内容
-				Encrypt *encrypt = new Encrypt();
-				packageContentString = encrypt->decrypt(packageContentString);
+				//cout<< packageContentString << endl;
+				Encrypt encrypt(ConfigureManager::Instance()->encryptKey);
+				packageContentString = encrypt.decrypt(packageContentString);
 			}
 
 			//执行逻辑请求
