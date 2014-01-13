@@ -21,8 +21,10 @@
     [TestFlight takeOff:@"773a0aab-1730-4c9d-ae56-9b25276f6b94"];
     
     //set up the plankton server sdk
-    [PLServer setServerIP:RelServerAdd port:13145];
-    [PLServer setLogicType:CML_PACKAGE_VOTE logicVersion:1];
+    [[PLServer shareInstance] setServerIP:RelServerAdd port:13145];
+    [[PLServer shareInstance] setLogicType:CML_PACKAGE_VOTE logicVersion:1];
+    [[PLServer shareInstance] setEncryptMode:YES];
+    [[PLServer shareInstance] setKey:@"5AFCB1E615360483465E64EE44FD0F68"];
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound|UIRemoteNotificationTypeAlert)];

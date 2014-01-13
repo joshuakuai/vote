@@ -7,33 +7,45 @@
 //
 
 #import "PLServer.h"
+#import "EncryptWrapper.h"
 
-
-static PLServer *instance;
-static NSString *ipString;
-static NSInteger portNumber;
-static short logicType;
-static short logicVersion;
+static PLServer *instance = NULL;
 
 @interface PLServer (){
     AsyncSocket *_socket;
     NSString *_sendString;
+    EncryptWrapper *_encrypt;
+    NSString *ipString;
+    NSInteger portNumber;
+    short logicType;
+    short logicVersion;
+    BOOL _isEncrypt;
 }
 
 @end
 
 @implementation PLServer
 
-+(void)setLogicType:(short)type logicVersion:(short)version
+-(void)setLogicType:(short)type logicVersion:(short)version
 {
     logicType = type;
     logicVersion = version;
 }
 
-+(void)setServerIP:(NSString*)ip port:(NSInteger)port
+-(void)setServerIP:(NSString*)ip port:(NSInteger)port
 {
     ipString = [ip copy];
     portNumber = port;
+}
+
+- (void)setKey:(NSString*)key
+{
+    [_encrypt setKey:key];
+}
+
+- (void)setEncryptMode:(BOOL)isEncrypt
+{
+    _isEncrypt = isEncrypt;
 }
 
 +(id)shareInstance
@@ -49,8 +61,10 @@ static short logicVersion;
     self = [super init];
     if (self) {
         _sendString = nil;
-        
+        _encrypt = [[EncryptWrapper alloc] init];
         _socket = [[AsyncSocket alloc] initWithDelegate:self];
+        ipString = nil;
+        _isEncrypt = NO;
     }
     return self;
 }
@@ -103,14 +117,20 @@ static short logicVersion;
     int len = 0;
     head = (CMLPackageHead *)&data[len];
     head->indication = CML_PACKAGE_INDICATION;
-    head->isEncrypt = false;
+    head->isEncrypt = _isEncrypt;
     head->logicLayerType = logicType;
     head->logicLayerVersion = logicVersion;
+    
+    //check if this need encrypt
+    if (_isEncrypt) {
+        _sendString = [_encrypt encrypt:_sendString];
+        NSLog(@"SendString %@",_sendString);
+    }
+    
     head->packageLength = (unsigned int)_sendString.length;
     len += sizeof(CMLPackageHead);
     NSMutableData *sendData = [[NSMutableData alloc] initWithBytes:head length:len];
     [sendData appendData:[_sendString dataUsingEncoding:NSUTF8StringEncoding]];
-    
     [_socket readDataWithTimeout:10 buffer:nil bufferOffset:0 maxLength:1024*4 tag:1];
     [_socket writeData:sendData withTimeout:6 tag:1];
 }
@@ -140,6 +160,12 @@ static short logicVersion;
     //We did not consider the situation of mutil package
     if (head->packageLength + sizeof(CMLPackageHead) == data.length) {
         NSString *jsonString = [[NSString alloc] initWithCString:&buffer[sizeof(CMLPackageHead)] encoding:NSUTF8StringEncoding];
+        
+        //check if the data is encrypted
+        if (head->isEncrypt) {
+            jsonString = [_encrypt decrypt:jsonString];
+        }
+        
         [_delegate plServer:self didReceivedJSONString:[jsonString objectFromJSONString]];
     }else{
         //does not finish,continue receive

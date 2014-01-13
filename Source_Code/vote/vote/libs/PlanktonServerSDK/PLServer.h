@@ -36,13 +36,15 @@
 @property(nonatomic,weak)id<PLServerDelegate>delegate;
 
 //Setting
-+(void)setLogicType:(short)type logicVersion:(short)version;
-+(void)setServerIP:(NSString*)ip port:(NSInteger)port;
+- (void)setLogicType:(short)type logicVersion:(short)version;
+- (void)setServerIP:(NSString*)ip port:(NSInteger)port;
+- (void)setKey:(NSString*)key;
+- (void)setEncryptMode:(BOOL)isEncrypt;
 
-+(id)shareInstance;
--(void)openLongConnection;
--(void)closeConnection;
--(void)sendDataWithString:(NSString*)jsonString;
--(void)sendDataWithDic:(NSDictionary*)jsonDic;
++ (id)shareInstance;
+- (void)openLongConnection;
+- (void)closeConnection;
+- (void)sendDataWithString:(NSString*)jsonString;
+- (void)sendDataWithDic:(NSDictionary*)jsonDic;
 
 @end
